@@ -1,7 +1,8 @@
 import javax.swing.JFrame;
 
 public class FrameHolder extends JFrame{
-
+    IntroScreen introScreen;
+    AttendanceScreen attendanceScreen;
     FrameHolder(){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Student Attendance Application by xbryan25");
@@ -10,8 +11,16 @@ public class FrameHolder extends JFrame{
         this.setVisible(true);
         this.setResizable(false);
 
-        IntroScreen introScreen = new IntroScreen();
+        introScreen = new IntroScreen(this);
         this.add(introScreen);
 
+
+    }
+
+    public void changeToAttendanceScreen(){
+
+        attendanceScreen = new AttendanceScreen();
+        this.add(attendanceScreen);
+        attendanceScreen.setVisible(true);
     }
 }

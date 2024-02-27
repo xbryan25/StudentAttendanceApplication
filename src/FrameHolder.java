@@ -8,6 +8,10 @@ public class FrameHolder extends JFrame{
         this.setSize(500, 500);
         this.setLayout(null);
         this.setVisible(true);
+        this.setResizable(false);
+
+        IntroScreen introScreen = new IntroScreen();
+        this.add(introScreen);
 
     }
 }

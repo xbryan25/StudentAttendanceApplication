@@ -1,2 +1,8 @@
-public class IntroScreen {
+import javax.swing.JPanel;
+
+public class IntroScreen extends JPanel{
+
+    IntroScreen(){
+
+    }
 }

@@ -1,4 +1,5 @@
 // TODO: Buttons stay at the top, use a Layout Manager
+// Change added: added different padding for different buttons
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,7 +8,6 @@ import java.awt.event.ActionListener;
 
 public class IntroScreen extends JPanel implements ActionListener{
     JButton addStudentButton = new JButton("Add Student");
-
     JButton aboutThisAppButton = new JButton("About this app");
     JButton adminModeButton = new JButton("Go Admin?");
 
@@ -48,7 +48,6 @@ public class IntroScreen extends JPanel implements ActionListener{
         gbc.insets = new Insets(50, 0, 0, 0);
         this.add(adminModeButton, gbc);
 
-
 //        gbc.gridx = 3;
 //        gbc.gridy = 3;
 //        gbc.weightx = 1;
@@ -62,7 +61,8 @@ public class IntroScreen extends JPanel implements ActionListener{
         if (e.getSource() == addStudentButton) {
             this.frame.changeToAttendanceScreen();
         } else if (e.getSource() == aboutThisAppButton){
-            System.out.println("aboutThisAppButton");
+            this.frame.changeToAboutThisAppScreen();
+
         } else if (e.getSource() == adminModeButton){
             System.out.println("adminModeButton");
         }

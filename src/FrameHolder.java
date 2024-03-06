@@ -2,7 +2,7 @@ import javax.swing.JFrame;
 
 public class FrameHolder extends JFrame{
     IntroScreen introScreen;
-    AttendanceScreen attendanceScreen = new AttendanceScreen();
+    AttendanceScreen attendanceScreen = new AttendanceScreen(this);
     AboutThisAppScreen aboutScreen = new AboutThisAppScreen(this);
     FrameHolder(){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

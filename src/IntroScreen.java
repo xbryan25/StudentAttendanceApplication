@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class IntroScreen extends JPanel implements ActionListener{
-    JButton addStudentButton = new JButton("Add Student");
+    JButton addStudentButton = new JButton("Attendance");
     JButton aboutThisAppButton = new JButton("About this app");
     JButton adminModeButton = new JButton("Go Admin?");
 
@@ -26,12 +26,15 @@ public class IntroScreen extends JPanel implements ActionListener{
         addStudentButton.setPreferredSize(new Dimension(180, 50));
         addStudentButton.setFont(new Font("Arial", Font.BOLD, 20));
         addStudentButton.addActionListener(this);
+        addStudentButton.setFocusable(false);
 
         aboutThisAppButton.setPreferredSize(new Dimension(180, 50));
         aboutThisAppButton.setFont(new Font("Arial", Font.BOLD, 20));
         aboutThisAppButton.addActionListener(this);
+        aboutThisAppButton.setFocusable(false);
 
         adminModeButton.addActionListener(this);
+        adminModeButton.setFocusable(false);
 
         gbc.gridx = 0;
         gbc.gridy = 0;

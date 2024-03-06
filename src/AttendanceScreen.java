@@ -7,13 +7,18 @@ import java.awt.event.ActionEvent;
 public class AttendanceScreen extends JPanel implements ActionListener{
     JButton backButton = new JButton("←");
     FrameHolder frame;
+
+//    TableHolder tableHolder = new TableHolder();
     GridBagConstraints gbc = new GridBagConstraints();
 
     AttendanceScreen(FrameHolder frame) {
         this.frame = frame;
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.GREEN);
-        this.setBounds(0, 0, 500, 500);
+        this.setBounds(0, 0, 500, 100);
+
+//        this.add(tableHolder);
+//        tableHolder.setVisible(true);
 
         backButton.setPreferredSize(new Dimension(65, 30));
         backButton.setFont(new Font("Arial", Font.BOLD, 30));

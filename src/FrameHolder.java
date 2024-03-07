@@ -3,8 +3,8 @@ import java.lang.management.GarbageCollectorMXBean;
 
 public class FrameHolder extends JFrame{
     IntroScreen introScreen;
-    AttendanceScreen attendanceScreen = new AttendanceScreen(this);
-    TableHolder tableHolder = new TableHolder();
+    AttendanceScreen attendanceScreen;
+    TableHolder tableHolder;
     AboutThisAppScreen aboutScreen = new AboutThisAppScreen(this);
     FrameHolder(){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -17,33 +17,48 @@ public class FrameHolder extends JFrame{
 
         introScreen = new IntroScreen(this);
         this.add(introScreen);
-        this.add(attendanceScreen);
         this.add(aboutScreen);
-        this.add(tableHolder);
 
-        attendanceScreen.setVisible(false);
+//        attendanceScreen.setVisible(false);
         aboutScreen.setVisible(false);
     }
 
-    public void changeToAttendanceScreen(){
-        introScreen.setVisible(false);
-        attendanceScreen.setVisible(true);
-        tableHolder.setVisible(true);
+    public void changeToAboutThisAppScreen(){
+        aboutScreen = new AboutThisAppScreen(this);
+
+        this.remove(introScreen);
+
+        this.add(aboutScreen);
+
+        this.revalidate();
+        this.repaint();
     }
 
-    public void changeToAboutThisAppScreen(){
-        introScreen.setVisible(false);
-        aboutScreen.setVisible(true);
+    public void changeToAttendanceScreen(){
+        attendanceScreen = new AttendanceScreen(this);
+        tableHolder = new TableHolder();
+
+        this.remove(introScreen);
+
+        this.add(attendanceScreen);
+        this.add(tableHolder);
+
+        this.revalidate();
+        this.repaint();
     }
 
     public void changeToIntroScreen(int state){
+        introScreen = new IntroScreen(this);
+
         if(state == 1){
-            aboutScreen.setVisible(false);
-            introScreen.setVisible(true);
+            this.remove(aboutScreen);
         } else if(state == 2){
-            attendanceScreen.setVisible(false);
-            tableHolder.setVisible(false);
-            introScreen.setVisible(true);
+            this.remove(attendanceScreen);
+            this.remove(tableHolder);
         }
+
+        this.add(introScreen);
+        this.revalidate();
+        this.repaint();
     }
 }

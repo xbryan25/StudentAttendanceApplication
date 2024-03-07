@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class IntroScreen extends JPanel implements ActionListener{
-    JButton addStudentButton = new JButton("Attendance");
+    JButton attendanceButton = new JButton("Attendance");
     JButton aboutThisAppButton = new JButton("About this app");
     JButton adminModeButton = new JButton("Go Admin?");
 
@@ -23,10 +23,10 @@ public class IntroScreen extends JPanel implements ActionListener{
 
         gbc.insets = new Insets(0, 3, 3, 3);
 
-        addStudentButton.setPreferredSize(new Dimension(180, 50));
-        addStudentButton.setFont(new Font("Arial", Font.BOLD, 20));
-        addStudentButton.addActionListener(this);
-        addStudentButton.setFocusable(false);
+        attendanceButton.setPreferredSize(new Dimension(180, 50));
+        attendanceButton.setFont(new Font("Arial", Font.BOLD, 20));
+        attendanceButton.addActionListener(this);
+        attendanceButton.setFocusable(false);
 
         aboutThisAppButton.setPreferredSize(new Dimension(180, 50));
         aboutThisAppButton.setFont(new Font("Arial", Font.BOLD, 20));
@@ -39,7 +39,7 @@ public class IntroScreen extends JPanel implements ActionListener{
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridheight = 1;
-        this.add(addStudentButton, gbc);
+        this.add(attendanceButton, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -61,7 +61,7 @@ public class IntroScreen extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == addStudentButton) {
+        if (e.getSource() == attendanceButton) {
             this.frame.changeToAttendanceScreen();
         } else if (e.getSource() == aboutThisAppButton){
             this.frame.changeToAboutThisAppScreen();

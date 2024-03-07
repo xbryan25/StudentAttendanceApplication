@@ -43,17 +43,17 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         gbc.gridy = 0;
         this.add(backButton, gbc);
 
-        gbc.insets = new Insets(10, 0, 0, 0);
+        gbc.insets = new Insets(0, 0, 0, 0);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
         this.add(addStudentButton, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-        this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft
+//        gbc.gridx = 1;
+//        gbc.gridy = 1;
+//        gbc.weightx = 1;
+//        gbc.weighty = 1;
+//        this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft
     }
 
     @Override

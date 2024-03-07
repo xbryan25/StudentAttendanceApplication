@@ -38,6 +38,8 @@ public class FrameHolder extends JFrame{
         attendanceScreen = new AttendanceScreen(this);
         tableHolder = new TableHolder();
 
+        this.setSize(750, 500);
+
         this.remove(introScreen);
 
         this.add(attendanceScreen);
@@ -55,6 +57,7 @@ public class FrameHolder extends JFrame{
         } else if(state == 2){
             this.remove(attendanceScreen);
             this.remove(tableHolder);
+            this.setSize(500, 500);
         }
 
         this.add(introScreen);

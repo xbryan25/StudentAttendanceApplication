@@ -15,7 +15,7 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         this.frame = frame;
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.GREEN);
-        this.setBounds(0, 0, 500, 100);
+        this.setBounds(500, 0, 250, 500);
 
 //        this.add(tableHolder);
 //        tableHolder.setVisible(true);

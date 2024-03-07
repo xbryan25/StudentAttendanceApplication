@@ -60,16 +60,22 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         } else if(e.getSource() == addStudentButton){
             Object[] obj = new Object[5];
 
-            obj[0] = JOptionPane.showInputDialog("ID Number: ");
-            obj[1] = JOptionPane.showInputDialog("First Name: ");
-            obj[2] = JOptionPane.showInputDialog("Last Name: ");
-            obj[3] = JOptionPane.showInputDialog("Program: ");
-            obj[4] = JOptionPane.showInputDialog("College: ");
+            obj[0] = JOptionPane.showInputDialog(null, "ID Number: ",
+                    "Input ID Number", JOptionPane.QUESTION_MESSAGE);
+            obj[1] = JOptionPane.showInputDialog(null, "First Name: ",
+                    "Input First Name", JOptionPane.QUESTION_MESSAGE);
+            obj[2] = JOptionPane.showInputDialog(null, "Last Name: ",
+                    "Input Last Name", JOptionPane.QUESTION_MESSAGE);
+            obj[3] = JOptionPane.showInputDialog(null, "Program: ",
+                    "Input Program", JOptionPane.QUESTION_MESSAGE);
+            obj[4] = JOptionPane.showInputDialog(null, "College: ",
+                    "Input College", JOptionPane.QUESTION_MESSAGE);
 
             // Add student using an instance of the table holder class, method defined in TableHolder.java
             this.tableHolder.addStudentInRow(obj);
 
-            System.out.println("Student added!");
+            JOptionPane.showMessageDialog(null, "Student added successfully.",
+                    "", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }

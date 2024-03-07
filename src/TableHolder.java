@@ -19,4 +19,8 @@ public class TableHolder extends JPanel{
         this.add(eventTitle);
         this.add(table.pane);
     }
+
+    public void addStudentInRow(Object[] obj){
+        table.model.addRow(obj);
+    }
 }

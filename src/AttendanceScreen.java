@@ -8,18 +8,15 @@ public class AttendanceScreen extends JPanel implements ActionListener{
     JButton backButton = new JButton("←");
     JButton addStudentButton = new JButton("Add Student");
     FrameHolder frame;
+    TableHolder tableHolder;
 
 //    TableHolder tableHolder = new TableHolder();
     GridBagConstraints gbc = new GridBagConstraints();
 
-    String idNum;
-    String firstName;
-    String lastName;
-    String program;
-    String college;
-
-    AttendanceScreen(FrameHolder frame) {
+    AttendanceScreen(FrameHolder frame, TableHolder tableHolder) {
         this.frame = frame;
+        this.tableHolder = tableHolder;
+
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.GREEN);
         this.setBounds(500, 0, 250, 500);
@@ -37,23 +34,23 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         addStudentButton.addActionListener(this);
         addStudentButton.setFocusable(false);
 
-        gbc.insets = new Insets(10, 10, 0, 0);
+        gbc.insets = new Insets(10, 0, 0, 10);
 
         gbc.gridx = 0;
         gbc.gridy = 0;
         this.add(backButton, gbc);
 
-        gbc.insets = new Insets(0, 0, 0, 0);
+        gbc.insets = new Insets(10, 0, 0, 0);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
         this.add(addStudentButton, gbc);
 
-//        gbc.gridx = 1;
-//        gbc.gridy = 1;
-//        gbc.weightx = 1;
-//        gbc.weighty = 1;
-//        this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft
     }
 
     @Override
@@ -61,11 +58,18 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         if(e.getSource() == backButton) {
             this.frame.changeToIntroScreen(2);
         } else if(e.getSource() == addStudentButton){
-            idNum = JOptionPane.showInputDialog("ID Number: ");
-            firstName = JOptionPane.showInputDialog("First Name: ");
-            lastName = JOptionPane.showInputDialog("Last Name: ");
+            Object[] obj = new Object[5];
 
-            System.out.printf("ID Number: %s\nFirst Name: %s\nLast Name: %s", idNum, firstName, lastName);
+            obj[0] = JOptionPane.showInputDialog("ID Number: ");
+            obj[1] = JOptionPane.showInputDialog("First Name: ");
+            obj[2] = JOptionPane.showInputDialog("Last Name: ");
+            obj[3] = JOptionPane.showInputDialog("Program: ");
+            obj[4] = JOptionPane.showInputDialog("College: ");
+
+            // Add student using an instance of the table holder class, method defined in TableHolder.java
+            this.tableHolder.addStudentInRow(obj);
+
+            System.out.println("Student added!");
         }
     }
 }

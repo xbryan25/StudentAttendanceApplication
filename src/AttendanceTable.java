@@ -10,7 +10,6 @@ import javax.swing.table.JTableHeader;
 
 public class AttendanceTable implements ActionListener{
     JTable mainTable = new JTable();
-    JTableHeader tableHeader = mainTable.getTableHeader();
     Object[] columns = {"ID Number", "First Name", "Last Name", "Program", "College"};
     DefaultTableModel model = new DefaultTableModel();
     JScrollPane pane = new JScrollPane(mainTable);

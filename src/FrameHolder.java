@@ -35,8 +35,8 @@ public class FrameHolder extends JFrame{
     }
 
     public void changeToAttendanceScreen(){
-        attendanceScreen = new AttendanceScreen(this);
         tableHolder = new TableHolder();
+        attendanceScreen = new AttendanceScreen(this, tableHolder);
 
         this.setSize(750, 500);
 

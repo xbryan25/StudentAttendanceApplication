@@ -21,6 +21,11 @@ public class AttendanceScreen extends JPanel implements ActionListener{
     ArrayList<ArrayList<String>> programsInColleges = new ArrayList<ArrayList<String>>();
 
     AttendanceScreen(FrameHolder frame, TableHolder tableHolder) {
+        colleges.add("CCS");
+        colleges.add("COE");
+
+        preLoad2DArrayList(programsInColleges);
+
         this.frame = frame;
         this.tableHolder = tableHolder;
 
@@ -129,9 +134,17 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                 programsCollege = JOptionPane.showInputDialog(null, "Under what college?",
                         "", JOptionPane.QUESTION_MESSAGE, null, collegesObject, collegesObject[0]);
 
-                for(ArrayList<String> collegeAndPrograms: programsInColleges){
-                    if(programsCollege.toString().equals(collegeAndPrograms.getFirst())){
+                for (ArrayList<String> collegeAndPrograms : programsInColleges) {
+                    if (programsCollege.toString().equals(collegeAndPrograms.getFirst())) {
                         collegeAndPrograms.add(program);
+                    }
+                }
+
+                System.out.printf("%s is added", program);
+
+                for(ArrayList<String> collegeAndPrograms: programsInColleges){
+                    for(String programs: collegeAndPrograms){
+                        System.out.println(programs);
                     }
                 }
             }
@@ -143,7 +156,17 @@ public class AttendanceScreen extends JPanel implements ActionListener{
 
         for(String college : collegeList){
             collegesInObject[objectCtr] = college;
+            objectCtr++;
         }
         return collegesInObject;
+    }
+
+    public ArrayList<ArrayList<String>> preLoad2DArrayList(ArrayList<ArrayList<String>> arrayList2d){
+        for(String college: colleges){
+            ArrayList<String> collegeArrayList= new ArrayList<>();
+            collegeArrayList.add(college);
+            programsInColleges.add(collegeArrayList);
+        }
+        return arrayList2d;
     }
 }

@@ -177,7 +177,15 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                 if (colleges.contains(program)){
                     JOptionPane.showMessageDialog(null, "College already exists",
                             "", JOptionPane.INFORMATION_MESSAGE);
-                } else{
+                }
+                else if (program == null){
+                    break;
+                }
+                else if (program.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "College cannot be blank, try again.",
+                            "", JOptionPane.WARNING_MESSAGE);
+                }
+                else{
                     colleges.add(program);
                     JOptionPane.showMessageDialog(null, program + " successfully added.",
                             "", JOptionPane.INFORMATION_MESSAGE);

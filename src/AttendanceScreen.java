@@ -21,10 +21,6 @@ public class AttendanceScreen extends JPanel implements ActionListener{
     ArrayList<ArrayList<String>> programsInColleges = new ArrayList<ArrayList<String>>();
 
     AttendanceScreen(FrameHolder frame, TableHolder tableHolder) {
-        colleges.add("CCS");
-        colleges.add("COE");
-
-        preLoad2DArrayList(programsInColleges);
 
         this.frame = frame;
         this.tableHolder = tableHolder;
@@ -95,6 +91,8 @@ public class AttendanceScreen extends JPanel implements ActionListener{
             this.frame.changeToIntroScreen(2);
         } else if (e.getSource() == addStudentButton) {
             if (!colleges.isEmpty()) {
+                preLoad2DArrayList();
+
                 Object[] collegesObject = objectColleges(colleges);
 
                 Object[] obj = new Object[5];
@@ -140,15 +138,37 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                     }
                 }
 
-                System.out.printf("%s is added", program);
+                System.out.println("Hey");
 
-                for(ArrayList<String> collegeAndPrograms: programsInColleges){
-                    for(String programs: collegeAndPrograms){
-                        System.out.println(programs);
-                    }
+                JOptionPane.showMessageDialog(null, program + " successfully added in " +
+                                programsCollege + ".","", JOptionPane.INFORMATION_MESSAGE);
+
+//                for(ArrayList<String> collegeAndPrograms: programsInColleges){
+//                    for(String programs: collegeAndPrograms){
+//                        System.out.println(programs);
+//                    }
+//                }
+            }
+        } else if(e.getSource() == editCollegesButton) {
+            String program;
+
+            while(true){
+                program = JOptionPane.showInputDialog(null, "Add college",
+                        "", JOptionPane.QUESTION_MESSAGE);
+
+                if (colleges.contains(program)){
+                    JOptionPane.showMessageDialog(null, "College already exists",
+                            "", JOptionPane.INFORMATION_MESSAGE);
+                } else{
+                    colleges.add(program);
+                    JOptionPane.showMessageDialog(null, program + " successfully added.",
+                            "", JOptionPane.INFORMATION_MESSAGE);
+                    break;
                 }
             }
+
         }
+
     }
     public Object[] objectColleges(ArrayList<String> collegeList){
         Object[] collegesInObject = new Object[colleges.size()];
@@ -161,12 +181,19 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         return collegesInObject;
     }
 
-    public ArrayList<ArrayList<String>> preLoad2DArrayList(ArrayList<ArrayList<String>> arrayList2d){
+//    public ArrayList<ArrayList<String>> preLoad2DArrayList(ArrayList<ArrayList<String>> arrayList2d){
+//        for(String college: colleges){
+//            ArrayList<String> collegeArrayList= new ArrayList<>();
+//            collegeArrayList.add(college);
+//            programsInColleges.add(collegeArrayList);
+//        }
+//        return arrayList2d;
+//    }
+    public void preLoad2DArrayList(){
         for(String college: colleges){
             ArrayList<String> collegeArrayList= new ArrayList<>();
             collegeArrayList.add(college);
             programsInColleges.add(collegeArrayList);
         }
-        return arrayList2d;
     }
 }

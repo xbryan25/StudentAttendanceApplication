@@ -11,14 +11,16 @@ public class AttendanceScreen extends JPanel implements ActionListener{
     JButton addStudentButton = new JButton("Add Student");
     JButton addProgramsButton = new JButton("Add programs");
     JButton addCollegesButton = new JButton("Add colleges");
+    JButton viewCollegesAndProgramsButton = new JButton("View colleges and programs");
+
     FrameHolder frame;
     TableHolder tableHolder;
 
 //    TableHolder tableHolder = new TableHolder();
     GridBagConstraints gbc = new GridBagConstraints();
 
-    ArrayList<String> colleges = new ArrayList<String>();
-    ArrayList<ArrayList<String>> programsInColleges = new ArrayList<ArrayList<String>>();
+    ArrayList<String> colleges = new ArrayList<>();
+    ArrayList<ArrayList<String>> programsInColleges = new ArrayList<>();
 
     AttendanceScreen(FrameHolder frame, TableHolder tableHolder) {
 
@@ -52,6 +54,11 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         addProgramsButton.addActionListener(this);
         addProgramsButton.setFocusable(false);
 
+        viewCollegesAndProgramsButton.setPreferredSize(new Dimension(180, 30));
+        viewCollegesAndProgramsButton.setFont(new Font("Arial", Font.BOLD, 12));
+        viewCollegesAndProgramsButton.addActionListener(this);
+        viewCollegesAndProgramsButton.setFocusable(false);
+
         // Positioning of buttons starts here
 
         gbc.insets = new Insets(10, 0, 0, 10);
@@ -78,8 +85,16 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         gbc.gridy = 3;
         this.add(addCollegesButton, gbc);
 
+        gbc.insets = new Insets(10, 0, 0, 0);
+
         gbc.gridx = 0;
         gbc.gridy = 4;
+
+        this.add(viewCollegesAndProgramsButton, gbc);
+
+
+        gbc.gridx = 0;
+        gbc.gridy = 5;
         gbc.weightx = 1;
         gbc.weighty = 1;
         this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft
@@ -87,9 +102,10 @@ public class AttendanceScreen extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == backButton) {
+        if(e.getSource() == backButton) {
             this.frame.changeToIntroScreen(2);
-        } else if (e.getSource() == addStudentButton) {
+        }
+        else if(e.getSource() == addStudentButton) {
             if (!colleges.isEmpty()) {
                 preLoad2DArrayList();
 
@@ -118,7 +134,8 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                         "", JOptionPane.WARNING_MESSAGE);
             }
 
-        } else if (e.getSource() == addProgramsButton) {
+        }
+        else if(e.getSource() == addProgramsButton) {
             if (colleges.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "No college added. Please add a college.",
                         "", JOptionPane.WARNING_MESSAGE);
@@ -149,7 +166,8 @@ public class AttendanceScreen extends JPanel implements ActionListener{
 //                    }
 //                }
             }
-        } else if(e.getSource() == addCollegesButton) {
+        }
+        else if(e.getSource() == addCollegesButton) {
             String program;
 
             while(true){
@@ -166,7 +184,10 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                     break;
                 }
             }
-
+        }
+        else if(e.getSource() == viewCollegesAndProgramsButton){
+            // TODO: Add a new windows that shows a table that displays all the colleges and programs
+            System.out.println("Hi!");
         }
 
     }
@@ -181,14 +202,6 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         return collegesInObject;
     }
 
-//    public ArrayList<ArrayList<String>> preLoad2DArrayList(ArrayList<ArrayList<String>> arrayList2d){
-//        for(String college: colleges){
-//            ArrayList<String> collegeArrayList= new ArrayList<>();
-//            collegeArrayList.add(college);
-//            programsInColleges.add(collegeArrayList);
-//        }
-//        return arrayList2d;
-//    }
     public void preLoad2DArrayList(){
         for(String college: colleges){
             ArrayList<String> collegeArrayList= new ArrayList<>();

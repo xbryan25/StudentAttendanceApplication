@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public class AttendanceScreen extends JPanel implements ActionListener{
     JButton backButton = new JButton("←");
     JButton addStudentButton = new JButton("Add Student");
-    JButton editProgramsButton = new JButton("Edit available programs");
-    JButton editCollegesButton = new JButton("Edit available colleges");
+    JButton addProgramsButton = new JButton("Add programs");
+    JButton addCollegesButton = new JButton("Add colleges");
     FrameHolder frame;
     TableHolder tableHolder;
 
@@ -42,15 +42,15 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         addStudentButton.addActionListener(this);
         addStudentButton.setFocusable(false);
 
-        editCollegesButton.setPreferredSize(new Dimension(180, 30));
-        editCollegesButton.setFont(new Font("Arial", Font.BOLD, 12));
-        editCollegesButton.addActionListener(this);
-        editCollegesButton.setFocusable(false);
+        addCollegesButton.setPreferredSize(new Dimension(180, 30));
+        addCollegesButton.setFont(new Font("Arial", Font.BOLD, 12));
+        addCollegesButton.addActionListener(this);
+        addCollegesButton.setFocusable(false);
 
-        editProgramsButton.setPreferredSize(new Dimension(180, 30));
-        editProgramsButton.setFont(new Font("Arial", Font.BOLD, 12));
-        editProgramsButton.addActionListener(this);
-        editProgramsButton.setFocusable(false);
+        addProgramsButton.setPreferredSize(new Dimension(180, 30));
+        addProgramsButton.setFont(new Font("Arial", Font.BOLD, 12));
+        addProgramsButton.addActionListener(this);
+        addProgramsButton.setFocusable(false);
 
         // Positioning of buttons starts here
 
@@ -70,13 +70,13 @@ public class AttendanceScreen extends JPanel implements ActionListener{
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        this.add(editProgramsButton, gbc);
+        this.add(addProgramsButton, gbc);
 
         gbc.insets = new Insets(10, 0, 0, 0);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
-        this.add(editCollegesButton, gbc);
+        this.add(addCollegesButton, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -114,13 +114,13 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                 JOptionPane.showMessageDialog(null, "Student added successfully.",
                         "", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "No college added. Please add a college",
+                JOptionPane.showMessageDialog(null, "No college added. Please add a college.",
                         "", JOptionPane.WARNING_MESSAGE);
             }
 
-        } else if (e.getSource() == editProgramsButton) {
+        } else if (e.getSource() == addProgramsButton) {
             if (colleges.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "No college added. Please add a college",
+                JOptionPane.showMessageDialog(null, "No college added. Please add a college.",
                         "", JOptionPane.WARNING_MESSAGE);
             } else {
                 String program;
@@ -149,7 +149,7 @@ public class AttendanceScreen extends JPanel implements ActionListener{
 //                    }
 //                }
             }
-        } else if(e.getSource() == editCollegesButton) {
+        } else if(e.getSource() == addCollegesButton) {
             String program;
 
             while(true){

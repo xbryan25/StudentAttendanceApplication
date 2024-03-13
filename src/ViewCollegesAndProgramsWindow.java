@@ -35,6 +35,7 @@ public class ViewCollegesAndProgramsWindow {
         collegesTable.setFont(new Font("Arial", Font.PLAIN, 12));
         collegesTable.setRowHeight(15);
         collegesTable.setAutoCreateRowSorter(true);
+        collegesTable.setDefaultEditor(Object.class, null);
 
         pane.setForeground(Color.RED);
         pane.setBackground(Color.WHITE);

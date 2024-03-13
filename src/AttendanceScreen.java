@@ -44,17 +44,17 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         addStudentButton.addActionListener(this);
         addStudentButton.setFocusable(false);
 
-        addCollegesButton.setPreferredSize(new Dimension(180, 30));
+        addCollegesButton.setPreferredSize(new Dimension(200, 30));
         addCollegesButton.setFont(new Font("Arial", Font.BOLD, 12));
         addCollegesButton.addActionListener(this);
         addCollegesButton.setFocusable(false);
 
-        addProgramsButton.setPreferredSize(new Dimension(180, 30));
+        addProgramsButton.setPreferredSize(new Dimension(200, 30));
         addProgramsButton.setFont(new Font("Arial", Font.BOLD, 12));
         addProgramsButton.addActionListener(this);
         addProgramsButton.setFocusable(false);
 
-        viewCollegesAndProgramsButton.setPreferredSize(new Dimension(180, 30));
+        viewCollegesAndProgramsButton.setPreferredSize(new Dimension(200, 30));
         viewCollegesAndProgramsButton.setFont(new Font("Arial", Font.BOLD, 12));
         viewCollegesAndProgramsButton.addActionListener(this);
         viewCollegesAndProgramsButton.setFocusable(false);

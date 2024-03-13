@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.table.JTableHeader;
 
+// This class gets called by TableHolder
+
 public class AttendanceTable implements ActionListener{
     JTable mainTable = new JTable();
     Object[] columns = {"ID Number", "First Name", "Last Name", "Program", "College"};

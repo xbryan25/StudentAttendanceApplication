@@ -3,7 +3,7 @@ import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
 
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 
 public class ViewCollegesAndProgramsWindow {
@@ -14,17 +14,18 @@ public class ViewCollegesAndProgramsWindow {
     JScrollPane pane = new JScrollPane(collegesTable);
     JDialog dialog = new JDialog();
 
-    ViewCollegesAndProgramsWindow(FrameHolder frame){
-//        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-//        dialog = new JDialog(frame, "What", true);
+    ViewCollegesAndProgramsWindow(){
+        // Set properties of the JDialog
+        dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         dialog.setSize(500, 500);
-//        dialog.setLocationRelativeTo(null);
-//        dialog.setBounds(0, 0, 500, 500);
+        dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
         dialog.setResizable(false);
         dialog.setBackground(Color.RED);
         dialog.setTitle("Edited");
 
+
+        // Creation of table
         model.setColumnIdentifiers(columns);
         collegesTable.setModel(model);
 

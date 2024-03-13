@@ -25,6 +25,7 @@ public class AttendanceTable implements ActionListener{
         mainTable.setFont(new Font("Arial", Font.PLAIN, 12));
         mainTable.setRowHeight(15);
         mainTable.setAutoCreateRowSorter(true);
+        mainTable.setDefaultEditor(Object.class, null);
 
         pane.setForeground(Color.RED);
         pane.setBackground(Color.WHITE);

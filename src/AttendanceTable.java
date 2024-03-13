@@ -1,12 +1,10 @@
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JScrollPane;
-import javax.swing.table.JTableHeader;
 
 // This class gets called by TableHolder
 
@@ -15,6 +13,7 @@ public class AttendanceTable implements ActionListener{
     Object[] columns = {"ID Number", "First Name", "Last Name", "Program", "College"};
     DefaultTableModel model = new DefaultTableModel();
     JScrollPane pane = new JScrollPane(mainTable);
+    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
     AttendanceTable(){
         model.setColumnIdentifiers(columns);
         mainTable.setModel(model);
@@ -27,6 +26,13 @@ public class AttendanceTable implements ActionListener{
         mainTable.setAutoCreateRowSorter(true);
         mainTable.setDefaultEditor(Object.class, null);
         mainTable.getTableHeader().setReorderingAllowed(false);
+
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        mainTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        mainTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        mainTable.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        mainTable.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        mainTable.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
 
         pane.setForeground(Color.RED);
         pane.setBackground(Color.WHITE);

@@ -194,7 +194,7 @@ public class AttendanceScreen extends JPanel implements ActionListener{
             }
         }
         else if(e.getSource() == viewCollegesAndProgramsButton){
-            new ViewCollegesAndProgramsWindow();
+            new ViewCollegesAndProgramsWindow(colleges);
             System.out.println("Hi!");
         }
 

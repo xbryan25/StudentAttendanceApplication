@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
@@ -14,7 +15,7 @@ public class ViewCollegesAndProgramsWindow {
     JScrollPane pane = new JScrollPane(collegesTable);
     JDialog dialog = new JDialog();
 
-    ViewCollegesAndProgramsWindow(){
+    ViewCollegesAndProgramsWindow(ArrayList<String> colleges){
         // Set properties of the JDialog
         dialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         dialog.setSize(500, 500);
@@ -36,14 +37,15 @@ public class ViewCollegesAndProgramsWindow {
         collegesTable.setRowHeight(15);
         collegesTable.setAutoCreateRowSorter(true);
         collegesTable.setDefaultEditor(Object.class, null);
+        collegesTable.getTableHeader().setReorderingAllowed(false);
 
         pane.setForeground(Color.RED);
         pane.setBackground(Color.WHITE);
         pane.setBounds(0, 0, 480, 375);
 
-        model.addRow(new Object[]{"CCS"});
-        model.addRow(new Object[]{"COET"});
-        model.addRow(new Object[]{"CHS"});
+        for(String college: colleges){
+            model.addRow(new Object[]{college});
+        }
 
         dialog.add(pane);
     }

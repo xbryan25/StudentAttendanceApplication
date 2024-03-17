@@ -136,6 +136,8 @@ public class AttendanceScreen extends JPanel implements ActionListener{
 
         }
         else if(e.getSource() == addProgramsButton) {
+            preLoad2DArrayList();
+
             if (colleges.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "No college added. Please add a college.",
                         "", JOptionPane.WARNING_MESSAGE);
@@ -148,6 +150,13 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                         "", JOptionPane.QUESTION_MESSAGE);
                 programsCollege = JOptionPane.showInputDialog(null, "Under what college?",
                         "", JOptionPane.QUESTION_MESSAGE, null, collegesObject, collegesObject[0]);
+
+//                if(programsInColleges.isEmpty()){
+//                    ArrayList<String> firstProgramsInColleges = new ArrayList<>();
+//                    firstProgramsInColleges.add(programsCollege.toString());
+//                    fir
+//
+//                }
 
                 for (ArrayList<String> collegeAndPrograms : programsInColleges) {
                     if (programsCollege.toString().equals(collegeAndPrograms.getFirst())) {
@@ -194,8 +203,7 @@ public class AttendanceScreen extends JPanel implements ActionListener{
             }
         }
         else if(e.getSource() == viewCollegesAndProgramsButton){
-            new ViewCollegesAndProgramsWindow(colleges);
-            System.out.println("Hi!");
+            new ViewCollegesAndProgramsWindow(colleges, programsInColleges);
         }
 
     }

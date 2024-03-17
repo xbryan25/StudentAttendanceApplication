@@ -12,9 +12,12 @@ public class ButtonEditor extends DefaultCellEditor implements ActionListener {
 
     protected JButton btn;
     private String label;
-//    private boolean clicked;
-    ButtonEditor(JTextField txt){
+    private boolean clicked;
+    ViewCollegesAndProgramsWindow viewColleges;
+    ButtonEditor(JTextField txt, ViewCollegesAndProgramsWindow viewColleges){
         super(txt);
+
+        this.viewColleges = viewColleges;
 
         btn = new JButton();
         btn.setOpaque(true);
@@ -33,25 +36,25 @@ public class ButtonEditor extends DefaultCellEditor implements ActionListener {
 
         label = (obj==null) ? "":obj.toString();
         btn.setText(label);
-//        clicked = true;
+        clicked = true;
 
         return btn;
     }
 
     @Override
     public Object getCellEditorValue(){
-//        if (clicked){
-//            System.out.println("Clicked");
-//        }
-        System.out.println("Button clicked!");
-//        clicked = false;
+        if (clicked) {
+            viewColleges.showProgramsInCollege(label);
+        }
+
+        clicked = false;
 
         return label;
     }
 
     @Override
     public boolean stopCellEditing(){
-//        clicked = false;
+        clicked = false;
         return super.stopCellEditing();
     }
 

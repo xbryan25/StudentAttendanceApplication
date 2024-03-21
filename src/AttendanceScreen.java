@@ -153,13 +153,6 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                 programsCollege = JOptionPane.showInputDialog(null, "Under what college?",
                         "", JOptionPane.QUESTION_MESSAGE, null, collegesObject, collegesObject[0]);
 
-//                if(programsInColleges.isEmpty()){
-//                    ArrayList<String> firstProgramsInColleges = new ArrayList<>();
-//                    firstProgramsInColleges.add(programsCollege.toString());
-//                    fir
-//
-//                }
-
                 for (ArrayList<String> collegeAndPrograms : programsInColleges) {
                     if (programsCollege.toString().equals(collegeAndPrograms.getFirst())) {
                         collegeAndPrograms.add(program);
@@ -169,12 +162,6 @@ public class AttendanceScreen extends JPanel implements ActionListener{
 
                 JOptionPane.showMessageDialog(null, program + " successfully added in " +
                                 programsCollege + ".","", JOptionPane.INFORMATION_MESSAGE);
-
-//                for(ArrayList<String> collegeAndPrograms: programsInColleges){
-//                    for(String programs: collegeAndPrograms){
-//                        System.out.println(programs);
-//                    }
-//                }
             }
         }
         else if(e.getSource() == addCollegesButton) {
@@ -202,9 +189,16 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                     break;
                 }
             }
+
+            preLoad2DArrayList();
         }
         else if(e.getSource() == viewCollegesAndProgramsButton){
-            new ViewCollegesAndProgramsWindow(colleges, programsInColleges);
+            if(colleges.isEmpty()){
+                JOptionPane.showMessageDialog(null, "No colleges yet. Please input a college to" +
+                                " open this window.","", JOptionPane.WARNING_MESSAGE);
+            } else{
+                new ViewCollegesAndProgramsWindow(colleges, programsInColleges);
+            }
         }
 
     }

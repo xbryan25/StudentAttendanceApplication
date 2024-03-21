@@ -109,60 +109,63 @@ public class ViewCollegesAndProgramsWindow {
             }
         }
 
-        System.out.println("Hi");
+        if(this.chosenCollegeAndItsPrograms.size() == 1){
+            System.out.println("Hiii---");
+            JOptionPane.showMessageDialog(collegesListDialog, "No programs yet. Please input a program in " +
+                    collegePrompt + " to open this window.","", JOptionPane.WARNING_MESSAGE);
+        } else{
+            programsListDialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            programsListDialog.setSize(500, 500);
+            programsListDialog.setLocationRelativeTo(null);
+            programsListDialog.setVisible(true);
+            programsListDialog.setResizable(false);
+            programsListDialog.setBackground(Color.RED);
+            programsListDialog.setTitle("Available programs in " + collegePrompt);
+            programsListDialog.setAlwaysOnTop(true);
 
-        programsListDialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        programsListDialog.setSize(500, 500);
-        programsListDialog.setLocationRelativeTo(null);
-        programsListDialog.setVisible(true);
-        programsListDialog.setResizable(false);
-        programsListDialog.setBackground(Color.RED);
-        programsListDialog.setTitle("Available programs in " + collegePrompt);
-        programsListDialog.setAlwaysOnTop(true);
+            // Set table title
+            programsColumns[0] = "Programs in " + collegePrompt;
 
-        // Set table title
-        programsColumns[0] = "Programs in " + collegePrompt;
-
-        // Creation of table
-        programsTableModel.setColumnIdentifiers(programsColumns);
-        programsTable.setModel(programsTableModel);
-
-
-        //      Set font of header
-        programsTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 30));
-
-        programsTable.setBackground(Color.LIGHT_GRAY);
-        programsTable.setSelectionForeground(Color.BLACK);
-        programsTable.setGridColor(Color.BLACK);
-        programsTable.setFont(new Font("Arial", Font.BOLD, 20));
-        programsTable.setRowHeight(30);
-        programsTable.setAutoCreateRowSorter(true);
-        programsTable.setDefaultEditor(Object.class, null);
-        programsTable.getTableHeader().setReorderingAllowed(false);
+            // Creation of table
+            programsTableModel.setColumnIdentifiers(programsColumns);
+            programsTable.setModel(programsTableModel);
 
 
-        //      Put text in center
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        programsTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+            //      Set font of header
+            programsTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 30));
 
-        // Set properties of the pane
-        programsTablePane.setForeground(Color.RED);
-        programsTablePane.setBackground(Color.WHITE);
-        programsTablePane.setBounds(0, 0, 480, 375);
+            programsTable.setBackground(Color.LIGHT_GRAY);
+            programsTable.setSelectionForeground(Color.BLACK);
+            programsTable.setGridColor(Color.BLACK);
+            programsTable.setFont(new Font("Arial", Font.BOLD, 20));
+            programsTable.setRowHeight(30);
+            programsTable.setAutoCreateRowSorter(true);
+            programsTable.setDefaultEditor(Object.class, null);
+            programsTable.getTableHeader().setReorderingAllowed(false);
 
 
-        // Reset the table each time
-        programsTableModel.setRowCount(0);
+            //      Put text in center
+            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            programsTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 
-        for(String program: this.chosenCollegeAndItsPrograms){
-            if(this.chosenCollegeAndItsPrograms.indexOf(program) != 0){
-                programsTableModel.addRow(new Object[]{program});
+            // Set properties of the pane
+            programsTablePane.setForeground(Color.RED);
+            programsTablePane.setBackground(Color.WHITE);
+            programsTablePane.setBounds(0, 0, 480, 375);
+
+
+            // Reset the table each time
+            programsTableModel.setRowCount(0);
+
+            for(String program: this.chosenCollegeAndItsPrograms){
+                if(this.chosenCollegeAndItsPrograms.indexOf(program) != 0){
+                    programsTableModel.addRow(new Object[]{program});
+                }
             }
+
+            programsListDialog.add(programsTablePane);
+
+            // Create another dialog that shows another table of available programs in a colleges (last na ni nga JDialog)
         }
-
-        programsListDialog.add(programsTablePane);
-
-        // Create another dialog that shows another table of available programs in a colleges (last na ni nga JDialog)
     }
-
 }

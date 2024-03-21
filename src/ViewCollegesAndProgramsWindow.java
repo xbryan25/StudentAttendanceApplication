@@ -105,8 +105,11 @@ public class ViewCollegesAndProgramsWindow {
         for(ArrayList<String> collegeAndItsPrograms: this.programsInColleges){
             if(collegePrompt.equals(collegeAndItsPrograms.getFirst())){
                 this.chosenCollegeAndItsPrograms = collegeAndItsPrograms;
+                break;
             }
         }
+
+        System.out.println("Hi");
 
         programsListDialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         programsListDialog.setSize(500, 500);
@@ -146,6 +149,10 @@ public class ViewCollegesAndProgramsWindow {
         programsTablePane.setForeground(Color.RED);
         programsTablePane.setBackground(Color.WHITE);
         programsTablePane.setBounds(0, 0, 480, 375);
+
+
+        // Reset the table each time
+        programsTableModel.setRowCount(0);
 
         for(String program: this.chosenCollegeAndItsPrograms){
             if(this.chosenCollegeAndItsPrograms.indexOf(program) != 0){

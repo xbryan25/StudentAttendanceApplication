@@ -136,6 +136,8 @@ public class AttendanceScreen extends JPanel implements ActionListener{
 
         }
         else if(e.getSource() == addProgramsButton) {
+            // I think dari ang error, dili ata ni siya irun everytime (Line 141)
+
             preLoad2DArrayList();
 
             if (colleges.isEmpty()) {
@@ -161,10 +163,9 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                 for (ArrayList<String> collegeAndPrograms : programsInColleges) {
                     if (programsCollege.toString().equals(collegeAndPrograms.getFirst())) {
                         collegeAndPrograms.add(program);
+                        break;
                     }
                 }
-
-                System.out.println("Hey");
 
                 JOptionPane.showMessageDialog(null, program + " successfully added in " +
                                 programsCollege + ".","", JOptionPane.INFORMATION_MESSAGE);
@@ -222,7 +223,10 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         for(String college: colleges){
             ArrayList<String> collegeArrayList= new ArrayList<>();
             collegeArrayList.add(college);
-            programsInColleges.add(collegeArrayList);
+
+            if (!programsInColleges.contains(collegeArrayList)) {
+                programsInColleges.add(collegeArrayList);
+            }
         }
     }
 }

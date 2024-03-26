@@ -159,14 +159,35 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                 JOptionPane.showMessageDialog(null, "No college added. Please add a college.",
                         "", JOptionPane.WARNING_MESSAGE);
             } else {
-                String program;
-                Object programsCollege;
+                String program = "";
+                Object programsCollege = "";
                 Object[] collegesObject = objectColleges(colleges);
+                Object responseObject;
 
-                program = JOptionPane.showInputDialog(null, "Add program",
-                        "", JOptionPane.QUESTION_MESSAGE);
-                programsCollege = JOptionPane.showInputDialog(null, "Under what college?",
-                        "", JOptionPane.QUESTION_MESSAGE, null, collegesObject, collegesObject[0]);
+                String[] paneMessages = {"Add program", "Under what college?"};
+
+                // This for loop and if statements are added so that when the exit button in a pane is pressed, no more
+                // panes will show up
+
+                for (int i = 0; i < 2; i++){
+                    if (i == 0){
+                        responseObject = JOptionPane.showInputDialog(null, paneMessages[0],
+                                    "", JOptionPane.QUESTION_MESSAGE);
+                    } else{
+                        responseObject = JOptionPane.showInputDialog(null, paneMessages[1],
+                                    "", JOptionPane.QUESTION_MESSAGE, null, collegesObject, collegesObject[0]);
+                    }
+
+                    if (responseObject == null){
+                        return;
+                    } else{
+                        if (i == 0){
+                            program = responseObject.toString();
+                        } else{
+                            programsCollege = responseObject;
+                        }
+                    }
+                }
 
                 // Trims both leading and trailing white spaces in String
                 program = program.trim();

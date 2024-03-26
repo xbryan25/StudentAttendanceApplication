@@ -114,19 +114,32 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                 preLoad2DArrayList();
 
                 Object[] collegesObject = objectColleges(colleges);
-
                 Object[] obj = new Object[5];
+                Object responseObject;
 
-                obj[0] = JOptionPane.showInputDialog(null, "ID Number: ",
-                        "Input ID Number", JOptionPane.QUESTION_MESSAGE);
-                obj[1] = JOptionPane.showInputDialog(null, "First Name: ",
-                        "Input First Name", JOptionPane.QUESTION_MESSAGE);
-                obj[2] = JOptionPane.showInputDialog(null, "Last Name: ",
-                        "Input Last Name", JOptionPane.QUESTION_MESSAGE);
-                obj[3] = JOptionPane.showInputDialog(null, "Program: ",
-                        "Input Program", JOptionPane.QUESTION_MESSAGE);
-                obj[4] = JOptionPane.showInputDialog(null, "College: ",
-                        "Input College", JOptionPane.QUESTION_MESSAGE, null, collegesObject, collegesObject[0]);
+                String[] paneMessages = {"ID Number: ", "First Name: ", "Last Name: ", "Program: ", "College: "};
+                String[] paneTitles = {"Input ID Number", "Input First Name ", "Input Last Name", "Input Program",
+                                        "Input College"};
+
+                // This for loop and if statements are added so that when the exit button in a pane is pressed, no more
+                // panes will show up
+
+                for (int i = 0; i < 5; i++){
+                    if (i != 4){
+                        responseObject = JOptionPane.showInputDialog(null, paneMessages[i], paneTitles[i],
+                                   JOptionPane.QUESTION_MESSAGE);
+                    } else{
+                        responseObject = JOptionPane.showInputDialog(null, paneMessages[i],
+                                         paneTitles[i], JOptionPane.QUESTION_MESSAGE, null, collegesObject,
+                                         collegesObject[0]);
+                    }
+
+                    if (responseObject == null){
+                        return;
+                    } else{
+                        obj[i] = responseObject;
+                    }
+                }
 
                 // Add student using an instance of the table holder class, method defined in TableHolder.java
                 this.tableHolder.addStudentInRow(obj);

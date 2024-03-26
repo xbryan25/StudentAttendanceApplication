@@ -1,12 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class TableHolder extends JPanel{
-    AttendanceTable table = new AttendanceTable();
+    AttendanceTable table;
 
     JLabel eventTitle = new JLabel();
 
-    TableHolder(){
+    TableHolder(ArrayList<String[]> dataFromCSV){
+        table = new AttendanceTable(dataFromCSV);
+
         this.setLayout(null);
         this.setBackground(Color.ORANGE);
         this.setBounds(0, 0, 500, 500);

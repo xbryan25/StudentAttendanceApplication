@@ -1,7 +1,14 @@
 import javax.swing.JFrame;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.lang.management.GarbageCollectorMXBean;
+import java.util.ArrayList;
 
 public class FrameHolder extends JFrame{
+    // For loading data in csv; moved from attendace table so that it will have a greater scope
+    String databaseName = "src\\database.csv";
+    BufferedReader reader;
+    ArrayList<String[]> dataFromCSV;
     IntroScreen introScreen;
     AttendanceScreen attendanceScreen;
     TableHolder tableHolder;
@@ -21,6 +28,7 @@ public class FrameHolder extends JFrame{
 
 //        attendanceScreen.setVisible(false);
         aboutScreen.setVisible(false);
+        getDataFromCSV();
     }
 
     public void changeToAboutThisAppScreen(){
@@ -35,8 +43,8 @@ public class FrameHolder extends JFrame{
     }
 
     public void changeToAttendanceScreen(){
-        tableHolder = new TableHolder();
-        attendanceScreen = new AttendanceScreen(this, tableHolder);
+        tableHolder = new TableHolder(dataFromCSV);
+        attendanceScreen = new AttendanceScreen(this, tableHolder, dataFromCSV);
 
         this.setSize(750, 500);
 
@@ -63,5 +71,21 @@ public class FrameHolder extends JFrame{
         this.add(introScreen);
         this.revalidate();
         this.repaint();
+    }
+
+    private void getDataFromCSV(){
+        try{
+            String line = "";
+
+            reader = new BufferedReader(new FileReader(databaseName));
+
+            while((line = reader.readLine()) != null){
+                String[] row = line.split(",");
+                dataFromCSV.add(row);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }

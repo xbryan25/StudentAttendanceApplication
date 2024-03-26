@@ -22,7 +22,11 @@ public class AttendanceScreen extends JPanel implements ActionListener{
     ArrayList<String> colleges = new ArrayList<>();
     ArrayList<ArrayList<String>> programsInColleges = new ArrayList<>();
 
-    AttendanceScreen(FrameHolder frame, TableHolder tableHolder) {
+    ArrayList<String[]> dataFromCSV;
+
+    AttendanceScreen(FrameHolder frame, TableHolder tableHolder, ArrayList<String[]> dataFromCSV) {
+        this.dataFromCSV = dataFromCSV;
+
 
         this.frame = frame;
         this.tableHolder = tableHolder;

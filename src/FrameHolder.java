@@ -8,7 +8,7 @@ public class FrameHolder extends JFrame{
     // For loading data in csv; moved from attendace table so that it will have a greater scope
     String databaseName = "src\\database.csv";
     BufferedReader reader;
-    ArrayList<String[]> dataFromCSV;
+    ArrayList<String[]> dataFromCSV = new ArrayList<>();
     IntroScreen introScreen;
     AttendanceScreen attendanceScreen;
     TableHolder tableHolder;
@@ -28,6 +28,8 @@ public class FrameHolder extends JFrame{
 
 //        attendanceScreen.setVisible(false);
         aboutScreen.setVisible(false);
+
+        // Fetch data from CSV
         getDataFromCSV();
     }
 
@@ -75,7 +77,7 @@ public class FrameHolder extends JFrame{
 
     private void getDataFromCSV(){
         try{
-            String line = "";
+            String line;
 
             reader = new BufferedReader(new FileReader(databaseName));
 

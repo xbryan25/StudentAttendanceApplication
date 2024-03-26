@@ -27,16 +27,12 @@ public class AttendanceScreen extends JPanel implements ActionListener{
     AttendanceScreen(FrameHolder frame, TableHolder tableHolder, ArrayList<String[]> dataFromCSV) {
         this.dataFromCSV = dataFromCSV;
 
-
         this.frame = frame;
         this.tableHolder = tableHolder;
 
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.GREEN);
         this.setBounds(500, 0, 250, 500);
-
-//        this.add(tableHolder);
-//        tableHolder.setVisible(true);
 
         backButton.setPreferredSize(new Dimension(65, 30));
         backButton.setFont(new Font("Arial", Font.BOLD, 30));
@@ -102,6 +98,10 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         gbc.weightx = 1;
         gbc.weighty = 1;
         this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft
+
+
+        // Initalize colleges ArrayList with a college that already exists in the database
+        initializeCollegesAndProgramsInColleges();
     }
 
     @Override
@@ -140,8 +140,6 @@ public class AttendanceScreen extends JPanel implements ActionListener{
 
         }
         else if(e.getSource() == addProgramsButton) {
-            // I think dari ang error, dili ata ni siya irun everytime (Line 141)
-
             preLoad2DArrayList();
 
             if (colleges.isEmpty()) {
@@ -157,15 +155,24 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                 programsCollege = JOptionPane.showInputDialog(null, "Under what college?",
                         "", JOptionPane.QUESTION_MESSAGE, null, collegesObject, collegesObject[0]);
 
+                // Trims both leading and trailing white spaces in String
+                program = program.trim();
+
                 for (ArrayList<String> collegeAndPrograms : programsInColleges) {
-                    if (programsCollege.toString().equals(collegeAndPrograms.getFirst())) {
+                    // If program doesn't exist in college
+                    if (programsCollege.toString().equals(collegeAndPrograms.getFirst()) && !collegeAndPrograms.contains(program)) {
                         collegeAndPrograms.add(program);
+                        JOptionPane.showMessageDialog(null, program + " successfully added in " +
+                                programsCollege + ".","", JOptionPane.INFORMATION_MESSAGE);
+                        break;
+
+                    // If program already exists in college
+                    } else if ((programsCollege.toString().equals(collegeAndPrograms.getFirst()) && collegeAndPrograms.contains(program))) {
+                        JOptionPane.showMessageDialog(null, program + " already exists in " +
+                                programsCollege + ", add another program.", "", JOptionPane.INFORMATION_MESSAGE);
                         break;
                     }
                 }
-
-                JOptionPane.showMessageDialog(null, program + " successfully added in " +
-                                programsCollege + ".","", JOptionPane.INFORMATION_MESSAGE);
             }
         }
         else if(e.getSource() == addCollegesButton) {
@@ -206,6 +213,8 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         }
 
     }
+
+    // Transfers each college in collegeList ArrayList into Object[]
     public Object[] objectColleges(ArrayList<String> collegeList){
         Object[] collegesInObject = new Object[colleges.size()];
         int objectCtr = 0;
@@ -217,13 +226,52 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         return collegesInObject;
     }
 
+    // Loads programsInColleges with colleges from colleges ArrayList
     public void preLoad2DArrayList(){
         for(String college: colleges){
             ArrayList<String> collegeArrayList= new ArrayList<>();
             collegeArrayList.add(college);
 
+            // If college is not in programsInColleges, then add college
             if (!programsInColleges.contains(collegeArrayList)) {
                 programsInColleges.add(collegeArrayList);
+            }
+        }
+    }
+
+    public void initializeCollegesAndProgramsInColleges(){
+        for(String[] line: dataFromCSV){
+            ArrayList<String> collegeArrayList= new ArrayList<>();
+            String programFromLine = line[3];
+            String collegeFromLine = line[4];
+
+            // Trims both leading and trailing white spaces in String
+            programFromLine = programFromLine.trim();
+
+            // Add to an ArrayList
+            collegeArrayList.add(collegeFromLine);
+
+            //----- Add new college in college and programsInCollege ArrayLists
+
+            // If college is not in programsInColleges, then add college
+            if (!programsInColleges.contains(collegeArrayList) && !colleges.contains(collegeFromLine)) {
+                // Add in programsInColleges 2D ArrayList
+                programsInColleges.add(collegeArrayList);
+                // Add in colleges ArrayList
+                colleges.add(collegeFromLine);
+            }
+
+            //----- Add new program in a college in programInCollege ArrayList
+
+            // Note: collegeAndPrograms is an ArrayList in programsInColleges
+            for (ArrayList<String> collegeAndPrograms: programsInColleges) {
+                // Check if the current college is the same with the college that is being searched
+                // AND if that college doesn't already contain the current program
+
+                if (collegeFromLine.equals(collegeAndPrograms.getFirst()) && !collegeAndPrograms.contains(programFromLine)) {
+                    collegeAndPrograms.add(programFromLine);
+                    break;
+                }
             }
         }
     }

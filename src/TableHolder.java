@@ -7,7 +7,11 @@ public class TableHolder extends JPanel{
 
     JLabel eventTitle = new JLabel();
 
+    ArrayList<String[]> dataFromCSV;
+
     TableHolder(ArrayList<String[]> dataFromCSV){
+        this.dataFromCSV = dataFromCSV;
+
         table = new AttendanceTable(dataFromCSV);
 
         this.setLayout(null);
@@ -21,8 +25,16 @@ public class TableHolder extends JPanel{
 
         this.add(eventTitle);
         this.add(table.pane);
+
+        initializeTable();
     }
 
+    // This method fills the table with data from the CSV
+    public void initializeTable(){
+        for(String[] row: dataFromCSV){
+            table.model.addRow(row);
+        }
+    }
     public void addStudentInRow(Object[] obj){
         table.model.addRow(obj);
     }

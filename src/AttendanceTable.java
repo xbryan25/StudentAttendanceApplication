@@ -45,10 +45,10 @@ public class AttendanceTable implements ActionListener{
         pane.setBackground(Color.WHITE);
         pane.setBounds(10, 75, 480, 375);
 
-        model.addRow(new Object[]{"2023-0022", "Bryan Miguel", "Agan", "BSCS", "CCS"});
-        model.addRow(new Object[]{"2023-0044", "Bryle Jared", "Fantilanan", "BSCS", "CCS"});
-        model.addRow(new Object[]{"2023-0079", "Keane Pharelle", "Ledesma", "BSCS", "CCS"});
-        model.addRow(new Object[]{"2023-0025", "Takatsuki", "Sen", "BSANBIO", "CSM"});
+//        model.addRow(new Object[]{"2023-0022", "Bryan Miguel", "Agan", "BSCS", "CCS"});
+//        model.addRow(new Object[]{"2023-0044", "Bryle Jared", "Fantilanan", "BSCS", "CCS"});
+//        model.addRow(new Object[]{"2023-0079", "Keane Pharelle", "Ledesma", "BSCS", "CCS"});
+//        model.addRow(new Object[]{"2023-0025", "Takatsuki", "Sen", "BSANBIO", "CSM"});
     }
 
     @Override

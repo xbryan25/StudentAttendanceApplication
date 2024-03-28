@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class AttendanceScreen extends JPanel implements ActionListener{
@@ -117,21 +118,30 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                 Object[] obj = new Object[5];
                 Object responseObject;
 
-                String[] paneMessages = {"ID Number: ", "First Name: ", "Last Name: ", "Program: ", "College: "};
-                String[] paneTitles = {"Input ID Number", "Input First Name ", "Input Last Name", "Input Program",
-                                        "Input College"};
+                String[] paneMessages = {"ID Number: ", "First Name: ", "Last Name: ", "College: ", "Program: "};
+                String[] paneTitles = {"Input ID Number", "Input First Name ", "Input Last Name", "Input College",
+                                        "Input Program"};
 
                 // This for loop and if statements are added so that when the exit button in a pane is pressed, no more
                 // panes will show up
 
                 for (int i = 0; i < 5; i++){
-                    if (i != 4){
+                    if (i < 3){
                         responseObject = JOptionPane.showInputDialog(null, paneMessages[i], paneTitles[i],
                                    JOptionPane.QUESTION_MESSAGE);
-                    } else{
+                    } else if (i == 3){
                         responseObject = JOptionPane.showInputDialog(null, paneMessages[i],
                                          paneTitles[i], JOptionPane.QUESTION_MESSAGE, null, collegesObject,
                                          collegesObject[0]);
+                    } else{
+                        Object tempCollege = obj[3];
+                        Object[] programInCollegeObject = objectProgramInColleges(tempCollege);
+
+                        System.out.println("Hi");
+//
+                        responseObject = JOptionPane.showInputDialog(null, paneMessages[i],
+                                paneTitles[i], JOptionPane.QUESTION_MESSAGE, null, programInCollegeObject,
+                                programInCollegeObject[0]);
                     }
 
                     if (responseObject == null){
@@ -258,6 +268,35 @@ public class AttendanceScreen extends JPanel implements ActionListener{
             objectCtr++;
         }
         return collegesInObject;
+    }
+
+    public Object[] objectProgramInColleges(Object collegePrompt){
+        int collegePromptSize = 0;
+        ArrayList<String> tempProgramsInCollege = new ArrayList<>();
+
+        // Get the size of the array list of a specific college in programsInColleges
+
+        for (ArrayList<String> programsInCollege: programsInColleges){
+            if (collegePrompt.equals(programsInCollege.getFirst())){
+                // Remove leading college in ArrayList
+
+                programsInCollege.removeFirst();
+
+                tempProgramsInCollege = programsInCollege;
+                collegePromptSize = programsInCollege.size();
+                break;
+            }
+        }
+
+        Object[] programInCollegesObject = new Object[collegePromptSize];
+        int objectCtr = 0;
+
+        for(String programs: tempProgramsInCollege){
+            programInCollegesObject[objectCtr] = programs;
+            objectCtr++;
+        }
+
+        return programInCollegesObject;
     }
 
     // Loads programsInColleges with colleges from colleges ArrayList

@@ -115,6 +115,9 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                 preLoad2DArrayList();
 
                 Object[] collegesObject = objectColleges(colleges);
+
+                // obj stores the data of the added student in an Object Array
+                // Its purpose is to become a storage which makes the addition of the new student in the table possible
                 Object[] obj = new Object[5];
                 Object responseObject;
 
@@ -270,6 +273,8 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         return collegesInObject;
     }
 
+    // Transfers each program ArrayList in programsInColleges ArrayList into Object[]
+    // The method will check the first element of the ArrayList to see if it matches to collegePrompt Object
     public Object[] objectProgramInColleges(Object collegePrompt){
         int collegePromptSize = 0;
         ArrayList<String> tempProgramsInCollege = new ArrayList<>();
@@ -300,13 +305,30 @@ public class AttendanceScreen extends JPanel implements ActionListener{
     }
 
     // Loads programsInColleges with colleges from colleges ArrayList
+    // TODO: Possible issue here
     public void preLoad2DArrayList(){
         for(String college: colleges){
             ArrayList<String> collegeArrayList= new ArrayList<>();
             collegeArrayList.add(college);
 
-            // If college is not in programsInColleges, then add college
-            if (!programsInColleges.contains(collegeArrayList)) {
+            // A flag that checks if an ArrayList of the respective college already exists
+            boolean doesExist = false;
+
+            // This for loop checks if the ArrayList of college already exists or not
+            // If it doesn't exist, it will add collegeArrayList to programsInColleges
+
+            // Added to avoid ConcurrentModificationException
+            // Which means that you are modifying the iterable that is currently being iterated
+            // What I did was separate the verifying and adding processes instead
+
+            for (ArrayList<String> programsInCollege : programsInColleges) {
+                if (programsInCollege.contains(college)) {
+                    doesExist = true;
+                    break;
+                }
+            }
+
+            if (!doesExist){
                 programsInColleges.add(collegeArrayList);
             }
         }
@@ -327,6 +349,9 @@ public class AttendanceScreen extends JPanel implements ActionListener{
             //----- Add new college in college and programsInCollege ArrayLists
 
             // If college is not in programsInColleges, then add college
+            // TODO: Possible issue here
+
+
             if (!programsInColleges.contains(collegeArrayList) && !colleges.contains(collegeFromLine)) {
                 // Add in programsInColleges 2D ArrayList
                 programsInColleges.add(collegeArrayList);

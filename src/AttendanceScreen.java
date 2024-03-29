@@ -305,7 +305,6 @@ public class AttendanceScreen extends JPanel implements ActionListener{
     }
 
     // Loads programsInColleges with colleges from colleges ArrayList
-    // TODO: Possible issue here
     public void preLoad2DArrayList(){
         for(String college: colleges){
             ArrayList<String> collegeArrayList= new ArrayList<>();
@@ -349,9 +348,6 @@ public class AttendanceScreen extends JPanel implements ActionListener{
             //----- Add new college in college and programsInCollege ArrayLists
 
             // If college is not in programsInColleges, then add college
-            // TODO: Possible issue here
-
-
             if (!programsInColleges.contains(collegeArrayList) && !colleges.contains(collegeFromLine)) {
                 // Add in programsInColleges 2D ArrayList
                 programsInColleges.add(collegeArrayList);

@@ -110,7 +110,6 @@ public class ViewCollegesAndProgramsWindow {
         }
 
         if(this.chosenCollegeAndItsPrograms.size() == 1){
-            System.out.println("Hiii---");
             JOptionPane.showMessageDialog(collegesListDialog, "No programs yet. Please input a program in " +
                     collegePrompt + " to open this window.","", JOptionPane.WARNING_MESSAGE);
         } else{

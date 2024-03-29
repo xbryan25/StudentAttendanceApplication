@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class AttendanceScreen extends JPanel implements ActionListener{
@@ -137,18 +136,23 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                                          paneTitles[i], JOptionPane.QUESTION_MESSAGE, null, collegesObject,
                                          collegesObject[0]);
                     } else{
-                        Object tempCollege = obj[3];
+                        Object tempCollege = obj[4];
                         Object[] programInCollegeObject = objectProgramInColleges(tempCollege);
-
-                        System.out.println("Hi");
 //
                         responseObject = JOptionPane.showInputDialog(null, paneMessages[i],
                                 paneTitles[i], JOptionPane.QUESTION_MESSAGE, null, programInCollegeObject,
                                 programInCollegeObject[0]);
                     }
 
+
                     if (responseObject == null){
                         return;
+                    } else if (i == 3){
+                        // This else if statement was added as the college was asked first, instead of the program
+                        // This reestablishes the proper order of the inputs
+                        obj[4] = responseObject;
+                    } else if (i == 4){
+                        obj[3] = responseObject;
                     } else{
                         obj[i] = responseObject;
                     }
@@ -279,16 +283,19 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         int collegePromptSize = 0;
         ArrayList<String> tempProgramsInCollege = new ArrayList<>();
 
+
         // Get the size of the array list of a specific college in programsInColleges
 
         for (ArrayList<String> programsInCollege: programsInColleges){
             if (collegePrompt.equals(programsInCollege.getFirst())){
+
+                // Copy value of ArrayList into a temporary ArrayList
+                tempProgramsInCollege.addAll(programsInCollege);
+
                 // Remove leading college in ArrayList
+                tempProgramsInCollege.removeFirst();
 
-                programsInCollege.removeFirst();
-
-                tempProgramsInCollege = programsInCollege;
-                collegePromptSize = programsInCollege.size();
+                collegePromptSize = tempProgramsInCollege.size();
                 break;
             }
         }

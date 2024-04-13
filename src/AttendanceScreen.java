@@ -9,8 +9,6 @@ import java.util.ArrayList;
 public class AttendanceScreen extends JPanel implements ActionListener{
     JButton backButton = new JButton("←");
     JButton addStudentButton = new JButton("Add Student");
-    JButton addProgramsButton = new JButton("Add programs");
-    JButton addCollegesButton = new JButton("Add colleges");
     JButton viewCollegesAndProgramsButton = new JButton("View colleges and programs");
 
     FrameHolder frame;
@@ -44,16 +42,6 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         addStudentButton.addActionListener(this);
         addStudentButton.setFocusable(false);
 
-        addCollegesButton.setPreferredSize(new Dimension(200, 30));
-        addCollegesButton.setFont(new Font("Arial", Font.BOLD, 12));
-        addCollegesButton.addActionListener(this);
-        addCollegesButton.setFocusable(false);
-
-        addProgramsButton.setPreferredSize(new Dimension(200, 30));
-        addProgramsButton.setFont(new Font("Arial", Font.BOLD, 12));
-        addProgramsButton.addActionListener(this);
-        addProgramsButton.setFocusable(false);
-
         viewCollegesAndProgramsButton.setPreferredSize(new Dimension(200, 30));
         viewCollegesAndProgramsButton.setFont(new Font("Arial", Font.BOLD, 12));
         viewCollegesAndProgramsButton.addActionListener(this);
@@ -77,21 +65,8 @@ public class AttendanceScreen extends JPanel implements ActionListener{
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        this.add(addProgramsButton, gbc);
-
-        gbc.insets = new Insets(10, 0, 0, 0);
-
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        this.add(addCollegesButton, gbc);
-
-        gbc.insets = new Insets(10, 0, 0, 0);
-
-        gbc.gridx = 0;
-        gbc.gridy = 4;
 
         this.add(viewCollegesAndProgramsButton, gbc);
-
 
         gbc.gridx = 0;
         gbc.gridy = 5;
@@ -169,91 +144,7 @@ public class AttendanceScreen extends JPanel implements ActionListener{
             }
 
         }
-        else if(e.getSource() == addProgramsButton) {
-            preLoad2DArrayList();
 
-            if (colleges.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "No college added. Please add a college.",
-                        "", JOptionPane.WARNING_MESSAGE);
-            } else {
-                String program = "";
-                Object programsCollege = "";
-                Object[] collegesObject = objectColleges(colleges);
-                Object responseObject;
-
-                String[] paneMessages = {"Add program", "Under what college?"};
-
-                // This for loop and if statements are added so that when the exit button in a pane is pressed, no more
-                // panes will show up
-
-                for (int i = 0; i < 2; i++){
-                    if (i == 0){
-                        responseObject = JOptionPane.showInputDialog(null, paneMessages[0],
-                                    "", JOptionPane.QUESTION_MESSAGE);
-                    } else{
-                        responseObject = JOptionPane.showInputDialog(null, paneMessages[1],
-                                    "", JOptionPane.QUESTION_MESSAGE, null, collegesObject, collegesObject[0]);
-                    }
-
-                    if (responseObject == null){
-                        return;
-                    } else{
-                        if (i == 0){
-                            program = responseObject.toString();
-                        } else{
-                            programsCollege = responseObject;
-                        }
-                    }
-                }
-
-                // Trims both leading and trailing white spaces in String
-                program = program.trim();
-
-                for (ArrayList<String> collegeAndPrograms : programsInColleges) {
-                    // If program doesn't exist in college
-                    if (programsCollege.toString().equals(collegeAndPrograms.getFirst()) && !collegeAndPrograms.contains(program)) {
-                        collegeAndPrograms.add(program);
-                        JOptionPane.showMessageDialog(null, program + " successfully added in " +
-                                programsCollege + ".","", JOptionPane.INFORMATION_MESSAGE);
-                        break;
-
-                    // If program already exists in college
-                    } else if ((programsCollege.toString().equals(collegeAndPrograms.getFirst()) && collegeAndPrograms.contains(program))) {
-                        JOptionPane.showMessageDialog(null, program + " already exists in " +
-                                programsCollege + ", add another program.", "", JOptionPane.INFORMATION_MESSAGE);
-                        break;
-                    }
-                }
-            }
-        }
-        else if(e.getSource() == addCollegesButton) {
-            String program;
-
-            while(true){
-                program = JOptionPane.showInputDialog(null, "Add college",
-                        "", JOptionPane.QUESTION_MESSAGE);
-
-                if (colleges.contains(program)){
-                    JOptionPane.showMessageDialog(null, "College already exists",
-                            "", JOptionPane.INFORMATION_MESSAGE);
-                }
-                else if (program == null){
-                    break;
-                }
-                else if (program.isEmpty()){
-                    JOptionPane.showMessageDialog(null, "College cannot be blank, try again.",
-                            "", JOptionPane.WARNING_MESSAGE);
-                }
-                else{
-                    colleges.add(program);
-                    JOptionPane.showMessageDialog(null, program + " successfully added.",
-                            "", JOptionPane.INFORMATION_MESSAGE);
-                    break;
-                }
-            }
-
-            preLoad2DArrayList();
-        }
         else if(e.getSource() == viewCollegesAndProgramsButton){
             if(colleges.isEmpty()){
                 JOptionPane.showMessageDialog(null, "No colleges yet. Please input a college to" +

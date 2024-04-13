@@ -217,40 +217,6 @@ public class AdminScreen extends JPanel implements ActionListener{
         return collegesInObject;
     }
 
-    // Transfers each program ArrayList in programsInColleges ArrayList into Object[]
-    // The method will check the first element of the ArrayList to see if it matches to collegePrompt Object
-    public Object[] objectProgramInColleges(Object collegePrompt){
-        int collegePromptSize = 0;
-        ArrayList<String> tempProgramsInCollege = new ArrayList<>();
-
-
-        // Get the size of the array list of a specific college in programsInColleges
-
-        for (ArrayList<String> programsInCollege: programsInColleges){
-            if (collegePrompt.equals(programsInCollege.getFirst())){
-
-                // Copy value of ArrayList into a temporary ArrayList
-                tempProgramsInCollege.addAll(programsInCollege);
-
-                // Remove leading college in ArrayList
-                tempProgramsInCollege.removeFirst();
-
-                collegePromptSize = tempProgramsInCollege.size();
-                break;
-            }
-        }
-
-        Object[] programInCollegesObject = new Object[collegePromptSize];
-        int objectCtr = 0;
-
-        for(String programs: tempProgramsInCollege){
-            programInCollegesObject[objectCtr] = programs;
-            objectCtr++;
-        }
-
-        return programInCollegesObject;
-    }
-
     // Loads programsInColleges with colleges from colleges ArrayList
     public void preLoad2DArrayList(){
         for(String college: colleges){

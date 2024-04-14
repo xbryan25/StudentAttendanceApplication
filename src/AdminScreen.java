@@ -8,15 +8,16 @@ import java.util.ArrayList;
 
 public class AdminScreen extends JPanel implements ActionListener{
     JButton backButton = new JButton("←");
-//    JButton addStudentButton = new JButton("Add Student");
+    JButton deleteStudentButtonByRow = new JButton("Delete Student (Row)");
+    JButton deleteStudentButtonByID = new JButton("Delete Student (ID)");
     JButton addProgramsButton = new JButton("Add programs");
     JButton addCollegesButton = new JButton("Add colleges");
     JButton viewCollegesAndProgramsButton = new JButton("View colleges and programs");
 
+
     FrameHolder frame;
     TableHolder tableHolder;
 
-    //    TableHolder tableHolder = new TableHolder();
     GridBagConstraints gbc = new GridBagConstraints();
 
     ArrayList<String> colleges = new ArrayList<>();
@@ -39,10 +40,15 @@ public class AdminScreen extends JPanel implements ActionListener{
         backButton.addActionListener(this);
         backButton.setFocusable(false);
 
-//        addStudentButton.setPreferredSize(new Dimension(180, 30));
-//        addStudentButton.setFont(new Font("Arial", Font.BOLD, 20));
-//        addStudentButton.addActionListener(this);
-//        addStudentButton.setFocusable(false);
+        deleteStudentButtonByRow.setPreferredSize(new Dimension(200, 30));
+        deleteStudentButtonByRow.setFont(new Font("Arial", Font.BOLD, 16));
+        deleteStudentButtonByRow.addActionListener(this);
+        deleteStudentButtonByRow.setFocusable(false);
+
+        deleteStudentButtonByID.setPreferredSize(new Dimension(200, 30));
+        deleteStudentButtonByID.setFont(new Font("Arial", Font.BOLD, 16));
+        deleteStudentButtonByID.addActionListener(this);
+        deleteStudentButtonByID.setFocusable(false);
 
         addCollegesButton.setPreferredSize(new Dimension(200, 30));
         addCollegesButton.setFont(new Font("Arial", Font.BOLD, 12));
@@ -67,34 +73,40 @@ public class AdminScreen extends JPanel implements ActionListener{
         gbc.gridy = 0;
         this.add(backButton, gbc);
 
-//        gbc.insets = new Insets(10, 0, 0, 0);
-//
-//        gbc.gridx = 0;
-//        gbc.gridy = 1;
-//        this.add(addStudentButton, gbc);
-
         gbc.insets = new Insets(10, 0, 0, 0);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
-        this.add(addProgramsButton, gbc);
+        this.add(deleteStudentButtonByRow, gbc);
 
         gbc.insets = new Insets(10, 0, 0, 0);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        this.add(addCollegesButton, gbc);
+        this.add(deleteStudentButtonByID, gbc);
 
         gbc.insets = new Insets(10, 0, 0, 0);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
+        this.add(addProgramsButton, gbc);
+
+        gbc.insets = new Insets(10, 0, 0, 0);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        this.add(addCollegesButton, gbc);
+
+        gbc.insets = new Insets(10, 0, 0, 0);
+
+        gbc.gridx = 0;
+        gbc.gridy = 5;
 
         this.add(viewCollegesAndProgramsButton, gbc);
 
 
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         gbc.weightx = 1;
         gbc.weighty = 1;
         this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft

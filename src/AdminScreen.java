@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 import java.awt.event.ActionListener;
@@ -13,7 +14,6 @@ public class AdminScreen extends JPanel implements ActionListener{
     JButton addProgramsButton = new JButton("Add programs");
     JButton addCollegesButton = new JButton("Add colleges");
     JButton viewCollegesAndProgramsButton = new JButton("View colleges and programs");
-
 
     FrameHolder frame;
     TableHolder tableHolder;
@@ -120,6 +120,40 @@ public class AdminScreen extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == backButton) {
             this.frame.changeToIntroScreen(3);
+        }
+        else if(e.getSource() == deleteStudentButtonByID){
+            String IDToDelete;
+            boolean IDIsFound = false;
+
+            do{
+                IDToDelete = JOptionPane.showInputDialog(null, "Input ID Number of the student",
+                        "", JOptionPane.QUESTION_MESSAGE);
+
+                if (IDToDelete != null && !IDToDelete.isEmpty()){
+                    break;
+                } else if (IDToDelete == null){
+                    return;
+                } else{
+                    JOptionPane.showMessageDialog(null, "Input an ID Number.",
+                                            "", JOptionPane.WARNING_MESSAGE);
+                }
+            } while(true);
+
+            DefaultTableModel tableModel = tableHolder.table.model;
+
+            for (int count = 0; count < tableModel.getRowCount(); count++){
+                String currentIDInModel = tableModel.getValueAt(count, 0).toString();
+                if (IDToDelete.equals(currentIDInModel)){
+                    tableModel.removeRow(count);
+                    IDIsFound = true;
+                    break;
+                }
+            }
+
+            if (!IDIsFound){
+                JOptionPane.showMessageDialog(null, "ID Number cannot be found in the table.",
+                                         "", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
         else if(e.getSource() == addProgramsButton) {
             preLoad2DArrayList();

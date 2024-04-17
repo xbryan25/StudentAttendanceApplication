@@ -127,6 +127,24 @@ public class AdminScreen extends JPanel implements ActionListener{
         if(e.getSource() == backButton) {
             this.frame.changeToIntroScreen(3);
         }
+        else if(e.getSource() == deleteStudentButtonByRow){
+            // Typecast to DefaultTableModel since it only gives TableModel
+
+            DefaultTableModel tableModel = (DefaultTableModel) tableHolder.table.mainTable.getModel();
+
+            int selectedRowCount = tableHolder.table.mainTable.getSelectedRowCount();
+            int selectedRow = tableHolder.table.mainTable.getSelectedRow();
+
+            if (selectedRowCount == 1){
+                tableModel.removeRow(selectedRow);
+            } else if (selectedRowCount == 0){
+                JOptionPane.showMessageDialog(null, "No row selected. Select a row to delete.",
+                        "", JOptionPane.WARNING_MESSAGE);
+            } else{
+                JOptionPane.showMessageDialog(null, "Multiple rows selected. Only select one to delete.",
+                        "", JOptionPane.WARNING_MESSAGE);
+            }
+        }
         else if(e.getSource() == deleteStudentButtonByID){
             String IDToDelete;
             boolean IDIsFound = false;

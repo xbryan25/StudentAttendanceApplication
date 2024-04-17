@@ -25,7 +25,9 @@ public class AdminScreen extends JPanel implements ActionListener{
 
     ArrayList<String[]> dataFromCSV;
 
-    AdminScreen(FrameHolder frame, TableHolder tableHolder, ArrayList<String[]> dataFromCSV) {
+    AdminScreen(FrameHolder frame, TableHolder tableHolder, ArrayList<String[]> dataFromCSV, boolean hasInitialized,
+                     ArrayList<String> collegesData, ArrayList<ArrayList<String>> programsInCollegesData) {
+
         this.dataFromCSV = dataFromCSV;
 
         this.frame = frame;
@@ -111,9 +113,13 @@ public class AdminScreen extends JPanel implements ActionListener{
         gbc.weighty = 1;
         this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft
 
-
-        // Initalize colleges ArrayList with a college that already exists in the database
-        initializeCollegesAndProgramsInColleges();
+        if (!hasInitialized){
+            // Initalize colleges ArrayList with a college that already exists in the database
+            initializeCollegesAndProgramsInColleges();
+        } else{
+            colleges = collegesData;
+            programsInColleges = programsInCollegesData;
+        }
     }
 
     @Override
@@ -139,6 +145,7 @@ public class AdminScreen extends JPanel implements ActionListener{
                 }
             } while(true);
 
+            // Gets the data from the table
             DefaultTableModel tableModel = tableHolder.table.model;
 
             for (int count = 0; count < tableModel.getRowCount(); count++){

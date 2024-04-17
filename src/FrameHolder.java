@@ -2,11 +2,12 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.lang.management.GarbageCollectorMXBean;
 import java.util.ArrayList;
 
 public class FrameHolder extends JFrame{
-
+    // Becomes true if the program has already read through the database
+    // Wrote to remove redundancy in reading through the database
+    boolean hasInitialized = false;
 
     // For loading data in csv; moved from attendance table so that it will have a greater scope
     String databaseName = "src\\database.csv";
@@ -20,6 +21,10 @@ public class FrameHolder extends JFrame{
     // Container to hold the current data
     DefaultTableModel tableData;
     boolean tableHasData = false;
+
+    // Containers to hold the colleges and programs data
+    ArrayList<String> collegesData;
+    ArrayList<ArrayList<String>> programsInCollegesData;
     AboutThisAppScreen aboutScreen = new AboutThisAppScreen(this);
     FrameHolder(){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -60,7 +65,9 @@ public class FrameHolder extends JFrame{
             tableHolder = new TableHolder(dataFromCSV, tableData, tableHasData);
         }
 
-        attendanceScreen = new AttendanceScreen(this, tableHolder, dataFromCSV);
+        attendanceScreen = new AttendanceScreen(this, tableHolder, dataFromCSV, hasInitialized, collegesData, programsInCollegesData);
+
+        hasInitialized = true;
 
         this.setSize(750, 500);
 
@@ -73,34 +80,6 @@ public class FrameHolder extends JFrame{
         this.repaint();
     }
 
-    public void changeToIntroScreen(int state){
-        introScreen = new IntroScreen(this);
-
-        if(state == 1){
-            this.remove(aboutScreen);
-        } else if(state == 2){
-            this.remove(attendanceScreen);
-
-            // Get data from table before tableHolder is erased
-            tableData = tableHolder.table.model;
-
-            this.remove(tableHolder);
-            this.setSize(500, 500);
-        } else if(state == 3){
-            this.remove(adminScreen);
-
-            // Get data from table before tableHolder is erased
-            tableData = tableHolder.table.model;
-
-            this.remove(tableHolder);
-            this.setSize(500, 500);
-        }
-
-        this.add(introScreen);
-        this.revalidate();
-        this.repaint();
-    }
-
     public void changeToAdminScreen(){
         if (!tableHasData){
             tableHolder = new TableHolder(dataFromCSV, tableData, tableHasData);
@@ -109,7 +88,9 @@ public class FrameHolder extends JFrame{
             tableHolder = new TableHolder(dataFromCSV, tableData, tableHasData);
         }
 
-        adminScreen = new AdminScreen(this, tableHolder, dataFromCSV);
+        adminScreen = new AdminScreen(this, tableHolder, dataFromCSV, hasInitialized, collegesData, programsInCollegesData);
+
+        hasInitialized = true;
 
         this.setSize(750, 500);
 
@@ -118,6 +99,44 @@ public class FrameHolder extends JFrame{
         this.add(adminScreen);
         this.add(tableHolder);
 
+        this.revalidate();
+        this.repaint();
+    }
+
+    public void changeToIntroScreen(int state){
+        introScreen = new IntroScreen(this);
+
+        if(state == 1){
+            this.remove(aboutScreen);
+        } else if(state == 2){
+            // Get data from table before tableHolder is erased
+            tableData = tableHolder.table.model;
+
+            // Get colleges data from AdminScreen class and transfer to AttendanceScreen
+            collegesData = adminScreen.colleges;
+
+            // Get programs data from AdminScreen class and transfer to AttendanceScreen
+            programsInCollegesData = adminScreen.programsInColleges;
+
+            this.remove(attendanceScreen);
+            this.remove(tableHolder);
+            this.setSize(500, 500);
+        } else if(state == 3){
+            // Get data from table before tableHolder is erased
+            tableData = tableHolder.table.model;
+
+            // Get colleges data from AdminScreen class and transfer to AttendanceScreen
+            collegesData = adminScreen.colleges;
+
+            // Get programs data from AdminScreen class and transfer to AttendanceScreen
+            programsInCollegesData = adminScreen.programsInColleges;
+
+            this.remove(adminScreen);
+            this.remove(tableHolder);
+            this.setSize(500, 500);
+        }
+
+        this.add(introScreen);
         this.revalidate();
         this.repaint();
     }

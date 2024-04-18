@@ -23,6 +23,7 @@ public class AttendanceScreen extends JPanel implements ActionListener{
     ArrayList<String[]> dataFromCSV;
 
     String eventTitle;
+    boolean eventTitleCancel = false;
 
     AttendanceScreen(FrameHolder frame, TableHolder tableHolder, ArrayList<String[]> dataFromCSV, boolean hasInitialized,
                      ArrayList<String> collegesData, ArrayList<ArrayList<String>> programsInCollegesData) {
@@ -35,11 +36,16 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                 eventTitle = JOptionPane.showInputDialog(null, "To proceed, input a name for the event.", "",
                         JOptionPane.QUESTION_MESSAGE);
 
-                if (eventTitle == null || eventTitle.isEmpty()){
+                if(eventTitle != null && !eventTitle.isEmpty()){
+                    break;
+
+                } else if(eventTitle == null){
+                    eventTitleCancel = true;
+                    break;
+                }
+                else{
                     JOptionPane.showMessageDialog(null, "Input a name for the event to proceed.",
                             "", JOptionPane.WARNING_MESSAGE);
-                } else{
-                    break;
                 }
             }
 
@@ -50,58 +56,60 @@ public class AttendanceScreen extends JPanel implements ActionListener{
             this.dataFromCSV = dataFromCSV;
         }
 
-        this.setLayout(new GridBagLayout());
-        this.setBackground(Color.GREEN);
-        this.setBounds(500, 0, 250, 500);
+        if (!eventTitleCancel){
+            this.setLayout(new GridBagLayout());
+            this.setBackground(Color.GREEN);
+            this.setBounds(500, 0, 250, 500);
 
-        backButton.setPreferredSize(new Dimension(65, 30));
-        backButton.setFont(new Font("Arial", Font.BOLD, 30));
-        backButton.addActionListener(this);
-        backButton.setFocusable(false);
+            backButton.setPreferredSize(new Dimension(65, 30));
+            backButton.setFont(new Font("Arial", Font.BOLD, 30));
+            backButton.addActionListener(this);
+            backButton.setFocusable(false);
 
-        addStudentButton.setPreferredSize(new Dimension(180, 30));
-        addStudentButton.setFont(new Font("Arial", Font.BOLD, 20));
-        addStudentButton.addActionListener(this);
-        addStudentButton.setFocusable(false);
+            addStudentButton.setPreferredSize(new Dimension(180, 30));
+            addStudentButton.setFont(new Font("Arial", Font.BOLD, 20));
+            addStudentButton.addActionListener(this);
+            addStudentButton.setFocusable(false);
 
-        viewCollegesAndProgramsButton.setPreferredSize(new Dimension(200, 30));
-        viewCollegesAndProgramsButton.setFont(new Font("Arial", Font.BOLD, 12));
-        viewCollegesAndProgramsButton.addActionListener(this);
-        viewCollegesAndProgramsButton.setFocusable(false);
+            viewCollegesAndProgramsButton.setPreferredSize(new Dimension(200, 30));
+            viewCollegesAndProgramsButton.setFont(new Font("Arial", Font.BOLD, 12));
+            viewCollegesAndProgramsButton.addActionListener(this);
+            viewCollegesAndProgramsButton.setFocusable(false);
 
-        // Positioning of buttons starts here
+            // Positioning of buttons starts here
 
-        gbc.insets = new Insets(10, 0, 0, 10);
+            gbc.insets = new Insets(10, 0, 0, 10);
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        this.add(backButton, gbc);
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            this.add(backButton, gbc);
 
-        gbc.insets = new Insets(10, 0, 0, 0);
+            gbc.insets = new Insets(10, 0, 0, 0);
 
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        this.add(addStudentButton, gbc);
+            gbc.gridx = 0;
+            gbc.gridy = 1;
+            this.add(addStudentButton, gbc);
 
-        gbc.insets = new Insets(10, 0, 0, 0);
+            gbc.insets = new Insets(10, 0, 0, 0);
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
+            gbc.gridx = 0;
+            gbc.gridy = 2;
 
-        this.add(viewCollegesAndProgramsButton, gbc);
+            this.add(viewCollegesAndProgramsButton, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-        this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft
+            gbc.gridx = 0;
+            gbc.gridy = 5;
+            gbc.weightx = 1;
+            gbc.weighty = 1;
+            this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft
 
-        if (!hasInitialized){
-            // Initalize colleges ArrayList with a college that already exists in the database
-            initializeCollegesAndProgramsInColleges();
-        } else{
-            colleges = collegesData;
-            programsInColleges = programsInCollegesData;
+            if (!hasInitialized){
+                // Initalize colleges ArrayList with a college that already exists in the database
+                initializeCollegesAndProgramsInColleges();
+            } else{
+                colleges = collegesData;
+                programsInColleges = programsInCollegesData;
+            }
         }
     }
 

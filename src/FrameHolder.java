@@ -63,31 +63,39 @@ public class FrameHolder extends JFrame{
     }
 
     public void changeToAttendanceScreen(){
-        if (!tableHasData){
-            tableHolder = new TableHolder(dataFromCSV, tableData, tableHasData);
-            tableHasData = true;
-        } else{
-            tableHolder = new TableHolder(dataFromCSV, tableData, tableHasData);
+        if (!eventTitleCancel){
+            if (!tableHasData){
+                tableHolder = new TableHolder(dataFromCSV, tableData, tableHasData);
+                tableHasData = true;
+            } else{
+                tableHolder = new TableHolder(dataFromCSV, tableData, tableHasData);
+            }
         }
 
         attendanceScreen = new AttendanceScreen(this, tableHolder, dataFromCSV, hasInitialized, collegesData, programsInCollegesData);
 
-        // Set title of event, only executes if the database is not empty
-        if (hasEventTitle){
-            attendanceScreen.tableHolder.setTitle(eventTitle);
+        eventTitleCancel = attendanceScreen.eventTitleCancel;
+
+        if (!eventTitleCancel){
+            this.remove(introScreen);
+
+            // Set title of event, only executes if the database is not empty
+            if (hasEventTitle){
+                attendanceScreen.tableHolder.setTitle(eventTitle);
+            }
+
+            hasInitialized = true;
+
+            this.setSize(750, 500);
+
+            this.add(attendanceScreen);
+            this.add(tableHolder);
+
+            this.revalidate();
+            this.repaint();
+        } else{
+            this.changeToIntroScreen(4);
         }
-
-        hasInitialized = true;
-
-        this.setSize(750, 500);
-
-        this.remove(introScreen);
-
-        this.add(attendanceScreen);
-        this.add(tableHolder);
-
-        this.revalidate();
-        this.repaint();
     }
 
     public void changeToAdminScreen(){
@@ -100,12 +108,13 @@ public class FrameHolder extends JFrame{
             }
         }
 
-
         adminScreen = new AdminScreen(this, tableHolder, dataFromCSV, hasInitialized, collegesData, programsInCollegesData);
 
         eventTitleCancel = adminScreen.eventTitleCancel;
 
         if (!eventTitleCancel) {
+            this.remove(introScreen);
+
             // Set title of event, only executes if the database is not empty
             if (hasEventTitle) {
                 adminScreen.tableHolder.setTitle(eventTitle);
@@ -115,15 +124,13 @@ public class FrameHolder extends JFrame{
 
             this.setSize(750, 500);
 
-            this.remove(introScreen);
-
             this.add(adminScreen);
             this.add(tableHolder);
 
             this.revalidate();
             this.repaint();
         } else{
-            this.changeToIntroScreen(4);
+            this.changeToIntroScreen(5);
         }
     }
 
@@ -148,7 +155,6 @@ public class FrameHolder extends JFrame{
                 hasEventTitle = true;
             }
 
-
             this.remove(attendanceScreen);
             this.remove(tableHolder);
             this.setSize(500, 500);
@@ -164,17 +170,17 @@ public class FrameHolder extends JFrame{
 
             // Get event title
             if (!hasEventTitle){
-                eventTitle = attendanceScreen.eventTitle;
+                eventTitle = adminScreen.eventTitle;
                 hasEventTitle = true;
             }
 
             this.remove(adminScreen);
             this.remove(tableHolder);
-
             this.setSize(500, 500);
         } else if (state == 4){
+            this.remove(attendanceScreen);
+        } else if (state == 5){
             this.remove(adminScreen);
-//            this.remove(tableHolder);
         }
 
         this.add(introScreen);

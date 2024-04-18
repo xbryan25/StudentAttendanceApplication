@@ -58,7 +58,7 @@ public class AdminScreen extends JPanel implements ActionListener{
             this.dataFromCSV = dataFromCSV;
         }
 
-        if (eventTitleCancel){
+        if (!eventTitleCancel){
             this.setLayout(new GridBagLayout());
             this.setBackground(Color.CYAN);
             this.setBounds(500, 0, 250, 500);

@@ -20,7 +20,6 @@ public class TableHolder extends JPanel{
             this.setBackground(Color.ORANGE);
             this.setBounds(0, 0, 500, 500);
 
-            eventTitle.setText("Event: Research Week");
             eventTitle.setHorizontalAlignment(JLabel.CENTER);
             eventTitle.setFont(new Font("Arial", Font.BOLD, 30));
             eventTitle.setBounds(0, 0, 500, 75);
@@ -36,7 +35,6 @@ public class TableHolder extends JPanel{
             this.setBackground(Color.ORANGE);
             this.setBounds(0, 0, 500, 500);
 
-            eventTitle.setText("Event: Research Week");
             eventTitle.setHorizontalAlignment(JLabel.CENTER);
             eventTitle.setFont(new Font("Arial", Font.BOLD, 30));
             eventTitle.setBounds(0, 0, 500, 75);
@@ -54,5 +52,9 @@ public class TableHolder extends JPanel{
     }
     public void addStudentInRow(Object[] obj){
         table.model.addRow(obj);
+    }
+
+    public void setTitle(String title){
+        eventTitle.setText("Event: " + title);
     }
 }

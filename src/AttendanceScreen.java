@@ -22,12 +22,33 @@ public class AttendanceScreen extends JPanel implements ActionListener{
 
     ArrayList<String[]> dataFromCSV;
 
+    String eventTitle;
+
     AttendanceScreen(FrameHolder frame, TableHolder tableHolder, ArrayList<String[]> dataFromCSV, boolean hasInitialized,
                      ArrayList<String> collegesData, ArrayList<ArrayList<String>> programsInCollegesData) {
-        this.dataFromCSV = dataFromCSV;
 
         this.frame = frame;
         this.tableHolder = tableHolder;
+
+        if (!frame.hasEventTitle){
+            while(true){
+                eventTitle = JOptionPane.showInputDialog(null, "To proceed, input a name for the event.", "",
+                        JOptionPane.QUESTION_MESSAGE);
+
+                if (eventTitle == null || eventTitle.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Input a name for the event to proceed.",
+                            "", JOptionPane.WARNING_MESSAGE);
+                } else{
+                    break;
+                }
+            }
+
+            this.dataFromCSV = new ArrayList<>();
+
+            this.tableHolder.setTitle(eventTitle);
+        } else{
+            this.dataFromCSV = dataFromCSV;
+        }
 
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.GREEN);

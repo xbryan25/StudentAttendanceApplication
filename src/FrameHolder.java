@@ -26,6 +26,11 @@ public class FrameHolder extends JFrame{
     ArrayList<String> collegesData;
     ArrayList<ArrayList<String>> programsInCollegesData;
     AboutThisAppScreen aboutScreen = new AboutThisAppScreen(this);
+
+    // Title of event
+    String eventTitle;
+    boolean eventTitleCancel = false;
+    boolean hasEventTitle = false;
     FrameHolder(){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Student Attendance Application by xbryan25");
@@ -67,6 +72,11 @@ public class FrameHolder extends JFrame{
 
         attendanceScreen = new AttendanceScreen(this, tableHolder, dataFromCSV, hasInitialized, collegesData, programsInCollegesData);
 
+        // Set title of event, only executes if the database is not empty
+        if (hasEventTitle){
+            attendanceScreen.tableHolder.setTitle(eventTitle);
+        }
+
         hasInitialized = true;
 
         this.setSize(750, 500);
@@ -81,26 +91,40 @@ public class FrameHolder extends JFrame{
     }
 
     public void changeToAdminScreen(){
-        if (!tableHasData){
-            tableHolder = new TableHolder(dataFromCSV, tableData, tableHasData);
-            tableHasData = true;
-        } else{
-            tableHolder = new TableHolder(dataFromCSV, tableData, tableHasData);
+        if (!eventTitleCancel){
+            if (!tableHasData){
+                tableHolder = new TableHolder(dataFromCSV, tableData, tableHasData);
+                tableHasData = true;
+            } else{
+                tableHolder = new TableHolder(dataFromCSV, tableData, tableHasData);
+            }
         }
+
 
         adminScreen = new AdminScreen(this, tableHolder, dataFromCSV, hasInitialized, collegesData, programsInCollegesData);
 
-        hasInitialized = true;
+        eventTitleCancel = adminScreen.eventTitleCancel;
 
-        this.setSize(750, 500);
+        if (!eventTitleCancel) {
+            // Set title of event, only executes if the database is not empty
+            if (hasEventTitle) {
+                adminScreen.tableHolder.setTitle(eventTitle);
+            }
 
-        this.remove(introScreen);
+            hasInitialized = true;
 
-        this.add(adminScreen);
-        this.add(tableHolder);
+            this.setSize(750, 500);
 
-        this.revalidate();
-        this.repaint();
+            this.remove(introScreen);
+
+            this.add(adminScreen);
+            this.add(tableHolder);
+
+            this.revalidate();
+            this.repaint();
+        } else{
+            this.changeToIntroScreen(4);
+        }
     }
 
     public void changeToIntroScreen(int state){
@@ -113,10 +137,17 @@ public class FrameHolder extends JFrame{
             tableData = tableHolder.table.model;
 
             // Get colleges data from AdminScreen class and transfer to AttendanceScreen
-            collegesData = adminScreen.colleges;
+            collegesData = attendanceScreen.colleges;
 
             // Get programs data from AdminScreen class and transfer to AttendanceScreen
-            programsInCollegesData = adminScreen.programsInColleges;
+            programsInCollegesData = attendanceScreen.programsInColleges;
+
+            // Get event title
+            if (!hasEventTitle){
+                eventTitle = attendanceScreen.eventTitle;
+                hasEventTitle = true;
+            }
+
 
             this.remove(attendanceScreen);
             this.remove(tableHolder);
@@ -131,9 +162,19 @@ public class FrameHolder extends JFrame{
             // Get programs data from AdminScreen class and transfer to AttendanceScreen
             programsInCollegesData = adminScreen.programsInColleges;
 
+            // Get event title
+            if (!hasEventTitle){
+                eventTitle = attendanceScreen.eventTitle;
+                hasEventTitle = true;
+            }
+
             this.remove(adminScreen);
             this.remove(tableHolder);
+
             this.setSize(500, 500);
+        } else if (state == 4){
+            this.remove(adminScreen);
+//            this.remove(tableHolder);
         }
 
         this.add(introScreen);

@@ -149,9 +149,12 @@ public class FrameHolder extends JFrame{
             // Get programs data from AdminScreen class and transfer to AttendanceScreen
             programsInCollegesData = attendanceScreen.programsInColleges;
 
+
             // Get event title
             if (!hasEventTitle){
-                eventTitle = attendanceScreen.eventTitle;
+                if (attendanceScreen.eventTitle != null){
+                    eventTitle = attendanceScreen.eventTitle;
+                }
                 hasEventTitle = true;
             }
 
@@ -168,9 +171,12 @@ public class FrameHolder extends JFrame{
             // Get programs data from AdminScreen class and transfer to AttendanceScreen
             programsInCollegesData = adminScreen.programsInColleges;
 
+            if (adminScreen.eventTitle != null){
+                eventTitle = adminScreen.eventTitle;
+            }
+
             // Get event title
             if (!hasEventTitle){
-                eventTitle = adminScreen.eventTitle;
                 hasEventTitle = true;
             }
 

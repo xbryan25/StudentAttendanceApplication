@@ -14,6 +14,7 @@ public class AdminScreen extends JPanel implements ActionListener{
     JButton addProgramsButton = new JButton("Add programs");
     JButton addCollegesButton = new JButton("Add colleges");
     JButton viewCollegesAndProgramsButton = new JButton("View colleges and programs");
+    JButton renameEvent = new JButton("Rename event");
 
     FrameHolder frame;
     TableHolder tableHolder;
@@ -93,6 +94,11 @@ public class AdminScreen extends JPanel implements ActionListener{
             viewCollegesAndProgramsButton.addActionListener(this);
             viewCollegesAndProgramsButton.setFocusable(false);
 
+            renameEvent.setPreferredSize(new Dimension(200, 30));
+            renameEvent.setFont(new Font("Arial", Font.BOLD, 12));
+            renameEvent.addActionListener(this);
+            renameEvent.setFocusable(false);
+
             // Positioning of buttons starts here
 
             gbc.insets = new Insets(10, 0, 0, 10);
@@ -132,9 +138,15 @@ public class AdminScreen extends JPanel implements ActionListener{
 
             this.add(viewCollegesAndProgramsButton, gbc);
 
+            gbc.insets = new Insets(10, 0, 0, 0);
 
             gbc.gridx = 0;
             gbc.gridy = 6;
+
+            this.add(renameEvent, gbc);
+
+            gbc.gridx = 0;
+            gbc.gridy = 7;
             gbc.weightx = 1;
             gbc.weighty = 1;
             this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft
@@ -298,6 +310,24 @@ public class AdminScreen extends JPanel implements ActionListener{
                         " open this window.","", JOptionPane.WARNING_MESSAGE);
             } else{
                 new ViewCollegesAndProgramsWindow(colleges, programsInColleges);
+            }
+        }
+        else if(e.getSource() == renameEvent){
+            while(true){
+                eventTitle = JOptionPane.showInputDialog(null, "Input a name to rename the event.", "",
+                        JOptionPane.QUESTION_MESSAGE);
+
+                if(eventTitle != null && !eventTitle.isEmpty()){
+                    tableHolder.setTitle(eventTitle);
+                    break;
+
+                } else if(eventTitle == null){
+                    break;
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Name cannot be blank. Try again.",
+                            "", JOptionPane.WARNING_MESSAGE);
+                }
             }
         }
 

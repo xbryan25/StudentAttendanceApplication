@@ -15,6 +15,7 @@ public class AdminScreen extends JPanel implements ActionListener{
     JButton addCollegesButton = new JButton("Add colleges");
     JButton viewCollegesAndProgramsButton = new JButton("View colleges and programs");
     JButton renameEvent = new JButton("Rename event");
+    JButton endAttendance = new JButton("End attendance");
 
     FrameHolder frame;
     TableHolder tableHolder;
@@ -99,6 +100,11 @@ public class AdminScreen extends JPanel implements ActionListener{
             renameEvent.addActionListener(this);
             renameEvent.setFocusable(false);
 
+            endAttendance.setPreferredSize(new Dimension(200, 30));
+            endAttendance.setFont(new Font("Arial", Font.BOLD, 12));
+            endAttendance.addActionListener(this);
+            endAttendance.setFocusable(false);
+
             // Positioning of buttons starts here
 
             gbc.insets = new Insets(10, 0, 0, 10);
@@ -119,34 +125,57 @@ public class AdminScreen extends JPanel implements ActionListener{
             gbc.gridy = 2;
             this.add(deleteStudentButtonByID, gbc);
 
+            // Add blank label to add space
             gbc.insets = new Insets(10, 0, 0, 0);
 
             gbc.gridx = 0;
             gbc.gridy = 3;
-            this.add(addProgramsButton, gbc);
+
+            this.add(new JLabel(" "), gbc);
 
             gbc.insets = new Insets(10, 0, 0, 0);
 
             gbc.gridx = 0;
             gbc.gridy = 4;
-            this.add(addCollegesButton, gbc);
+            this.add(addProgramsButton, gbc);
 
             gbc.insets = new Insets(10, 0, 0, 0);
 
             gbc.gridx = 0;
             gbc.gridy = 5;
-
-            this.add(viewCollegesAndProgramsButton, gbc);
+            this.add(addCollegesButton, gbc);
 
             gbc.insets = new Insets(10, 0, 0, 0);
 
             gbc.gridx = 0;
             gbc.gridy = 6;
 
-            this.add(renameEvent, gbc);
+            this.add(viewCollegesAndProgramsButton, gbc);
+
+            gbc.insets = new Insets(10, 0, 0, 0);
 
             gbc.gridx = 0;
             gbc.gridy = 7;
+
+            this.add(renameEvent, gbc);
+
+            // Add blank label to add space
+            gbc.insets = new Insets(10, 0, 0, 0);
+
+            gbc.gridx = 0;
+            gbc.gridy = 8;
+
+            this.add(new JLabel(" "), gbc);
+
+            gbc.insets = new Insets(10, 0, 0, 0);
+
+            gbc.gridx = 0;
+            gbc.gridy = 9;
+
+            this.add(endAttendance, gbc);
+
+            gbc.gridx = 0;
+            gbc.gridy = 10;
             gbc.weightx = 1;
             gbc.weighty = 1;
             this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft

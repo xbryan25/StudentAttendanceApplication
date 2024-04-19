@@ -90,15 +90,23 @@ public class AttendanceScreen extends JPanel implements ActionListener{
             gbc.gridy = 1;
             this.add(addStudentButton, gbc);
 
+            // Add blank label to add space
             gbc.insets = new Insets(10, 0, 0, 0);
 
             gbc.gridx = 0;
             gbc.gridy = 2;
 
+            this.add(new JLabel(" "), gbc);
+
+            gbc.insets = new Insets(10, 0, 0, 0);
+
+            gbc.gridx = 0;
+            gbc.gridy = 3;
+
             this.add(viewCollegesAndProgramsButton, gbc);
 
             gbc.gridx = 0;
-            gbc.gridy = 5;
+            gbc.gridy = 4;
             gbc.weightx = 1;
             gbc.weighty = 1;
             this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft
@@ -178,7 +186,6 @@ public class AttendanceScreen extends JPanel implements ActionListener{
             }
 
         }
-
         else if(e.getSource() == viewCollegesAndProgramsButton){
             if(colleges.isEmpty()){
                 JOptionPane.showMessageDialog(null, "No colleges yet. Please input a college to" +
@@ -187,7 +194,6 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                 new ViewCollegesAndProgramsWindow(colleges, programsInColleges);
             }
         }
-
     }
 
     // Transfers each college in collegeList ArrayList into Object[]

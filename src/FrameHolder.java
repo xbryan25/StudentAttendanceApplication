@@ -1,4 +1,4 @@
-import javax.swing.JFrame;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -187,6 +187,13 @@ public class FrameHolder extends JFrame{
             this.remove(attendanceScreen);
         } else if (state == 5){
             this.remove(adminScreen);
+        } else if (state == 6){
+            this.changeToIntroScreen(3);
+
+            JOptionPane.showMessageDialog(null, "Attendance session ended. Please check the database.",
+                    "", JOptionPane.INFORMATION_MESSAGE);
+
+            hasEventTitle = false;
         }
 
         this.add(introScreen);

@@ -359,6 +359,9 @@ public class AdminScreen extends JPanel implements ActionListener{
                 }
             }
         }
+        else if (e.getSource() == endAttendance){
+            this.frame.changeToIntroScreen(6);
+        }
 
     }
 

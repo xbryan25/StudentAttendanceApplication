@@ -1,3 +1,5 @@
+
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -5,9 +7,12 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AdminScreen extends JPanel implements ActionListener{
+    String databaseName = "src\\database.csv";
     JButton backButton = new JButton("←");
     JButton deleteStudentButtonByRow = new JButton("Delete Student (Row)");
     JButton deleteStudentButtonByID = new JButton("Delete Student (ID)");
@@ -15,6 +20,7 @@ public class AdminScreen extends JPanel implements ActionListener{
     JButton addCollegesButton = new JButton("Add colleges");
     JButton viewCollegesAndProgramsButton = new JButton("View colleges and programs");
     JButton renameEvent = new JButton("Rename event");
+    JButton saveProgress = new JButton("Save progress");
     JButton endAttendance = new JButton("End attendance");
 
     FrameHolder frame;
@@ -100,6 +106,11 @@ public class AdminScreen extends JPanel implements ActionListener{
             renameEvent.addActionListener(this);
             renameEvent.setFocusable(false);
 
+            saveProgress.setPreferredSize(new Dimension(200, 30));
+            saveProgress.setFont(new Font("Arial", Font.BOLD, 12));
+            saveProgress.addActionListener(this);
+            saveProgress.setFocusable(false);
+
             endAttendance.setPreferredSize(new Dimension(200, 30));
             endAttendance.setFont(new Font("Arial", Font.BOLD, 12));
             endAttendance.addActionListener(this);
@@ -172,10 +183,17 @@ public class AdminScreen extends JPanel implements ActionListener{
             gbc.gridx = 0;
             gbc.gridy = 9;
 
-            this.add(endAttendance, gbc);
+            this.add(saveProgress, gbc);
+
+            gbc.insets = new Insets(10, 0, 0, 0);
 
             gbc.gridx = 0;
             gbc.gridy = 10;
+
+            this.add(endAttendance, gbc);
+
+            gbc.gridx = 0;
+            gbc.gridy = 11;
             gbc.weightx = 1;
             gbc.weighty = 1;
             this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft
@@ -356,6 +374,33 @@ public class AdminScreen extends JPanel implements ActionListener{
                 else{
                     JOptionPane.showMessageDialog(null, "Name cannot be blank. Try again.",
                             "", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+
+            JOptionPane.showMessageDialog(null, "Event successfully renamed to " + eventTitle + ".",
+                    "", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if(e.getSource() == saveProgress){
+            if (dataFromCSV.isEmpty()){
+                JOptionPane.showMessageDialog(null, "No data yet. Add students first.",
+                        "", JOptionPane.WARNING_MESSAGE);
+            } else{
+                try (FileWriter writer = new FileWriter("test.csv")){
+                    String[] tableColumns = {"ID Number", "First Name", "Last Name", "Program", "College"};
+
+                    writer.write(eventTitle + "\n");
+                    writer.write(tableColumns[0] + "," + tableColumns[1] + "," + tableColumns[2] + "," + tableColumns[3] + "," + tableColumns[4]);
+
+                    ArrayList<String> dataFromTable = new ArrayList<>();
+                    DefaultTableModel tableModel = tableHolder.table.model;
+
+                    for (int count = 0; count < tableModel.getRowCount(); count++){
+                        dataFromTable.add(tableModel.getValueAt(count, 0).toString());
+                    }
+
+                    writer.flush();
+                } catch(IOException error){
+                    error.printStackTrace();
                 }
             }
         }

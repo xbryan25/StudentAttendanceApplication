@@ -205,11 +205,18 @@ public class FrameHolder extends JFrame{
         try{
             String line;
 
+            //
+            int count = 0;
+
             reader = new BufferedReader(new FileReader(databaseName));
 
             while((line = reader.readLine()) != null){
-                String[] row = line.split(",");
-                dataFromCSV.add(row);
+                // This makes it so that only lines 3 onwards from the csv will be read
+                if (count >= 2){
+                    String[] row = line.split(",");
+                    dataFromCSV.add(row);
+                }
+                count++;
             }
         }
         catch(Exception e){

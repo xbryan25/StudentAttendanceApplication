@@ -1,3 +1,11 @@
+// Import from itextpdf jar file
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
@@ -9,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -432,6 +441,58 @@ public class AdminScreen extends JPanel implements ActionListener{
             }
         }
         else if (e.getSource() == endAttendance){
+            // Saving data to PDF (Reference: jinu jawad m)
+
+            try{
+                // Create PDF
+                Document document = new Document();
+                String pdfFileName = eventTitle + ".pdf";
+
+                PdfWriter.getInstance(document, new FileOutputStream(pdfFileName));
+
+                document.open();
+
+                // Add content in PDF
+                Paragraph eventTitleParagraph = new Paragraph("Event title: " + eventTitle);
+                Paragraph eventStartedParagraph = new Paragraph("Date started: " + frame.databaseStartDate);
+                Paragraph newLines = new Paragraph("\n\n");
+
+                PdfPTable tableInPDF = new PdfPTable(5);
+
+                String[] tableColumnsInPDF = {"ID Number", "First Name", "Last Name", "Program", "College"};
+
+                for(String tableColumn: tableColumnsInPDF){
+                    PdfPCell tableCellInPDF = new PdfPCell(new Phrase(tableColumn));
+                    tableInPDF.addCell(tableCellInPDF);
+                }
+
+                tableInPDF.setHeaderRows(1);
+
+                // Data from the table in the application
+                DefaultTableModel tableModel = tableHolder.table.model;
+                String dataInTableModel;
+
+                for (int countRow = 0; countRow < tableModel.getRowCount(); countRow++){
+                    for (int countColumn = 0; countColumn < tableModel.getColumnCount(); countColumn++){
+                        dataInTableModel = tableModel.getValueAt(countRow, countColumn).toString();
+                        tableInPDF.addCell(dataInTableModel);
+                    }
+                }
+
+                document.add(eventTitleParagraph);
+                document.add(eventStartedParagraph);
+                document.add(newLines);
+
+                document.add(tableInPDF);
+
+                // Close the document
+                document.close();
+
+            } catch (Exception error){
+                System.err.println(error);
+            }
+
+
             this.frame.changeToIntroScreen(6);
         }
     }

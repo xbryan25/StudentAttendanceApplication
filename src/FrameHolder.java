@@ -10,7 +10,12 @@ public class FrameHolder extends JFrame{
     boolean hasInitialized = false;
 
     // For loading data in csv; moved from attendance table so that it will have a greater scope
-    String databaseName = "src\\database.csv";
+    String databasePath = "src\\database.csv";
+
+    // Information about the database
+    String databaseStartDate = "";
+    String databaseEndDate = "";
+
     BufferedReader reader;
     ArrayList<String[]> dataFromCSV = new ArrayList<>();
     IntroScreen introScreen;
@@ -208,11 +213,25 @@ public class FrameHolder extends JFrame{
             //
             int count = 0;
 
-            reader = new BufferedReader(new FileReader(databaseName));
+            reader = new BufferedReader(new FileReader(databasePath));
 
             while((line = reader.readLine()) != null){
                 // This makes it so that only lines 3 onwards from the csv will be read
-                if (count >= 2){
+                if (count == 0){
+                    // Get event title
+                    String[] title = line.split(",");
+                    eventTitle = title[0].replace("Event title: ", "");
+                    hasEventTitle = true;
+                } else if (count == 1){
+                    // Get event start date
+                    String[] startDate = line.split(",");
+                    databaseStartDate = startDate[0].replace("Date started: ", "");
+                } else if (count == 2){
+                    // Get event end date
+                    String[] endDate = line.split(",");
+                    databaseEndDate = endDate[0].replace("Date ended: ", "");
+                } else if (count > 4){
+                    // Greater than 4 because row 5 is where the data starts in the database
                     String[] row = line.split(",");
                     dataFromCSV.add(row);
                 }

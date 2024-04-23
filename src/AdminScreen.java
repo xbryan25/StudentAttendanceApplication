@@ -1,4 +1,5 @@
-
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -63,6 +64,7 @@ public class AdminScreen extends JPanel implements ActionListener{
 
             this.tableHolder.setTitle(eventTitle);
         } else{
+            this.eventTitle = frame.eventTitle;
             this.dataFromCSV = dataFromCSV;
         }
 
@@ -381,22 +383,47 @@ public class AdminScreen extends JPanel implements ActionListener{
                     "", JOptionPane.INFORMATION_MESSAGE);
         }
         else if(e.getSource() == saveProgress){
-            if (dataFromCSV.isEmpty()){
+            if (!frame.tableHasData){
                 JOptionPane.showMessageDialog(null, "No data yet. Add students first.",
                         "", JOptionPane.WARNING_MESSAGE);
             } else{
-                try (FileWriter writer = new FileWriter("test.csv")){
+                try (FileWriter writer = new FileWriter(databaseName)){
                     String[] tableColumns = {"ID Number", "First Name", "Last Name", "Program", "College"};
 
-                    writer.write(eventTitle + "\n");
-                    writer.write(tableColumns[0] + "," + tableColumns[1] + "," + tableColumns[2] + "," + tableColumns[3] + "," + tableColumns[4]);
+                    writer.write("Event title: " + eventTitle + "\n");
 
-                    ArrayList<String> dataFromTable = new ArrayList<>();
+                    if (frame.databaseStartDate.isEmpty()){
+                        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+                        LocalDateTime timeNow = LocalDateTime.now();
+                        String dateInString = dateTimeFormat.format(timeNow);
+
+                        writer.write("Date started: " + dateInString + "\n");
+                    } else{
+                        writer.write("Date started: " + frame.databaseStartDate + "\n");
+                    }
+
+                    writer.write("Date ended: \n\n");
+
+                    writer.write(tableColumns[0] + "," + tableColumns[1] + "," + tableColumns[2] + "," + tableColumns[3] + "," + tableColumns[4] + "\n");
+
                     DefaultTableModel tableModel = tableHolder.table.model;
 
+                    // Pulls data from the table
                     for (int count = 0; count < tableModel.getRowCount(); count++){
-                        dataFromTable.add(tableModel.getValueAt(count, 0).toString());
+                        // Gets the data from each row of the table
+                        String dataFromEachRow = tableModel.getDataVector().elementAt(count).toString();
+
+                        // Removes the square braces in the string
+                        dataFromEachRow = dataFromEachRow.substring(1, dataFromEachRow.length() - 1);
+
+                        // Removes all the white spaces in the string
+                        dataFromEachRow = dataFromEachRow.replace(" ", "");
+
+                        writer.write(dataFromEachRow + "\n");
                     }
+
+                    JOptionPane.showMessageDialog(null, "Progress successfully saved.",
+                            "", JOptionPane.INFORMATION_MESSAGE);
 
                     writer.flush();
                 } catch(IOException error){
@@ -407,7 +434,6 @@ public class AdminScreen extends JPanel implements ActionListener{
         else if (e.getSource() == endAttendance){
             this.frame.changeToIntroScreen(6);
         }
-
     }
 
     // Transfers each college in collegeList ArrayList into Object[]

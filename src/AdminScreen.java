@@ -1,7 +1,12 @@
 // Import from itextpdf jar file
+//import com.itextpdf.text.*;
+
 import com.itextpdf.text.Document;
-import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.PageSize;
+
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -11,10 +16,17 @@ import java.time.LocalDateTime;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+//import java.awt.*;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.GridBagLayout;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Color;
+
 
 import java.io.FileWriter;
 import java.io.FileOutputStream;
@@ -445,16 +457,23 @@ public class AdminScreen extends JPanel implements ActionListener{
 
             try{
                 // Create PDF
-                Document document = new Document();
+                Document document = new Document(PageSize.A4);
                 String pdfFileName = eventTitle + ".pdf";
-
                 PdfWriter.getInstance(document, new FileOutputStream(pdfFileName));
 
                 document.open();
 
+                // Font styles
+                com.itextpdf.text.Font pdfTitleFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 15, com.itextpdf.text.Font.BOLD);
+                com.itextpdf.text.Font pdfHeadingsFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 13, com.itextpdf.text.Font.BOLD);
+                com.itextpdf.text.Font pdfCellFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12, com.itextpdf.text.Font.NORMAL);
+
                 // Add content in PDF
-                Paragraph eventTitleParagraph = new Paragraph("Event title: " + eventTitle);
-                Paragraph eventStartedParagraph = new Paragraph("Date started: " + frame.databaseStartDate);
+
+                Paragraph eventTitleParagraph = new Paragraph("Event title: " + eventTitle, pdfTitleFont);
+
+                Paragraph eventStartedParagraph = new Paragraph("Date started: " + frame.databaseStartDate, pdfTitleFont);
+
                 Paragraph newLines = new Paragraph("\n\n");
 
                 PdfPTable tableInPDF = new PdfPTable(5);
@@ -462,8 +481,9 @@ public class AdminScreen extends JPanel implements ActionListener{
                 String[] tableColumnsInPDF = {"ID Number", "First Name", "Last Name", "Program", "College"};
 
                 for(String tableColumn: tableColumnsInPDF){
-                    PdfPCell tableCellInPDF = new PdfPCell(new Phrase(tableColumn));
-                    tableInPDF.addCell(tableCellInPDF);
+                    PdfPCell tableHeadingInPDF = new PdfPCell(new Phrase(tableColumn, pdfHeadingsFont));
+                    tableHeadingInPDF.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    tableInPDF.addCell(tableHeadingInPDF);
                 }
 
                 tableInPDF.setHeaderRows(1);
@@ -475,7 +495,11 @@ public class AdminScreen extends JPanel implements ActionListener{
                 for (int countRow = 0; countRow < tableModel.getRowCount(); countRow++){
                     for (int countColumn = 0; countColumn < tableModel.getColumnCount(); countColumn++){
                         dataInTableModel = tableModel.getValueAt(countRow, countColumn).toString();
-                        tableInPDF.addCell(dataInTableModel);
+
+                        PdfPCell tableCellInPDF = new PdfPCell(new Phrase(dataInTableModel, pdfCellFont));
+                        tableCellInPDF.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+                        tableInPDF.addCell(tableCellInPDF);
                     }
                 }
 

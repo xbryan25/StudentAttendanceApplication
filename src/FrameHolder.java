@@ -140,7 +140,10 @@ public class FrameHolder extends JFrame{
     }
 
     public void changeToIntroScreen(int state){
-        introScreen = new IntroScreen(this);
+        if (state != 6){
+            introScreen = new IntroScreen(this);
+        }
+
 
         if(state == 1){
             this.remove(aboutScreen);
@@ -188,6 +191,7 @@ public class FrameHolder extends JFrame{
             this.remove(adminScreen);
             this.remove(tableHolder);
             this.setSize(500, 500);
+
         } else if (state == 4){
             this.remove(attendanceScreen);
         } else if (state == 5){
@@ -201,7 +205,10 @@ public class FrameHolder extends JFrame{
             hasEventTitle = false;
         }
 
-        this.add(introScreen);
+        if (state != 6){
+            this.add(introScreen);
+        }
+
         this.revalidate();
         this.repaint();
     }

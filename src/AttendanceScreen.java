@@ -146,9 +146,39 @@ public class AttendanceScreen extends JPanel implements ActionListener{
 
                 for (int i = 0; i < 5; i++){
                     if (i < 3){
-                        responseObject = JOptionPane.showInputDialog(null, paneMessages[i], paneTitles[i],
-                                   JOptionPane.QUESTION_MESSAGE);
-                    } else if (i == 3){
+                        // Checks if ID number already exists or not
+                        if (i == 0){
+                            while (true){
+                                responseObject = JOptionPane.showInputDialog(null, paneMessages[i], paneTitles[i],
+                                        JOptionPane.QUESTION_MESSAGE);
+
+                                boolean alreadyExists = false;
+
+                                int rowCount = tableHolder.table.model.getRowCount();
+
+                                for (int j = 0; j < rowCount; j++){
+                                    String tempIDNum = tableHolder.table.model.getValueAt(j, 0).toString();
+                                    if (responseObject.equals(tempIDNum)){
+                                        alreadyExists = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!alreadyExists){
+                                    break;
+                                } else{
+                                    JOptionPane.showMessageDialog(null, "ID number already exists. Try again.",
+                                            "", JOptionPane.WARNING_MESSAGE);
+                                }
+                            }
+                        } else{
+                            responseObject = JOptionPane.showInputDialog(null, paneMessages[i], paneTitles[i],
+                                    JOptionPane.QUESTION_MESSAGE);
+                        }
+
+                    }
+
+                    else if (i == 3){
                         responseObject = JOptionPane.showInputDialog(null, paneMessages[i],
                                          paneTitles[i], JOptionPane.QUESTION_MESSAGE, null, collegesObject,
                                          collegesObject[0]);

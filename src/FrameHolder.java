@@ -217,7 +217,6 @@ public class FrameHolder extends JFrame{
         try{
             String line;
 
-            //
             int count = 0;
 
             reader = new BufferedReader(new FileReader(databasePath));
@@ -227,12 +226,25 @@ public class FrameHolder extends JFrame{
                 if (count == 0){
                     // Get event title
                     String[] title = line.split(",");
-                    eventTitle = title[0].replace("Event title: ", "");
-                    hasEventTitle = true;
+
+                    if (title[0].equals("Event title:")){
+                        eventTitle = "";
+                        hasEventTitle = false;
+                    } else{
+                        eventTitle = title[0].replace("Event title: ", "");
+                        hasEventTitle = true;
+                    }
+
                 } else if (count == 1){
                     // Get event start date
                     String[] startDate = line.split(",");
-                    databaseStartDate = startDate[0].replace("Date started: ", "");
+
+                    if (startDate[0].equals("Date started:")){
+                        databaseStartDate = "";
+                    } else{
+                        databaseStartDate = startDate[0].replace("Date started: ", "");
+                    }
+
                 } else if (count == 2){
                     // Get event end date
                     String[] endDate = line.split(",");

@@ -521,18 +521,8 @@ public class AdminScreen extends JPanel implements ActionListener{
             try (FileWriter writer = new FileWriter(databaseName)){
                 String[] tableColumns = {"ID Number", "First Name", "Last Name", "Program", "College"};
 
-                writer.write("Event title: " + eventTitle + "\n");
-
-                if (frame.databaseStartDate.isEmpty()){
-                    DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
-                    LocalDateTime timeNow = LocalDateTime.now();
-                    String dateInString = dateTimeFormat.format(timeNow);
-
-                    writer.write("Date started: " + dateInString + "\n");
-                } else{
-                    writer.write("Date started: " + frame.databaseStartDate + "\n");
-                }
-
+                writer.write("Event title: \n");
+                writer.write("Date started: \n");
                 writer.write("Date ended: \n\n");
 
                 writer.write(tableColumns[0] + "," + tableColumns[1] + "," + tableColumns[2] + "," + tableColumns[3] + "," + tableColumns[4] + "\n");

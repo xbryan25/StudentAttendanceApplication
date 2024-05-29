@@ -84,6 +84,11 @@ public class AdminScreen extends JPanel implements ActionListener{
             this.dataFromCSV = new ArrayList<>();
 
             this.tableHolder.setTitle(eventTitle);
+
+            // Once a name of the event has been inputted, the start date will be tracked as well
+            DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+            LocalDateTime timeNow = LocalDateTime.now();
+            frame.databaseStartDate = dateTimeFormat.format(timeNow);
         } else{
             this.eventTitle = frame.eventTitle;
             this.dataFromCSV = dataFromCSV;
@@ -453,8 +458,6 @@ public class AdminScreen extends JPanel implements ActionListener{
             }
         }
         else if (e.getSource() == endAttendance){
-
-
             if (tableHolder.table.model.getRowCount() != 0){
 
                 // Saving data to PDF (Reference: jinu jawad m)
@@ -524,9 +527,9 @@ public class AdminScreen extends JPanel implements ActionListener{
                 try (FileWriter writer = new FileWriter(databaseName)){
                     String[] tableColumns = {"ID Number", "First Name", "Last Name", "Program", "College"};
 
-                    writer.write("Event title: \n");
-                    writer.write("Date started: \n");
-                    writer.write("Date ended: \n\n");
+                    writer.write("Event title:\n");
+                    writer.write("Date started:\n");
+                    writer.write("Date ended:\n\n");
 
                     writer.write(tableColumns[0] + "," + tableColumns[1] + "," + tableColumns[2] + "," + tableColumns[3] + "," + tableColumns[4] + "\n");
 

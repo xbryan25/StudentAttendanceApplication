@@ -245,12 +245,12 @@ public class FrameHolder extends JFrame{
                         databaseStartDate = startDate[0].replace("Date started: ", "");
                     }
 
-                } else if (count == 2){
-                    // Get event end date
-                    String[] endDate = line.split(",");
-                    databaseEndDate = endDate[0].replace("Date ended: ", "");
-                } else if (count > 4){
-                    // Greater than 4 because row 5 is where the data starts in the database
+//                } else if (count == 2){
+//                    // Get event end date
+//                    String[] endDate = line.split(",");
+//                    databaseEndDate = endDate[0].replace("Date ended: ", "");
+                } else if (count > 3){
+                    // Greater than 3 because row 4 is where the data starts in the database
                     String[] row = line.split(",");
                     dataFromCSV.add(row);
                 }

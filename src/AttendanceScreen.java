@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class AttendanceScreen extends JPanel implements ActionListener{
@@ -52,6 +54,11 @@ public class AttendanceScreen extends JPanel implements ActionListener{
             this.dataFromCSV = new ArrayList<>();
 
             this.tableHolder.setTitle(eventTitle);
+
+            // Once a name of the event has been inputted, the start date will be tracked as well
+            DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+            LocalDateTime timeNow = LocalDateTime.now();
+            frame.databaseStartDate = dateTimeFormat.format(timeNow);
         } else{
             this.dataFromCSV = dataFromCSV;
         }

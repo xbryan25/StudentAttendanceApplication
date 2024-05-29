@@ -1,7 +1,9 @@
 import javax.swing.JFrame;
+import com.formdev.flatlaf.FlatDarculaLaf;
 
 public class MainClass {
     public static void main(String[] args){
-        FrameHolder frame1 = new FrameHolder();
+        FlatDarculaLaf.setup();
+        new FrameHolder();
     }
 }

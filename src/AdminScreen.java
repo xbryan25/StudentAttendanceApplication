@@ -448,94 +448,103 @@ public class AdminScreen extends JPanel implements ActionListener{
 
                     writer.flush();
                 } catch(IOException error){
-                    error.printStackTrace();
+                    System.out.println(error.getMessage());
                 }
             }
         }
         else if (e.getSource() == endAttendance){
-            // Saving data to PDF (Reference: jinu jawad m)
 
-            try{
-                // Create PDF
-                Document document = new Document(PageSize.A4);
-                String pdfFileName = eventTitle + ".pdf";
-                PdfWriter.getInstance(document, new FileOutputStream(pdfFileName));
 
-                document.open();
+            if (tableHolder.table.model.getRowCount() != 0){
 
-                // Font styles
-                com.itextpdf.text.Font pdfTitleFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 15, com.itextpdf.text.Font.BOLD);
-                com.itextpdf.text.Font pdfHeadingsFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 13, com.itextpdf.text.Font.BOLD);
-                com.itextpdf.text.Font pdfCellFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12, com.itextpdf.text.Font.NORMAL);
+                // Saving data to PDF (Reference: jinu jawad m)
+                try{
+                    // Create PDF
+                    Document document = new Document(PageSize.A4);
+                    String pdfFileName = eventTitle + ".pdf";
+                    PdfWriter.getInstance(document, new FileOutputStream(pdfFileName));
 
-                // Add content in PDF
+                    document.open();
 
-                Paragraph eventTitleParagraph = new Paragraph("Event title: " + eventTitle, pdfTitleFont);
+                    // Font styles
+                    com.itextpdf.text.Font pdfTitleFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 15, com.itextpdf.text.Font.BOLD);
+                    com.itextpdf.text.Font pdfHeadingsFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 13, com.itextpdf.text.Font.BOLD);
+                    com.itextpdf.text.Font pdfCellFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 12, com.itextpdf.text.Font.NORMAL);
 
-                Paragraph eventStartedParagraph = new Paragraph("Date started: " + frame.databaseStartDate, pdfTitleFont);
+                    // Add content in PDF
 
-                Paragraph newLines = new Paragraph("\n\n");
+                    Paragraph eventTitleParagraph = new Paragraph("Event title: " + eventTitle, pdfTitleFont);
 
-                PdfPTable tableInPDF = new PdfPTable(5);
+                    Paragraph eventStartedParagraph = new Paragraph("Date started: " + frame.databaseStartDate, pdfTitleFont);
 
-                String[] tableColumnsInPDF = {"ID Number", "First Name", "Last Name", "Program", "College"};
+                    Paragraph newLines = new Paragraph("\n\n");
 
-                for(String tableColumn: tableColumnsInPDF){
-                    PdfPCell tableHeadingInPDF = new PdfPCell(new Phrase(tableColumn, pdfHeadingsFont));
-                    tableHeadingInPDF.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    tableInPDF.addCell(tableHeadingInPDF);
-                }
+                    PdfPTable tableInPDF = new PdfPTable(5);
 
-                tableInPDF.setHeaderRows(1);
+                    String[] tableColumnsInPDF = {"ID Number", "First Name", "Last Name", "Program", "College"};
 
-                // Data from the table in the application
-                DefaultTableModel tableModel = tableHolder.table.model;
-                String dataInTableModel;
-
-                for (int countRow = 0; countRow < tableModel.getRowCount(); countRow++){
-                    for (int countColumn = 0; countColumn < tableModel.getColumnCount(); countColumn++){
-                        dataInTableModel = tableModel.getValueAt(countRow, countColumn).toString();
-
-                        PdfPCell tableCellInPDF = new PdfPCell(new Phrase(dataInTableModel, pdfCellFont));
-                        tableCellInPDF.setHorizontalAlignment(Element.ALIGN_CENTER);
-
-                        tableInPDF.addCell(tableCellInPDF);
+                    for(String tableColumn: tableColumnsInPDF){
+                        PdfPCell tableHeadingInPDF = new PdfPCell(new Phrase(tableColumn, pdfHeadingsFont));
+                        tableHeadingInPDF.setHorizontalAlignment(Element.ALIGN_CENTER);
+                        tableInPDF.addCell(tableHeadingInPDF);
                     }
+
+                    tableInPDF.setHeaderRows(1);
+
+                    // Data from the table in the application
+                    DefaultTableModel tableModel = tableHolder.table.model;
+                    String dataInTableModel;
+
+                    for (int countRow = 0; countRow < tableModel.getRowCount(); countRow++){
+                        for (int countColumn = 0; countColumn < tableModel.getColumnCount(); countColumn++){
+                            dataInTableModel = tableModel.getValueAt(countRow, countColumn).toString();
+
+                            PdfPCell tableCellInPDF = new PdfPCell(new Phrase(dataInTableModel, pdfCellFont));
+                            tableCellInPDF.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+                            tableInPDF.addCell(tableCellInPDF);
+                        }
+                    }
+
+                    document.add(eventTitleParagraph);
+                    document.add(eventStartedParagraph);
+                    document.add(newLines);
+
+                    document.add(tableInPDF);
+
+                    // Close the document
+                    document.close();
+
+                }
+                catch (Exception error){
+                    System.out.println(error.getMessage());
                 }
 
-                document.add(eventTitleParagraph);
-                document.add(eventStartedParagraph);
-                document.add(newLines);
+                // Erase all contents in database.csv
+                try (FileWriter writer = new FileWriter(databaseName)){
+                    String[] tableColumns = {"ID Number", "First Name", "Last Name", "Program", "College"};
 
-                document.add(tableInPDF);
+                    writer.write("Event title: \n");
+                    writer.write("Date started: \n");
+                    writer.write("Date ended: \n\n");
 
-                // Close the document
-                document.close();
+                    writer.write(tableColumns[0] + "," + tableColumns[1] + "," + tableColumns[2] + "," + tableColumns[3] + "," + tableColumns[4] + "\n");
 
-            }
-            catch (Exception error){
-                System.err.println(error);
-            }
+                    writer.flush();
+                } catch(IOException error){
+                    System.out.println(error.getMessage());
+                }
 
-            // Erase all contents in database.csv
-            try (FileWriter writer = new FileWriter(databaseName)){
-                String[] tableColumns = {"ID Number", "First Name", "Last Name", "Program", "College"};
+                // Clears the contents of the tableHolder
+                tableHolder.table.model.setRowCount(0);
 
-                writer.write("Event title: \n");
-                writer.write("Date started: \n");
-                writer.write("Date ended: \n\n");
-
-                writer.write(tableColumns[0] + "," + tableColumns[1] + "," + tableColumns[2] + "," + tableColumns[3] + "," + tableColumns[4] + "\n");
-
-                writer.flush();
-            } catch(IOException error){
-                error.printStackTrace();
+                this.frame.changeToIntroScreen(6);
+            } else{
+                JOptionPane.showMessageDialog(null, "Table is empty.",
+                        "", JOptionPane.WARNING_MESSAGE);
             }
 
-            // Clears the contents of the tableHolder
-            tableHolder.table.model.setRowCount(0);
 
-            this.frame.changeToIntroScreen(6);
         }
     }
 

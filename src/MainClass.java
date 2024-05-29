@@ -1,4 +1,3 @@
-import javax.swing.JFrame;
 import com.formdev.flatlaf.FlatDarculaLaf;
 
 public class MainClass {

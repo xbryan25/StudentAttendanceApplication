@@ -14,7 +14,6 @@ public class FrameHolder extends JFrame{
 
     // Information about the database
     String databaseStartDate = "";
-    String databaseEndDate = "";
 
     BufferedReader reader;
     ArrayList<String[]> dataFromCSV = new ArrayList<>();

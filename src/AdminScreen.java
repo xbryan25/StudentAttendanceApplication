@@ -96,7 +96,7 @@ public class AdminScreen extends JPanel implements ActionListener{
 
         if (!eventTitleCancel){
             this.setLayout(new GridBagLayout());
-            this.setBackground(Color.CYAN);
+//            this.setBackground(Color.CYAN);
             this.setBounds(500, 0, 250, 500);
 
             backButton.setPreferredSize(new Dimension(65, 30));

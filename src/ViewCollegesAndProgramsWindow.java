@@ -50,7 +50,7 @@ public class ViewCollegesAndProgramsWindow {
         collegesListDialog.setLocationRelativeTo(null);
         collegesListDialog.setVisible(true);
         collegesListDialog.setResizable(false);
-        collegesListDialog.setBackground(Color.RED);
+//        collegesListDialog.setBackground(Color.RED);
         collegesListDialog.setTitle("Available colleges");
         collegesListDialog.setAlwaysOnTop(true);
 
@@ -63,7 +63,7 @@ public class ViewCollegesAndProgramsWindow {
         //      Set font of header
         collegesTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 30));
 
-        collegesTable.setBackground(Color.LIGHT_GRAY);
+//        collegesTable.setBackground(Color.LIGHT_GRAY);
         collegesTable.setSelectionForeground(Color.BLACK);
         collegesTable.setGridColor(Color.BLACK);
         collegesTable.setFont(new Font("Arial", Font.BOLD, 20));
@@ -85,7 +85,7 @@ public class ViewCollegesAndProgramsWindow {
 
         // Set properties of the pane
         collegesTablePane.setForeground(Color.RED);
-        collegesTablePane.setBackground(Color.WHITE);
+//        collegesTablePane.setBackground(Color.WHITE);
         collegesTablePane.setBounds(0, 0, 480, 375);
 
 
@@ -118,7 +118,7 @@ public class ViewCollegesAndProgramsWindow {
             programsListDialog.setLocationRelativeTo(null);
             programsListDialog.setVisible(true);
             programsListDialog.setResizable(false);
-            programsListDialog.setBackground(Color.RED);
+//            programsListDialog.setBackground(Color.RED);
             programsListDialog.setTitle("Available programs in " + collegePrompt);
             programsListDialog.setAlwaysOnTop(true);
 
@@ -133,7 +133,7 @@ public class ViewCollegesAndProgramsWindow {
             //      Set font of header
             programsTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 30));
 
-            programsTable.setBackground(Color.LIGHT_GRAY);
+//            programsTable.setBackground(Color.LIGHT_GRAY);
             programsTable.setSelectionForeground(Color.BLACK);
             programsTable.setGridColor(Color.BLACK);
             programsTable.setFont(new Font("Arial", Font.BOLD, 20));
@@ -149,7 +149,7 @@ public class ViewCollegesAndProgramsWindow {
 
             // Set properties of the pane
             programsTablePane.setForeground(Color.RED);
-            programsTablePane.setBackground(Color.WHITE);
+//            programsTablePane.setBackground(Color.WHITE);
             programsTablePane.setBounds(0, 0, 480, 375);
 
 

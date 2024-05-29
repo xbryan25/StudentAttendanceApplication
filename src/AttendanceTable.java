@@ -6,8 +6,6 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.ArrayList;
 
 // This class gets called by TableHolder
@@ -28,7 +26,7 @@ public class AttendanceTable implements ActionListener{
             model.setColumnIdentifiers(columns);
             mainTable.setModel(model);
 
-            mainTable.setBackground(Color.LIGHT_GRAY);
+//            mainTable.setBackground(Color.LIGHT_GRAY);
             mainTable.setSelectionForeground(Color.BLACK);
             mainTable.setGridColor(Color.BLACK);
             mainTable.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -45,7 +43,7 @@ public class AttendanceTable implements ActionListener{
             mainTable.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
 
             pane.setForeground(Color.RED);
-            pane.setBackground(Color.WHITE);
+//            pane.setBackground(Color.WHITE);
             pane.setBounds(10, 75, 480, 375);
         } else{
             model = tableData;
@@ -53,7 +51,7 @@ public class AttendanceTable implements ActionListener{
             model.setColumnIdentifiers(columns);
             mainTable.setModel(model);
 
-            mainTable.setBackground(Color.LIGHT_GRAY);
+//            mainTable.setBackground(Color.LIGHT_GRAY);
             mainTable.setSelectionForeground(Color.BLACK);
             mainTable.setGridColor(Color.BLACK);
             mainTable.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -70,7 +68,7 @@ public class AttendanceTable implements ActionListener{
             mainTable.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
 
             pane.setForeground(Color.RED);
-            pane.setBackground(Color.WHITE);
+//            pane.setBackground(Color.WHITE);
             pane.setBounds(10, 75, 480, 375);
         }
 

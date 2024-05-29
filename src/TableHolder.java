@@ -17,7 +17,7 @@ public class TableHolder extends JPanel{
             table = new AttendanceTable(dataFromCSV, tableData, tableHasData);
 
             this.setLayout(null);
-            this.setBackground(Color.ORANGE);
+//            this.setBackground(Color.ORANGE);
             this.setBounds(0, 0, 500, 500);
 
             eventTitle.setHorizontalAlignment(JLabel.CENTER);
@@ -32,7 +32,7 @@ public class TableHolder extends JPanel{
             table = new AttendanceTable(dataFromCSV, tableData, tableHasData);
 
             this.setLayout(null);
-            this.setBackground(Color.ORANGE);
+//            this.setBackground(Color.ORANGE);
             this.setBounds(0, 0, 500, 500);
 
             eventTitle.setHorizontalAlignment(JLabel.CENTER);

@@ -13,7 +13,7 @@ public class AboutThisAppScreen extends JPanel implements ActionListener{
     AboutThisAppScreen(FrameHolder frame) {
         this.frame = frame;
         this.setLayout(new GridBagLayout());
-        this.setBackground(Color.GREEN);
+//        this.setBackground(Color.GREEN);
         this.setBounds(0, 0, 500, 500);
 
         backButton.setPreferredSize(new Dimension(65, 30));

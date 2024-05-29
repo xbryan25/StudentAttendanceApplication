@@ -19,7 +19,7 @@ public class IntroScreen extends JPanel implements ActionListener{
         this.frame = frame;
         this.setLayout(new GridBagLayout());
         this.setSize(500, 500);
-        this.setBackground(Color.RED);
+//        this.setBackground(Color.RED);
 
         gbc.insets = new Insets(0, 3, 3, 3);
 

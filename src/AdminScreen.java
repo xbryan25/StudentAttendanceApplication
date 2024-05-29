@@ -462,6 +462,11 @@ public class AdminScreen extends JPanel implements ActionListener{
 
                 // Saving data to PDF (Reference: jinu jawad m)
                 try{
+                    // Not included in reference - get current time
+                    DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+                    LocalDateTime timeNow = LocalDateTime.now();
+                    String endTime = dateTimeFormat.format(timeNow);
+
                     // Create PDF
                     Document document = new Document(PageSize.A4);
                     String pdfFileName = eventTitle + ".pdf";
@@ -480,9 +485,13 @@ public class AdminScreen extends JPanel implements ActionListener{
 
                     Paragraph eventStartedParagraph = new Paragraph("Date started: " + frame.databaseStartDate, pdfTitleFont);
 
+                    Paragraph eventEndedParagraph = new Paragraph("Date ended: " + endTime, pdfTitleFont);
+
                     Paragraph newLines = new Paragraph("\n\n");
 
                     PdfPTable tableInPDF = new PdfPTable(5);
+
+                    // Headers
 
                     String[] tableColumnsInPDF = {"ID Number", "First Name", "Last Name", "Program", "College"};
 
@@ -511,6 +520,7 @@ public class AdminScreen extends JPanel implements ActionListener{
 
                     document.add(eventTitleParagraph);
                     document.add(eventStartedParagraph);
+                    document.add(eventEndedParagraph);
                     document.add(newLines);
 
                     document.add(tableInPDF);
@@ -528,8 +538,7 @@ public class AdminScreen extends JPanel implements ActionListener{
                     String[] tableColumns = {"ID Number", "First Name", "Last Name", "Program", "College"};
 
                     writer.write("Event title:\n");
-                    writer.write("Date started:\n");
-                    writer.write("Date ended:\n\n");
+                    writer.write("Date started:\n\n");
 
                     writer.write(tableColumns[0] + "," + tableColumns[1] + "," + tableColumns[2] + "," + tableColumns[3] + "," + tableColumns[4] + "\n");
 

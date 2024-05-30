@@ -59,8 +59,9 @@ public class FrameHolder extends JFrame{
         aboutScreen = new AboutThisAppScreen(this);
 
         this.remove(introScreen);
-
         this.add(aboutScreen);
+
+        this.setSize(500, 600);
 
         this.revalidate();
         this.repaint();
@@ -146,6 +147,8 @@ public class FrameHolder extends JFrame{
 
         if(state == 1){
             this.remove(aboutScreen);
+
+            this.setSize(500, 500);
         } else if(state == 2){
             // Get data from table before tableHolder is erased
             tableData = tableHolder.table.model;

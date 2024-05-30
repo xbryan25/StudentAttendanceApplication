@@ -422,12 +422,10 @@ public class AdminScreen extends JPanel implements ActionListener{
                         LocalDateTime timeNow = LocalDateTime.now();
                         String dateInString = dateTimeFormat.format(timeNow);
 
-                        writer.write("Date started: " + dateInString + "\n");
+                        writer.write("Date started: " + dateInString + "\n\n");
                     } else{
-                        writer.write("Date started: " + frame.databaseStartDate + "\n");
+                        writer.write("Date started: " + frame.databaseStartDate + "\n\n");
                     }
-
-                    writer.write("Date ended: \n\n");
 
                     writer.write(tableColumns[0] + "," + tableColumns[1] + "," + tableColumns[2] + "," + tableColumns[3] + "," + tableColumns[4] + "\n");
 

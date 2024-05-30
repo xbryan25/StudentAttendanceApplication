@@ -61,7 +61,7 @@ public class FrameHolder extends JFrame{
         this.remove(introScreen);
         this.add(aboutScreen);
 
-        this.setSize(500, 600);
+        this.setSize(500, 550);
 
         this.revalidate();
         this.repaint();

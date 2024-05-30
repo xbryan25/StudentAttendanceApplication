@@ -3,6 +3,7 @@ import java.awt.*;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.net.URI;
 
 public class AboutThisAppScreen extends JPanel implements ActionListener{
     JButton backButton = new JButton("←");
@@ -11,6 +12,8 @@ public class AboutThisAppScreen extends JPanel implements ActionListener{
     JLabel paragraph2 = new JLabel();
     JLabel paragraph3 = new JLabel();
     JLabel version = new JLabel();
+    JButton githubButton = new JButton("GitHub");
+    JButton facebookButton = new JButton("Facebook");
     FrameHolder frame;
     GridBagConstraints gbc = new GridBagConstraints();
 
@@ -49,13 +52,24 @@ public class AboutThisAppScreen extends JPanel implements ActionListener{
                 " I made using Python two years ago. If you ever find any errors, please don't hesitate to add an issue" +
                 " to the repository of this project. If you want to reach me, my socials are pinned below.</p></html>");
 
+        githubButton.setPreferredSize(new Dimension(100, 30));
+        githubButton.setFont(new Font("Arial", Font.BOLD, 20));
+        githubButton.addActionListener(this);
+        githubButton.setFocusable(false);
+
+        facebookButton.setPreferredSize(new Dimension(100, 30));
+        facebookButton.setFont(new Font("Arial", Font.BOLD, 20));
+        facebookButton.addActionListener(this);
+        facebookButton.setFocusable(false);
+
         gbc.insets = new Insets(10, 10, 0, 0);
+        gbc.anchor = GridBagConstraints.FIRST_LINE_START;
         gbc.ipadx = 10;
         gbc.gridx = 0;
         gbc.gridy = 0;
         this.add(backButton, gbc);
 
-        gbc.insets = new Insets(20, 45, 0, 0);
+        gbc.insets = new Insets(20, 60, 0, 0);
         gbc.gridwidth = 2;
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -82,8 +96,24 @@ public class AboutThisAppScreen extends JPanel implements ActionListener{
         gbc.gridy = 4;
         this.add(paragraph3, gbc);
 
-        gbc.gridx = 5;
+        gbc.insets = new Insets(20, 60, 0, 0);
+        gbc.gridwidth = 1;
+        gbc.ipadx = 75;
+        gbc.ipady = 15;
+        gbc.gridx = 0;
         gbc.gridy = 5;
+        this.add(githubButton, gbc);
+
+        gbc.insets = new Insets(20, 10, 0, 0);
+        gbc.gridwidth = 1;
+        gbc.ipadx = 55;
+        gbc.ipady = 15;
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        this.add(facebookButton, gbc);
+
+        gbc.gridx = 6;
+        gbc.gridy = 6;
         gbc.weightx = 1;
         gbc.weighty = 1;
         this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft
@@ -93,6 +123,18 @@ public class AboutThisAppScreen extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == backButton){
             this.frame.changeToIntroScreen(1);
+        } else if (e.getSource() == githubButton){
+            openWebpage("www.github.com/xbryan25");
+        } else if (e.getSource() == facebookButton){
+            openWebpage("www.facebook.com/bryanagan25p");
+        }
+    }
+
+    public static void openWebpage(String urlString) {
+        try {
+            Desktop.getDesktop().browse(new URI(urlString));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }

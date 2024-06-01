@@ -1,3 +1,5 @@
+package main;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -16,7 +18,7 @@ public class AttendanceScreen extends JPanel implements ActionListener{
     FrameHolder frame;
     TableHolder tableHolder;
 
-//    TableHolder tableHolder = new TableHolder();
+//    main.TableHolder tableHolder = new main.TableHolder();
     GridBagConstraints gbc = new GridBagConstraints();
 
     ArrayList<String> colleges = new ArrayList<>();
@@ -212,7 +214,7 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                     }
                 }
 
-                // Add student using an instance of the table holder class, method defined in TableHolder.java
+                // Add student using an instance of the table holder class, method defined in main.TableHolder.java
                 this.tableHolder.addStudentInRow(obj);
 
                 JOptionPane.showMessageDialog(null, "Student added successfully.",

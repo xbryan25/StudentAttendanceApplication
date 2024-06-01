@@ -1,4 +1,4 @@
-// Import from itextpdf jar file
+package main;// Import from itextpdf jar file
 //import com.itextpdf.text.*;
 
 import com.itextpdf.text.Document;
@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class AdminScreen extends JPanel implements ActionListener{
-    String databaseName = "src\\database.csv";
+    String databaseName = "src\\assets\\database.csv";
     JButton backButton = new JButton("←");
     JButton deleteStudentButtonByRow = new JButton("Delete Student (Row)");
     JButton deleteStudentButtonByID = new JButton("Delete Student (ID)");

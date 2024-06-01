@@ -1,3 +1,5 @@
+package main;
+
 import com.formdev.flatlaf.FlatDarculaLaf;
 
 public class MainClass {

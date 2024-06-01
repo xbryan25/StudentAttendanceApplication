@@ -1,8 +1,11 @@
+package main;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class FrameHolder extends JFrame{
     // Becomes true if the program has already read through the database
@@ -10,7 +13,7 @@ public class FrameHolder extends JFrame{
     boolean hasInitialized = false;
 
     // For loading data in csv; moved from attendance table so that it will have a greater scope
-    String databasePath = "src\\database.csv";
+    String databasePath = "src\\assets\\database.csv";
 
     // Information about the database
     String databaseStartDate = "";
@@ -46,7 +49,10 @@ public class FrameHolder extends JFrame{
 
         introScreen = new IntroScreen(this);
         this.add(introScreen);
-        this.add(aboutScreen);
+
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("assets/accept.png")));
+        this.setIconImage(icon.getImage());
+//        this.add(aboutScreen);
 
 //        attendanceScreen.setVisible(false);
         aboutScreen.setVisible(false);
@@ -153,10 +159,10 @@ public class FrameHolder extends JFrame{
             // Get data from table before tableHolder is erased
             tableData = tableHolder.table.model;
 
-            // Get colleges data from AdminScreen class and transfer to AttendanceScreen
+            // Get colleges data from main.AdminScreen class and transfer to main.AttendanceScreen
             collegesData = attendanceScreen.colleges;
 
-            // Get programs data from AdminScreen class and transfer to AttendanceScreen
+            // Get programs data from main.AdminScreen class and transfer to main.AttendanceScreen
             programsInCollegesData = attendanceScreen.programsInColleges;
 
 
@@ -175,10 +181,10 @@ public class FrameHolder extends JFrame{
             // Get data from table before tableHolder is erased
             tableData = tableHolder.table.model;
 
-            // Get colleges data from AdminScreen class and transfer to AttendanceScreen
+            // Get colleges data from main.AdminScreen class and transfer to main.AttendanceScreen
             collegesData = adminScreen.colleges;
 
-            // Get programs data from AdminScreen class and transfer to AttendanceScreen
+            // Get programs data from main.AdminScreen class and transfer to main.AttendanceScreen
             programsInCollegesData = adminScreen.programsInColleges;
 
             if (adminScreen.eventTitle != null){

@@ -1,5 +1,4 @@
-// TODO: Buttons stay at the top, use a Layout Manager
-// Change added: added different padding for different buttons
+package main;
 
 import javax.swing.*;
 import java.awt.*;

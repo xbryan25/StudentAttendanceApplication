@@ -1,3 +1,5 @@
+package main;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -33,8 +35,8 @@ public class ViewCollegesAndProgramsWindow {
 
     ButtonRenderer buttonRenderer = new ButtonRenderer();
 
-    // Plan: Pass ViewCollegesAndProgramsWindow object into ButtonEditor so that ButtonEditor will have access to
-    // ViewCollegesAndProgramsWindow's methods
+    // Plan: Pass main.ViewCollegesAndProgramsWindow object into main.ButtonEditor so that main.ButtonEditor will have access to
+    // main.ViewCollegesAndProgramsWindow's methods
     ButtonEditor buttonEditor = new ButtonEditor(new JTextField(), this);
     DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 

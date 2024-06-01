@@ -10,6 +10,7 @@ public class IntroScreen extends JPanel implements ActionListener{
     JButton aboutThisAppButton = new JButton("About this app");
     JButton adminModeButton = new JButton("Go Admin?");
 
+    JLabel version = new JLabel("v0 (pre v1.0)");
     FrameHolder frame;
     GridBagConstraints gbc = new GridBagConstraints();
 
@@ -20,7 +21,6 @@ public class IntroScreen extends JPanel implements ActionListener{
         this.setSize(500, 500);
 //        this.setBackground(Color.RED);
 
-        gbc.insets = new Insets(0, 3, 3, 3);
 
         attendanceButton.setPreferredSize(new Dimension(180, 50));
         attendanceButton.setFont(new Font("Arial", Font.BOLD, 20));
@@ -35,27 +35,31 @@ public class IntroScreen extends JPanel implements ActionListener{
         adminModeButton.addActionListener(this);
         adminModeButton.setFocusable(false);
 
+        version.setFont(new Font("Arial", Font.BOLD, 20));
+
+        gbc.insets = new Insets(125, 25, 3, 3);
+
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.gridheight = 1;
         this.add(attendanceButton, gbc);
+
+        gbc.insets = new Insets(125, 3, 3, 3);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
-        gbc.gridheight = 1;
         this.add(aboutThisAppButton, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 3;
         gbc.insets = new Insets(50, 0, 0, 0);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         this.add(adminModeButton, gbc);
 
-//        gbc.gridx = 3;
-//        gbc.gridy = 3;
-//        gbc.weightx = 1;
-//        gbc.weighty = 1;
-//
-//        this.add(new JLabel(" "), gbc);
+        gbc.insets = new Insets(130, 110, 0, 0);
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        this.add(version, gbc);
+
     }
 
     @Override

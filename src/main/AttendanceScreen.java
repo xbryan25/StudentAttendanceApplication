@@ -67,7 +67,6 @@ public class AttendanceScreen extends JPanel implements ActionListener{
 
         if (!eventTitleCancel){
             this.setLayout(new GridBagLayout());
-//            this.setBackground(Color.GREEN);
             this.setBounds(500, 0, 250, 500);
 
             backButton.setPreferredSize(new Dimension(65, 30));
@@ -93,7 +92,7 @@ public class AttendanceScreen extends JPanel implements ActionListener{
             gbc.gridy = 0;
             this.add(backButton, gbc);
 
-            gbc.insets = new Insets(10, 0, 0, 0);
+            gbc.insets = new Insets(35, 0, 0, 0);
 
             gbc.gridx = 0;
             gbc.gridy = 1;

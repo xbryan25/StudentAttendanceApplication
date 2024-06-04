@@ -146,14 +146,13 @@ public class FrameHolder extends JFrame{
     }
 
     public void changeToIntroScreen(int state){
-        if (state != 6){
-            introScreen = new IntroScreen(this);
-        }
+//        if (state != 6){
+//            introScreen = new IntroScreen(this);
+//        }
 
 
         if(state == 1){
             this.remove(aboutScreen);
-
             this.setSize(500, 500);
         } else if(state == 2){
             // Get data from table before tableHolder is erased

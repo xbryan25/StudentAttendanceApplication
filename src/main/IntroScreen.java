@@ -68,7 +68,6 @@ public class IntroScreen extends JPanel implements ActionListener{
             this.frame.changeToAttendanceScreen();
         } else if (e.getSource() == aboutThisAppButton){
             this.frame.changeToAboutThisAppScreen();
-
         } else if (e.getSource() == adminModeButton){
             this.frame.changeToAdminScreen();
         }

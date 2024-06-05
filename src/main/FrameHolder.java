@@ -13,13 +13,15 @@ public class FrameHolder extends JFrame{
     boolean hasInitialized = false;
 
     // For loading data in csv; moved from attendance table so that it will have a greater scope
-    String databasePath = "src\\assets\\database.csv";
+    String studentDatabasePath = "src\\assets\\stddb.csv";
+    String collegeAndProgramsPath = "src\\assets\\cpdb.csv";
 
     // Information about the database
     String databaseStartDate = "";
 
     BufferedReader reader;
-    ArrayList<String[]> dataFromCSV = new ArrayList<>();
+    ArrayList<String[]> dataFromStudentCSV = new ArrayList<>();
+    ArrayList<ArrayList<ArrayList<String>>> dataFromCollegeAndProgramsCSV = new ArrayList<>();
     IntroScreen introScreen;
     AttendanceScreen attendanceScreen;
     AdminScreen adminScreen;
@@ -57,8 +59,11 @@ public class FrameHolder extends JFrame{
 //        attendanceScreen.setVisible(false);
         aboutScreen.setVisible(false);
 
-        // Fetch data from CSV
-        getDataFromCSV();
+        // Fetch student data from stddb.csv
+        getDataFromStudentCSV();
+
+        // Fetch college and programd data from cpdb.csv
+        getDataFromCollegeAndProgramsCSV();
     }
 
     public void changeToAboutThisAppScreen(){
@@ -76,14 +81,14 @@ public class FrameHolder extends JFrame{
     public void changeToAttendanceScreen(){
         if (!eventTitleCancel){
             if (!tableHasData){
-                tableHolder = new TableHolder(dataFromCSV, tableData, tableHasData);
+                tableHolder = new TableHolder(dataFromStudentCSV, tableData, tableHasData);
                 tableHasData = true;
             } else{
-                tableHolder = new TableHolder(dataFromCSV, tableData, tableHasData);
+                tableHolder = new TableHolder(dataFromStudentCSV, tableData, tableHasData);
             }
         }
 
-        attendanceScreen = new AttendanceScreen(this, tableHolder, dataFromCSV, hasInitialized, collegesData, programsInCollegesData);
+        attendanceScreen = new AttendanceScreen(this, tableHolder, dataFromStudentCSV, hasInitialized, collegesData, programsInCollegesData);
 
         eventTitleCancel = attendanceScreen.eventTitleCancel;
 
@@ -112,14 +117,14 @@ public class FrameHolder extends JFrame{
     public void changeToAdminScreen(){
         if (!eventTitleCancel){
             if (!tableHasData){
-                tableHolder = new TableHolder(dataFromCSV, tableData, tableHasData);
+                tableHolder = new TableHolder(dataFromStudentCSV, tableData, tableHasData);
                 tableHasData = true;
             } else{
-                tableHolder = new TableHolder(dataFromCSV, tableData, tableHasData);
+                tableHolder = new TableHolder(dataFromStudentCSV, tableData, tableHasData);
             }
         }
 
-        adminScreen = new AdminScreen(this, tableHolder, dataFromCSV, hasInitialized, collegesData, programsInCollegesData);
+        adminScreen = new AdminScreen(this, tableHolder, dataFromStudentCSV, hasInitialized, collegesData, programsInCollegesData);
 
         eventTitleCancel = adminScreen.eventTitleCancel;
 
@@ -220,13 +225,13 @@ public class FrameHolder extends JFrame{
         this.repaint();
     }
 
-    private void getDataFromCSV(){
+    private void getDataFromStudentCSV(){
         try{
             String line;
 
             int count = 0;
 
-            reader = new BufferedReader(new FileReader(databasePath));
+            reader = new BufferedReader(new FileReader(studentDatabasePath));
 
             while((line = reader.readLine()) != null){
                 // This makes it so that only lines 3 onwards from the csv will be read
@@ -259,10 +264,58 @@ public class FrameHolder extends JFrame{
                 } else if (count > 3){
                     // Greater than 3 because row 4 is where the data starts in the database
                     String[] row = line.split(",");
-                    dataFromCSV.add(row);
+                    dataFromStudentCSV.add(row);
                 }
                 count++;
             }
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void getDataFromCollegeAndProgramsCSV(){
+        try{
+            String line, collegeTitle;
+
+            // The hierarchy goes like this (from general to specific): dataFromCollegeAndProgramsCSV, collegeArrayList,
+            // (tempCollegeTitleArrayList and programAndItsTitleArrayList)
+            ArrayList<ArrayList<String>> collegeArrayList = new ArrayList<>();
+
+            reader = new BufferedReader(new FileReader(collegeAndProgramsPath));
+
+            while((line = reader.readLine()) != null){
+
+                if (line.startsWith("---End of data---")){
+                    // Upon reading "---End of data---" in cpdb.csv, the loop will terminate
+                    // This was written so that the last college will be added to the ArrayList
+                    break;
+                } else if (line.startsWith("--") && line.endsWith("--")){
+                    collegeTitle = line.replace("--", "");
+
+                    ArrayList<String> tempCollegeTitleArrayList = new ArrayList<>();
+                    tempCollegeTitleArrayList.add(collegeTitle);
+
+                    // Add the college title
+                    collegeArrayList.add(tempCollegeTitleArrayList);
+                } else if (!line.isBlank() && !line.isEmpty()){
+                    String[] programAndItsTitle = line.split(",");
+
+                    ArrayList<String> programAndItsTitleArrayList = new ArrayList<>();
+                    programAndItsTitleArrayList.add(programAndItsTitle[0]);
+                    programAndItsTitleArrayList.add(programAndItsTitle[1]);
+
+                    collegeArrayList.add(programAndItsTitleArrayList);
+                } else{
+                    // If there is a blank line, it will be assumed that marks the end of a particular college
+                    dataFromCollegeAndProgramsCSV.add(collegeArrayList);
+
+                    // Make another ArrayList for another college; collegeArrayList.clear() doesn't work
+                    collegeArrayList = new ArrayList<>();
+                }
+            }
+
+
         }
         catch(Exception e){
             System.out.println(e.getMessage());

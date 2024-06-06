@@ -21,7 +21,7 @@ public class FrameHolder extends JFrame{
 
     BufferedReader reader;
     ArrayList<String[]> dataFromStudentCSV = new ArrayList<>();
-    ArrayList<ArrayList<ArrayList<String>>> dataFromCollegeAndProgramsCSV = new ArrayList<>();
+    ArrayList<ArrayList<ArrayList<String>>> dataFromCollegesAndProgramsCSV = new ArrayList<>();
     IntroScreen introScreen;
     AttendanceScreen attendanceScreen;
     AdminScreen adminScreen;
@@ -124,7 +124,8 @@ public class FrameHolder extends JFrame{
             }
         }
 
-        adminScreen = new AdminScreen(this, tableHolder, dataFromStudentCSV, hasInitialized, collegesData, programsInCollegesData);
+        adminScreen = new AdminScreen(this, tableHolder, dataFromStudentCSV, dataFromCollegesAndProgramsCSV,
+                                      hasInitialized, collegesData, programsInCollegesData);
 
         eventTitleCancel = adminScreen.eventTitleCancel;
 
@@ -308,7 +309,7 @@ public class FrameHolder extends JFrame{
                     collegeArrayList.add(programAndItsTitleArrayList);
                 } else{
                     // If there is a blank line, it will be assumed that marks the end of a particular college
-                    dataFromCollegeAndProgramsCSV.add(collegeArrayList);
+                    dataFromCollegesAndProgramsCSV.add(collegeArrayList);
 
                     // Make another ArrayList for another college; collegeArrayList.clear() doesn't work
                     collegeArrayList = new ArrayList<>();

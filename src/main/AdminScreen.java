@@ -50,18 +50,22 @@ public class AdminScreen extends JPanel implements ActionListener{
     GridBagConstraints gbc = new GridBagConstraints();
 
     ArrayList<String> colleges = new ArrayList<>();
+
+    // TODO: programsInColleges is redundant, use dataFromCollegeAndProgramsCSV
     ArrayList<ArrayList<String>> programsInColleges = new ArrayList<>();
 
     ArrayList<String[]> dataFromCSV;
+    ArrayList<ArrayList<ArrayList<String>>> dataFromCollegesAndProgramsCSV;
 
     String eventTitle;
     boolean eventTitleCancel = false;
 
-    AdminScreen(FrameHolder frame, TableHolder tableHolder, ArrayList<String[]> dataFromCSV, boolean hasInitialized,
-                     ArrayList<String> collegesData, ArrayList<ArrayList<String>> programsInCollegesData) {
+    AdminScreen(FrameHolder frame, TableHolder tableHolder, ArrayList<String[]> dataFromCSV, ArrayList<ArrayList<ArrayList<String>>> dataFromCollegesAndProgramsCSV,
+                boolean hasInitialized, ArrayList<String> collegesData, ArrayList<ArrayList<String>> programsInCollegesData) {
 
         this.frame = frame;
         this.tableHolder = tableHolder;
+        this.dataFromCollegesAndProgramsCSV = dataFromCollegesAndProgramsCSV;
 
         if (!frame.hasEventTitle){
             while(true){
@@ -95,7 +99,6 @@ public class AdminScreen extends JPanel implements ActionListener{
 
         if (!eventTitleCancel){
             this.setLayout(new GridBagLayout());
-//            this.setBackground(Color.CYAN);
             this.setBounds(500, 0, 250, 500);
 
             backButton.setPreferredSize(new Dimension(65, 30));
@@ -293,6 +296,7 @@ public class AdminScreen extends JPanel implements ActionListener{
                                          "", JOptionPane.INFORMATION_MESSAGE);
             }
         }
+
         else if(e.getSource() == addProgramsButton) {
             preLoad2DArrayList();
 
@@ -333,21 +337,65 @@ public class AdminScreen extends JPanel implements ActionListener{
                 // Trims both leading and trailing white spaces in String
                 program = program.trim();
 
-                for (ArrayList<String> collegeAndPrograms : programsInColleges) {
-                    // If program doesn't exist in college
-                    if (programsCollege.toString().equals(collegeAndPrograms.getFirst()) && !collegeAndPrograms.contains(program)) {
-                        collegeAndPrograms.add(program);
+                // What I'm really doing here is checking of the added program already exists or not
+                // I'm looking for the added program to fail, to go inside the if statements. If it doesn't fail,
+                // it gets added to the database.
+
+                // Fix addition of a program
+
+                boolean checkFirst = false;
+                boolean doesProgramExist = false;
+
+                for(ArrayList<ArrayList<String>> aCollegeAndItsPrograms: dataFromCollegesAndProgramsCSV){
+                    for(ArrayList<String> eachElementInACollegeAndItsPrograms: aCollegeAndItsPrograms){
+                        // If program doesn't exist in college
+                        if (!programsCollege.toString().equals(eachElementInACollegeAndItsPrograms.getFirst()) && !checkFirst){
+                            continue;
+                        } else{
+                            checkFirst = true;
+                        }
+
+                        if (eachElementInACollegeAndItsPrograms.contains(program)){
+                            JOptionPane.showMessageDialog(null, program + " already exists in " +
+                                    programsCollege + ", add another program.", "", JOptionPane.INFORMATION_MESSAGE);
+
+                            doesProgramExist = true;
+                            break;
+                        }
+                    }
+
+                    if (!doesProgramExist){
+                        ArrayList<String> programAndItsTitleArrayList = new ArrayList<>();
+                        programAndItsTitleArrayList.add(program);
+                        programAndItsTitleArrayList.add("");
+
+                        aCollegeAndItsPrograms.add(programAndItsTitleArrayList);
+
                         JOptionPane.showMessageDialog(null, program + " successfully added in " +
                                 programsCollege + ".","", JOptionPane.INFORMATION_MESSAGE);
-                        break;
 
-                        // If program already exists in college
-                    } else if ((programsCollege.toString().equals(collegeAndPrograms.getFirst()) && collegeAndPrograms.contains(program))) {
-                        JOptionPane.showMessageDialog(null, program + " already exists in " +
-                                programsCollege + ", add another program.", "", JOptionPane.INFORMATION_MESSAGE);
                         break;
                     }
+
+                    checkFirst = false;
+                    doesProgramExist = false;
                 }
+
+//                for (ArrayList<String> collegeAndPrograms : programsInColleges) {
+//                    // If program doesn't exist in college
+//                    if (programsCollege.toString().equals(collegeAndPrograms.getFirst()) && !collegeAndPrograms.contains(program)) {
+//                        collegeAndPrograms.add(program);
+//                        JOptionPane.showMessageDialog(null, program + " successfully added in " +
+//                                programsCollege + ".","", JOptionPane.INFORMATION_MESSAGE);
+//                        break;
+//
+//                        // If program already exists in college
+//                    } else if ((programsCollege.toString().equals(collegeAndPrograms.getFirst()) && collegeAndPrograms.contains(program))) {
+//                        JOptionPane.showMessageDialog(null, program + " already exists in " +
+//                                programsCollege + ", add another program.", "", JOptionPane.INFORMATION_MESSAGE);
+//                        break;
+//                    }
+//                }
             }
         }
         else if(e.getSource() == addCollegesButton) {
@@ -557,7 +605,7 @@ public class AdminScreen extends JPanel implements ActionListener{
         }
     }
 
-    // Transfers each college in collegeList ArrayList into Object[]
+    // Transforms each college in collegeList ArrayList<String> into Object[]
     public Object[] objectColleges(ArrayList<String> collegeList){
         Object[] collegesInObject = new Object[colleges.size()];
         int objectCtr = 0;
@@ -599,39 +647,51 @@ public class AdminScreen extends JPanel implements ActionListener{
     }
 
     public void initializeCollegesAndProgramsInColleges(){
-        for(String[] line: dataFromCSV){
-            ArrayList<String> collegeArrayList= new ArrayList<>();
-            String programFromLine = line[3];
-            String collegeFromLine = line[4];
-
-            // Trims both leading and trailing white spaces in String
-            programFromLine = programFromLine.trim();
-
-            // Add to an ArrayList
-            collegeArrayList.add(collegeFromLine);
-
-            //----- Add new college in college and programsInCollege ArrayLists
-
-            // If college is not in programsInColleges, then add college
-            if (!programsInColleges.contains(collegeArrayList) && !colleges.contains(collegeFromLine)) {
-                // Add in programsInColleges 2D ArrayList
-                programsInColleges.add(collegeArrayList);
-                // Add in colleges ArrayList
-                colleges.add(collegeFromLine);
-            }
-
-            //----- Add new program in a college in programInCollege ArrayList
-
-            // Note: collegeAndPrograms is an ArrayList in programsInColleges
-            for (ArrayList<String> collegeAndPrograms: programsInColleges) {
-                // Check if the current college is the same with the college that is being searched
-                // AND if that college doesn't already contain the current program
-
-                if (collegeFromLine.equals(collegeAndPrograms.getFirst()) && !collegeAndPrograms.contains(programFromLine)) {
-                    collegeAndPrograms.add(programFromLine);
-                    break;
-                }
+        for(ArrayList<ArrayList<String>> aCollegeAndItsPrograms: dataFromCollegesAndProgramsCSV){
+            for(ArrayList<String> eachElementInACollegeAndItsPrograms: aCollegeAndItsPrograms){
+                // Only get the first element of eachElementInACollegeAndItsPrograms, since its always the college
+                colleges.add(eachElementInACollegeAndItsPrograms.getFirst());
+                break;
             }
         }
+
+
+
+
+
+//        for(String[] line: dataFromCSV){
+//            ArrayList<String> collegeArrayList= new ArrayList<>();
+//            String programFromLine = line[3];
+//            String collegeFromLine = line[4];
+//
+//            // Trims both leading and trailing white spaces in String
+//            programFromLine = programFromLine.trim();
+//
+//            // Add to an ArrayList
+//            collegeArrayList.add(collegeFromLine);
+//
+//            //----- Add new college in college and programsInCollege ArrayLists
+//
+//            // If college is not in programsInColleges, then add college
+//            if (!programsInColleges.contains(collegeArrayList) && !colleges.contains(collegeFromLine)) {
+//                // Add in programsInColleges 2D ArrayList
+//                programsInColleges.add(collegeArrayList);
+//                // Add in colleges ArrayList
+//                colleges.add(collegeFromLine);
+//            }
+//
+//            //----- Add new program in a college in programInCollege ArrayList
+//
+//            // Note: collegeAndPrograms is an ArrayList in programsInColleges
+//            for (ArrayList<String> collegeAndPrograms: programsInColleges) {
+//                // Check if the current college is the same with the college that is being searched
+//                // AND if that college doesn't already contain the current program
+//
+//                if (collegeFromLine.equals(collegeAndPrograms.getFirst()) && !collegeAndPrograms.contains(programFromLine)) {
+//                    collegeAndPrograms.add(programFromLine);
+//                    break;
+//                }
+//            }
+//        }
     }
 }

@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 public class ViewCollegesAndProgramsWindow {
-
+    // Made another ArrayList for colleges to make it more accessible as opposed to traversing a nested ArrayList
     ArrayList<String> colleges;
-    ArrayList<ArrayList<String>> programsInColleges;
+
+    ArrayList<ArrayList<ArrayList<String>>> dataFromCollegesAndProgramsCSV;
     JTable collegesTable = new JTable();
     JTable programsTable = new JTable();
     Object[] collegesColumns = {"Colleges"};
@@ -40,11 +41,13 @@ public class ViewCollegesAndProgramsWindow {
     ButtonEditor buttonEditor = new ButtonEditor(new JTextField(), this);
     DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 
-    ArrayList<String> chosenCollegeAndItsPrograms;
+    ArrayList<ArrayList<String>> chosenCollegeAndItsPrograms;
 
-    ViewCollegesAndProgramsWindow(ArrayList<String> colleges, ArrayList<ArrayList<String>> programsInColleges){
+    ViewCollegesAndProgramsWindow(ArrayList<String> colleges, ArrayList<ArrayList<ArrayList<String>>> dataFromCollegesAndProgramsCSV){
         this.colleges = colleges;
-        this.programsInColleges = programsInColleges;
+        this.dataFromCollegesAndProgramsCSV = dataFromCollegesAndProgramsCSV;
+//        this.colleges = colleges;
+//        this.programsInColleges = programsInColleges;
 
         // Set properties of the JDialog
         collegesListDialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -104,9 +107,9 @@ public class ViewCollegesAndProgramsWindow {
     }
 
     public void showProgramsInCollege(String collegePrompt){
-        for(ArrayList<String> collegeAndItsPrograms: this.programsInColleges){
-            if(collegePrompt.equals(collegeAndItsPrograms.getFirst())){
-                this.chosenCollegeAndItsPrograms = collegeAndItsPrograms;
+        for(ArrayList<ArrayList<String>> aCollegeAndItsPrograms: dataFromCollegesAndProgramsCSV){
+            if (collegePrompt.equals(aCollegeAndItsPrograms.getFirst().getFirst())){
+                this.chosenCollegeAndItsPrograms = aCollegeAndItsPrograms;
                 break;
             }
         }
@@ -158,9 +161,9 @@ public class ViewCollegesAndProgramsWindow {
             // Reset the table each time
             programsTableModel.setRowCount(0);
 
-            for(String program: this.chosenCollegeAndItsPrograms){
-                if(this.chosenCollegeAndItsPrograms.indexOf(program) != 0){
-                    programsTableModel.addRow(new Object[]{program});
+            for (ArrayList<String> eachElementInACurrentCollegeAndItsPrograms: this.chosenCollegeAndItsPrograms){
+                if(this.chosenCollegeAndItsPrograms.indexOf(eachElementInACurrentCollegeAndItsPrograms) != 0){
+                    programsTableModel.addRow(new Object[]{eachElementInACurrentCollegeAndItsPrograms.getFirst()});
                 }
             }
 

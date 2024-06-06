@@ -233,7 +233,7 @@ public class AdminScreen extends JPanel implements ActionListener{
                 initializeCollegesAndProgramsInColleges();
             } else{
                 colleges = collegesData;
-                programsInColleges = programsInCollegesData;
+//                programsInColleges = programsInCollegesData;
             }
         }
     }
@@ -431,7 +431,8 @@ public class AdminScreen extends JPanel implements ActionListener{
                 JOptionPane.showMessageDialog(null, "No colleges yet. Please input a college to" +
                         " open this window.","", JOptionPane.WARNING_MESSAGE);
             } else{
-                new ViewCollegesAndProgramsWindow(colleges, programsInColleges);
+                new ViewCollegesAndProgramsWindow(colleges, dataFromCollegesAndProgramsCSV);
+//                new ViewCollegesAndProgramsWindow(colleges, programsInColleges);
             }
         }
         else if(e.getSource() == renameEvent){

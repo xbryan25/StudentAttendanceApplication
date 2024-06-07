@@ -33,7 +33,6 @@ public class FrameHolder extends JFrame{
 
     // Containers to hold the colleges and programs data
     ArrayList<String> collegesData;
-    ArrayList<ArrayList<String>> programsInCollegesData;
     AboutThisAppScreen aboutScreen = new AboutThisAppScreen(this);
 
     // Title of event

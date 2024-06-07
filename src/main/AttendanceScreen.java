@@ -30,7 +30,7 @@ public class AttendanceScreen extends JPanel implements ActionListener{
     boolean eventTitleCancel = false;
 
     AttendanceScreen(FrameHolder frame, TableHolder tableHolder, ArrayList<String[]> dataFromCSV, ArrayList<ArrayList<ArrayList<String>>> dataFromCollegesAndProgramsCSV,
-                boolean hasInitialized, ArrayList<String> collegesData, ArrayList<ArrayList<String>> programsInCollegesData) {
+                boolean hasInitialized, ArrayList<String> collegesData) {
 
         this.frame = frame;
         this.tableHolder = tableHolder;
@@ -137,7 +137,6 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         }
         else if(e.getSource() == addStudentButton) {
             if (!colleges.isEmpty()) {
-                preLoad2DArrayList();
 
                 Object[] collegesObject = objectColleges(colleges);
 
@@ -279,35 +278,6 @@ public class AttendanceScreen extends JPanel implements ActionListener{
         }
 
         return programInCollegesObject;
-    }
-
-    // Loads programsInColleges with colleges from colleges ArrayList
-    public void preLoad2DArrayList(){
-        for(String college: colleges){
-            ArrayList<String> collegeArrayList= new ArrayList<>();
-            collegeArrayList.add(college);
-
-            // A flag that checks if an ArrayList of the respective college already exists
-            boolean doesExist = false;
-
-            // This for loop checks if the ArrayList of college already exists or not
-            // If it doesn't exist, it will add collegeArrayList to programsInColleges
-
-            // Added to avoid ConcurrentModificationException
-            // Which means that you are modifying the iterable that is currently being iterated
-            // What I did was separate the verifying and adding processes instead
-
-            for (ArrayList<String> programsInCollege : programsInColleges) {
-                if (programsInCollege.contains(college)) {
-                    doesExist = true;
-                    break;
-                }
-            }
-
-            if (!doesExist){
-                programsInColleges.add(collegeArrayList);
-            }
-        }
     }
 
     public void initializeCollegesAndProgramsInColleges(){

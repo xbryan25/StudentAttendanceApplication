@@ -25,15 +25,16 @@ public class AttendanceScreen extends JPanel implements ActionListener{
     ArrayList<ArrayList<String>> programsInColleges = new ArrayList<>();
 
     ArrayList<String[]> dataFromCSV;
-
+    ArrayList<ArrayList<ArrayList<String>>> dataFromCollegesAndProgramsCSV;
     String eventTitle;
     boolean eventTitleCancel = false;
 
-    AttendanceScreen(FrameHolder frame, TableHolder tableHolder, ArrayList<String[]> dataFromCSV, boolean hasInitialized,
-                     ArrayList<String> collegesData, ArrayList<ArrayList<String>> programsInCollegesData) {
+    AttendanceScreen(FrameHolder frame, TableHolder tableHolder, ArrayList<String[]> dataFromCSV, ArrayList<ArrayList<ArrayList<String>>> dataFromCollegesAndProgramsCSV,
+                boolean hasInitialized, ArrayList<String> collegesData, ArrayList<ArrayList<String>> programsInCollegesData) {
 
         this.frame = frame;
         this.tableHolder = tableHolder;
+        this.dataFromCollegesAndProgramsCSV = dataFromCollegesAndProgramsCSV;
 
         if (!frame.hasEventTitle){
             while(true){
@@ -124,7 +125,7 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                 initializeCollegesAndProgramsInColleges();
             } else{
                 colleges = collegesData;
-                programsInColleges = programsInCollegesData;
+//                programsInColleges = programsInCollegesData;
             }
         }
     }
@@ -229,7 +230,7 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                 JOptionPane.showMessageDialog(null, "No colleges yet. Please input a college to" +
                                 " open this window.","", JOptionPane.WARNING_MESSAGE);
             } else{
-                new ViewCollegesAndProgramsWindow(colleges, programsInColleges);
+                new ViewCollegesAndProgramsWindow(colleges, dataFromCollegesAndProgramsCSV);
             }
         }
     }
@@ -310,38 +311,11 @@ public class AttendanceScreen extends JPanel implements ActionListener{
     }
 
     public void initializeCollegesAndProgramsInColleges(){
-        for(String[] line: dataFromCSV){
-            ArrayList<String> collegeArrayList= new ArrayList<>();
-            String programFromLine = line[3];
-            String collegeFromLine = line[4];
-
-            // Trims both leading and trailing white spaces in String
-            programFromLine = programFromLine.trim();
-
-            // Add to an ArrayList
-            collegeArrayList.add(collegeFromLine);
-
-            //----- Add new college in college and programsInCollege ArrayLists
-
-            // If college is not in programsInColleges, then add college
-            if (!programsInColleges.contains(collegeArrayList) && !colleges.contains(collegeFromLine)) {
-                // Add in programsInColleges 2D ArrayList
-                programsInColleges.add(collegeArrayList);
-                // Add in colleges ArrayList
-                colleges.add(collegeFromLine);
-            }
-
-            //----- Add new program in a college in programInCollege ArrayList
-
-            // Note: collegeAndPrograms is an ArrayList in programsInColleges
-            for (ArrayList<String> collegeAndPrograms: programsInColleges) {
-                // Check if the current college is the same with the college that is being searched
-                // AND if that college doesn't already contain the current program
-
-                if (collegeFromLine.equals(collegeAndPrograms.getFirst()) && !collegeAndPrograms.contains(programFromLine)) {
-                    collegeAndPrograms.add(programFromLine);
-                    break;
-                }
+        for(ArrayList<ArrayList<String>> aCollegeAndItsPrograms: dataFromCollegesAndProgramsCSV){
+            for(ArrayList<String> eachElementInACollegeAndItsPrograms: aCollegeAndItsPrograms){
+                // Only get the first element of eachElementInACollegeAndItsPrograms, since its always the college
+                colleges.add(eachElementInACollegeAndItsPrograms.getFirst());
+                break;
             }
         }
     }

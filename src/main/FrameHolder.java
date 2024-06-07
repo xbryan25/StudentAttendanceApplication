@@ -88,7 +88,8 @@ public class FrameHolder extends JFrame{
             }
         }
 
-        attendanceScreen = new AttendanceScreen(this, tableHolder, dataFromStudentCSV, hasInitialized, collegesData, programsInCollegesData);
+        attendanceScreen = new AttendanceScreen(this, tableHolder, dataFromStudentCSV, dataFromCollegesAndProgramsCSV,
+                hasInitialized, collegesData, programsInCollegesData);
 
         eventTitleCancel = attendanceScreen.eventTitleCancel;
 

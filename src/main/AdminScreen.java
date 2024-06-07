@@ -298,24 +298,28 @@ public class AdminScreen extends JPanel implements ActionListener{
                 JOptionPane.showMessageDialog(null, "No college added. Please add a college.",
                         "", JOptionPane.WARNING_MESSAGE);
             } else {
-                String program = "";
+                String programCode = "";
+                String programTitle = "";
                 Object programsCollege = "";
                 Object[] collegesObject = objectColleges(colleges);
                 Object responseObject;
 
-                String[] paneMessages = {"Add program", "Under what college?"};
+                String[] paneMessages = {"Add program code (e.g. BSSTAT)", "Input program name (e.g. BS Statistics)", "Under what college?"};
 
                 // This for loop and if statements are added so that when the exit button in a pane is pressed, no more
                 // panes will show up
 
                 // Can also be written using a while loop
 
-                for (int i = 0; i < 2; i++){
+                for (int i = 0; i < 3; i++){
                     if (i == 0){
-                        responseObject = JOptionPane.showInputDialog(null, paneMessages[0],
+                        responseObject = JOptionPane.showInputDialog(null, paneMessages[i],
+                                "", JOptionPane.QUESTION_MESSAGE);
+                    } else if (i == 1){
+                        responseObject = JOptionPane.showInputDialog(null, paneMessages[i],
                                 "", JOptionPane.QUESTION_MESSAGE);
                     } else{
-                        responseObject = JOptionPane.showInputDialog(null, paneMessages[1],
+                        responseObject = JOptionPane.showInputDialog(null, paneMessages[i],
                                 "", JOptionPane.QUESTION_MESSAGE, null, collegesObject, collegesObject[0]);
                     }
 
@@ -323,7 +327,9 @@ public class AdminScreen extends JPanel implements ActionListener{
                         return;
                     } else{
                         if (i == 0){
-                            program = responseObject.toString();
+                            programCode = responseObject.toString();
+                        } else if (i == 1){
+                            programTitle = responseObject.toString();
                         } else{
                             programsCollege = responseObject;
                         }
@@ -331,7 +337,8 @@ public class AdminScreen extends JPanel implements ActionListener{
                 }
 
                 // Trims both leading and trailing white spaces in String
-                program = program.trim();
+                programCode = programCode.trim();
+                programTitle = programTitle.trim();
 
                 // What I'm really doing here is checking of the added program already exists or not
                 // I'm looking for the added program to fail, to go inside the if statements. If it doesn't fail,
@@ -351,8 +358,8 @@ public class AdminScreen extends JPanel implements ActionListener{
                             checkFirst = true;
                         }
 
-                        if (eachElementInACollegeAndItsPrograms.contains(program)){
-                            JOptionPane.showMessageDialog(null, program + " already exists in " +
+                        if (eachElementInACollegeAndItsPrograms.contains(programCode)){
+                            JOptionPane.showMessageDialog(null, programTitle + " already exists in " +
                                     programsCollege + ", add another program.", "", JOptionPane.INFORMATION_MESSAGE);
 
                             doesProgramExist = true;
@@ -362,12 +369,12 @@ public class AdminScreen extends JPanel implements ActionListener{
 
                     if (!doesProgramExist){
                         ArrayList<String> programAndItsTitleArrayList = new ArrayList<>();
-                        programAndItsTitleArrayList.add(program);
-                        programAndItsTitleArrayList.add("");
+                        programAndItsTitleArrayList.add(programCode);
+                        programAndItsTitleArrayList.add(programTitle);
 
                         aCollegeAndItsPrograms.add(programAndItsTitleArrayList);
 
-                        JOptionPane.showMessageDialog(null, program + " successfully added in " +
+                        JOptionPane.showMessageDialog(null, programTitle + " successfully added in " +
                                 programsCollege + ".","", JOptionPane.INFORMATION_MESSAGE);
 
                         break;

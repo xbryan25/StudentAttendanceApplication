@@ -22,7 +22,6 @@ public class AttendanceScreen extends JPanel implements ActionListener{
     GridBagConstraints gbc = new GridBagConstraints();
 
     ArrayList<String> colleges = new ArrayList<>();
-    ArrayList<ArrayList<String>> programsInColleges = new ArrayList<>();
 
     ArrayList<String[]> dataFromCSV;
     ArrayList<ArrayList<ArrayList<String>>> dataFromCollegesAndProgramsCSV;
@@ -118,14 +117,13 @@ public class AttendanceScreen extends JPanel implements ActionListener{
             gbc.gridy = 4;
             gbc.weightx = 1;
             gbc.weighty = 1;
-            this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft
+            this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on top left
 
             if (!hasInitialized){
-                // Initalize colleges ArrayList with a college that already exists in the database
+                // Initialize colleges ArrayList with a college that already exists in the database
                 initializeCollegesAndProgramsInColleges();
             } else{
                 colleges = collegesData;
-//                programsInColleges = programsInCollegesData;
             }
         }
     }
@@ -186,6 +184,7 @@ public class AttendanceScreen extends JPanel implements ActionListener{
 
                     }
 
+                    // This is different because it shows a dropdown menu
                     else if (i == 3){
                         responseObject = JOptionPane.showInputDialog(null, paneMessages[i],
                                          paneTitles[i], JOptionPane.QUESTION_MESSAGE, null, collegesObject,
@@ -249,25 +248,24 @@ public class AttendanceScreen extends JPanel implements ActionListener{
     // Transfers each program ArrayList in programsInColleges ArrayList into Object[]
     // The method will check the first element of the ArrayList to see if it matches to collegePrompt Object
     public Object[] objectProgramInColleges(Object collegePrompt){
-        int collegePromptSize = 0;
+        int collegePromptSize;
         ArrayList<String> tempProgramsInCollege = new ArrayList<>();
 
 
         // Get the size of the array list of a specific college in programsInColleges
 
-        for (ArrayList<String> programsInCollege: programsInColleges){
-            if (collegePrompt.equals(programsInCollege.getFirst())){
-
-                // Copy value of ArrayList into a temporary ArrayList
-                tempProgramsInCollege.addAll(programsInCollege);
-
-                // Remove leading college in ArrayList
-                tempProgramsInCollege.removeFirst();
-
-                collegePromptSize = tempProgramsInCollege.size();
-                break;
+        for(ArrayList<ArrayList<String>> aCollegeAndItsPrograms: dataFromCollegesAndProgramsCSV){
+            if (collegePrompt.equals(aCollegeAndItsPrograms.getFirst().getFirst())){
+                for (ArrayList<String> eachElementInACollegeAndItsPrograms: aCollegeAndItsPrograms){
+                    // Add the first elements in the ArrayLists, which are the subject codes, to the temp ArrayList
+                    tempProgramsInCollege.add(eachElementInACollegeAndItsPrograms.getFirst());
+                }
             }
         }
+
+        // Remove first element in ArrayList because it is the college title
+        tempProgramsInCollege.removeFirst();
+        collegePromptSize = tempProgramsInCollege.size();
 
         Object[] programInCollegesObject = new Object[collegePromptSize];
         int objectCtr = 0;
@@ -283,7 +281,7 @@ public class AttendanceScreen extends JPanel implements ActionListener{
     public void initializeCollegesAndProgramsInColleges(){
         for(ArrayList<ArrayList<String>> aCollegeAndItsPrograms: dataFromCollegesAndProgramsCSV){
             for(ArrayList<String> eachElementInACollegeAndItsPrograms: aCollegeAndItsPrograms){
-                // Only get the first element of eachElementInACollegeAndItsPrograms, since its always the college
+                // Only get the first element of eachElementInACollegeAndItsPrograms, since it's always the college
                 colleges.add(eachElementInACollegeAndItsPrograms.getFirst());
                 break;
             }

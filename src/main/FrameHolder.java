@@ -126,7 +126,7 @@ public class FrameHolder extends JFrame{
         }
 
         adminScreen = new AdminScreen(this, tableHolder, dataFromStudentCSV, dataFromCollegesAndProgramsCSV,
-                                      hasInitialized, collegesData, programsInCollegesData);
+                                      hasInitialized, collegesData);
 
         eventTitleCancel = adminScreen.eventTitleCancel;
 
@@ -168,8 +168,9 @@ public class FrameHolder extends JFrame{
             // Get colleges data from main.AdminScreen class and transfer to main.AttendanceScreen
             collegesData = attendanceScreen.colleges;
 
+            // TODO: Fix this
             // Get programs data from main.AdminScreen class and transfer to main.AttendanceScreen
-            programsInCollegesData = attendanceScreen.programsInColleges;
+//            programsInCollegesData = attendanceScreen.programsInColleges;
 
 
             // Get event title
@@ -190,8 +191,9 @@ public class FrameHolder extends JFrame{
             // Get colleges data from main.AdminScreen class and transfer to main.AttendanceScreen
             collegesData = adminScreen.colleges;
 
+            // TODO: Fix this
             // Get programs data from main.AdminScreen class and transfer to main.AttendanceScreen
-            programsInCollegesData = adminScreen.programsInColleges;
+//            programsInCollegesData = adminScreen.programsInColleges;
 
             if (adminScreen.eventTitle != null){
                 eventTitle = adminScreen.eventTitle;

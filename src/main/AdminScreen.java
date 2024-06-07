@@ -51,9 +51,6 @@ public class AdminScreen extends JPanel implements ActionListener{
 
     ArrayList<String> colleges = new ArrayList<>();
 
-    // TODO: programsInColleges is redundant, use dataFromCollegeAndProgramsCSV
-    ArrayList<ArrayList<String>> programsInColleges = new ArrayList<>();
-
     ArrayList<String[]> dataFromCSV;
     ArrayList<ArrayList<ArrayList<String>>> dataFromCollegesAndProgramsCSV;
 
@@ -61,7 +58,7 @@ public class AdminScreen extends JPanel implements ActionListener{
     boolean eventTitleCancel = false;
 
     AdminScreen(FrameHolder frame, TableHolder tableHolder, ArrayList<String[]> dataFromCSV, ArrayList<ArrayList<ArrayList<String>>> dataFromCollegesAndProgramsCSV,
-                boolean hasInitialized, ArrayList<String> collegesData, ArrayList<ArrayList<String>> programsInCollegesData) {
+                boolean hasInitialized, ArrayList<String> collegesData) {
 
         this.frame = frame;
         this.tableHolder = tableHolder;
@@ -233,7 +230,6 @@ public class AdminScreen extends JPanel implements ActionListener{
                 initializeCollegesAndProgramsInColleges();
             } else{
                 colleges = collegesData;
-//                programsInColleges = programsInCollegesData;
             }
         }
     }
@@ -298,8 +294,6 @@ public class AdminScreen extends JPanel implements ActionListener{
         }
 
         else if(e.getSource() == addProgramsButton) {
-            preLoad2DArrayList();
-
             if (colleges.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "No college added. Please add a college.",
                         "", JOptionPane.WARNING_MESSAGE);
@@ -313,6 +307,8 @@ public class AdminScreen extends JPanel implements ActionListener{
 
                 // This for loop and if statements are added so that when the exit button in a pane is pressed, no more
                 // panes will show up
+
+                // Can also be written using a while loop
 
                 for (int i = 0; i < 2; i++){
                     if (i == 0){
@@ -380,22 +376,6 @@ public class AdminScreen extends JPanel implements ActionListener{
                     checkFirst = false;
                     doesProgramExist = false;
                 }
-
-//                for (ArrayList<String> collegeAndPrograms : programsInColleges) {
-//                    // If program doesn't exist in college
-//                    if (programsCollege.toString().equals(collegeAndPrograms.getFirst()) && !collegeAndPrograms.contains(program)) {
-//                        collegeAndPrograms.add(program);
-//                        JOptionPane.showMessageDialog(null, program + " successfully added in " +
-//                                programsCollege + ".","", JOptionPane.INFORMATION_MESSAGE);
-//                        break;
-//
-//                        // If program already exists in college
-//                    } else if ((programsCollege.toString().equals(collegeAndPrograms.getFirst()) && collegeAndPrograms.contains(program))) {
-//                        JOptionPane.showMessageDialog(null, program + " already exists in " +
-//                                programsCollege + ", add another program.", "", JOptionPane.INFORMATION_MESSAGE);
-//                        break;
-//                    }
-//                }
             }
         }
         else if(e.getSource() == addCollegesButton) {
@@ -423,8 +403,6 @@ public class AdminScreen extends JPanel implements ActionListener{
                     break;
                 }
             }
-
-            preLoad2DArrayList();
         }
         else if(e.getSource() == viewCollegesAndProgramsButton){
             if(colleges.isEmpty()){
@@ -432,7 +410,6 @@ public class AdminScreen extends JPanel implements ActionListener{
                         " open this window.","", JOptionPane.WARNING_MESSAGE);
             } else{
                 new ViewCollegesAndProgramsWindow(colleges, dataFromCollegesAndProgramsCSV);
-//                new ViewCollegesAndProgramsWindow(colleges, programsInColleges);
             }
         }
         else if(e.getSource() == renameEvent){
@@ -618,35 +595,6 @@ public class AdminScreen extends JPanel implements ActionListener{
         return collegesInObject;
     }
 
-    // Loads programsInColleges with colleges from colleges ArrayList
-    public void preLoad2DArrayList(){
-        for(String college: colleges){
-            ArrayList<String> collegeArrayList= new ArrayList<>();
-            collegeArrayList.add(college);
-
-            // A flag that checks if an ArrayList of the respective college already exists
-            boolean doesExist = false;
-
-            // This for loop checks if the ArrayList of college already exists or not
-            // If it doesn't exist, it will add collegeArrayList to programsInColleges
-
-            // Added to avoid ConcurrentModificationException
-            // Which means that you are modifying the iterable that is currently being iterated
-            // What I did was separate the verifying and adding processes instead
-
-            for (ArrayList<String> programsInCollege : programsInColleges) {
-                if (programsInCollege.contains(college)) {
-                    doesExist = true;
-                    break;
-                }
-            }
-
-            if (!doesExist){
-                programsInColleges.add(collegeArrayList);
-            }
-        }
-    }
-
     public void initializeCollegesAndProgramsInColleges(){
         for(ArrayList<ArrayList<String>> aCollegeAndItsPrograms: dataFromCollegesAndProgramsCSV){
             for(ArrayList<String> eachElementInACollegeAndItsPrograms: aCollegeAndItsPrograms){
@@ -655,44 +603,5 @@ public class AdminScreen extends JPanel implements ActionListener{
                 break;
             }
         }
-
-
-
-
-
-//        for(String[] line: dataFromCSV){
-//            ArrayList<String> collegeArrayList= new ArrayList<>();
-//            String programFromLine = line[3];
-//            String collegeFromLine = line[4];
-//
-//            // Trims both leading and trailing white spaces in String
-//            programFromLine = programFromLine.trim();
-//
-//            // Add to an ArrayList
-//            collegeArrayList.add(collegeFromLine);
-//
-//            //----- Add new college in college and programsInCollege ArrayLists
-//
-//            // If college is not in programsInColleges, then add college
-//            if (!programsInColleges.contains(collegeArrayList) && !colleges.contains(collegeFromLine)) {
-//                // Add in programsInColleges 2D ArrayList
-//                programsInColleges.add(collegeArrayList);
-//                // Add in colleges ArrayList
-//                colleges.add(collegeFromLine);
-//            }
-//
-//            //----- Add new program in a college in programInCollege ArrayList
-//
-//            // Note: collegeAndPrograms is an ArrayList in programsInColleges
-//            for (ArrayList<String> collegeAndPrograms: programsInColleges) {
-//                // Check if the current college is the same with the college that is being searched
-//                // AND if that college doesn't already contain the current program
-//
-//                if (collegeFromLine.equals(collegeAndPrograms.getFirst()) && !collegeAndPrograms.contains(programFromLine)) {
-//                    collegeAndPrograms.add(programFromLine);
-//                    break;
-//                }
-//            }
-//        }
     }
 }

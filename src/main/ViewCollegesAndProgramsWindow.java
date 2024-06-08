@@ -12,12 +12,11 @@ import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 public class ViewCollegesAndProgramsWindow {
     // Made another ArrayList for colleges to make it more accessible as opposed to traversing a nested ArrayList
     ArrayList<String> colleges;
-
     ArrayList<ArrayList<ArrayList<String>>> dataFromCollegesAndProgramsCSV;
     JTable collegesTable = new JTable();
     JTable programsTable = new JTable();
     Object[] collegesColumns = {"Colleges"};
-    Object[] programsColumns = {""};
+    Object[] programsColumns = {"",""};
 
     // Override isCellEditable of DefaultTableModel
     DefaultTableModel collegesTableModel = new DefaultTableModel();
@@ -33,7 +32,6 @@ public class ViewCollegesAndProgramsWindow {
     JScrollPane programsTablePane = new JScrollPane(programsTable);
     JDialog collegesListDialog = new JDialog();
     JDialog programsListDialog = new JDialog();
-
     ButtonRenderer buttonRenderer = new ButtonRenderer();
 
     // Plan: Pass main.ViewCollegesAndProgramsWindow object into main.ButtonEditor so that main.ButtonEditor will have access to
@@ -42,6 +40,8 @@ public class ViewCollegesAndProgramsWindow {
     DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 
     ArrayList<ArrayList<String>> chosenCollegeAndItsPrograms;
+
+    JLabel chosenCollegeTitle = new JLabel("");
 
     ViewCollegesAndProgramsWindow(ArrayList<String> colleges, ArrayList<ArrayList<ArrayList<String>>> dataFromCollegesAndProgramsCSV){
         this.colleges = colleges;
@@ -128,17 +128,21 @@ public class ViewCollegesAndProgramsWindow {
             programsListDialog.setAlwaysOnTop(true);
 
             // Set table title
-            programsColumns[0] = "Programs in " + collegePrompt;
+            programsColumns[0] = "Program code";
+            programsColumns[1] = "Program title";
+
 
             // Creation of table
             programsTableModel.setColumnIdentifiers(programsColumns);
             programsTable.setModel(programsTableModel);
 
+            // Set column width
+            programsTable.getColumnModel().getColumn(0).setPreferredWidth(165);
+            programsTable.getColumnModel().getColumn(0).setMaxWidth(165);
 
             //      Set font of header
-            programsTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 30));
+            programsTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 20));
 
-//            programsTable.setBackground(Color.LIGHT_GRAY);
             programsTable.setSelectionForeground(Color.BLACK);
             programsTable.setGridColor(Color.BLACK);
             programsTable.setFont(new Font("Arial", Font.BOLD, 20));
@@ -147,23 +151,22 @@ public class ViewCollegesAndProgramsWindow {
             programsTable.setDefaultEditor(Object.class, null);
             programsTable.getTableHeader().setReorderingAllowed(false);
 
-
             //      Put text in center
             centerRenderer.setHorizontalAlignment(JLabel.CENTER);
             programsTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+            programsTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+
 
             // Set properties of the pane
-            programsTablePane.setForeground(Color.RED);
-//            programsTablePane.setBackground(Color.WHITE);
             programsTablePane.setBounds(0, 0, 480, 375);
-
 
             // Reset the table each time
             programsTableModel.setRowCount(0);
 
             for (ArrayList<String> eachElementInACurrentCollegeAndItsPrograms: this.chosenCollegeAndItsPrograms){
                 if(this.chosenCollegeAndItsPrograms.indexOf(eachElementInACurrentCollegeAndItsPrograms) != 0){
-                    programsTableModel.addRow(new Object[]{eachElementInACurrentCollegeAndItsPrograms.getFirst()});
+                    // Adds the first and second elements in ArrayList
+                    programsTableModel.addRow(new Object[]{eachElementInACurrentCollegeAndItsPrograms.getFirst(), eachElementInACurrentCollegeAndItsPrograms.get(1)});
                 }
             }
 

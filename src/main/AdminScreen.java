@@ -69,7 +69,7 @@ public class AdminScreen extends JPanel implements ActionListener{
                 eventTitle = JOptionPane.showInputDialog(null, "To proceed, input a name for the event.", "",
                             JOptionPane.QUESTION_MESSAGE);
 
-                if(eventTitle != null && !eventTitle.isEmpty() && eventTitle.length() <= 20){
+                if(eventTitle != null && !eventTitle.isEmpty() && !eventTitle.isBlank() && eventTitle.length() <= 20){
                     break;
                 } else if(eventTitle == null){
                     eventTitleCancel = true;

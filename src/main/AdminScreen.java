@@ -69,18 +69,20 @@ public class AdminScreen extends JPanel implements ActionListener{
                 eventTitle = JOptionPane.showInputDialog(null, "To proceed, input a name for the event.", "",
                             JOptionPane.QUESTION_MESSAGE);
 
-                if(eventTitle != null && !eventTitle.isEmpty()){
+                if(eventTitle != null && !eventTitle.isEmpty() && eventTitle.length() <= 20){
                     break;
-
                 } else if(eventTitle == null){
                     eventTitleCancel = true;
                     break;
-                }
-                else{
+                } else if(eventTitle.length() > 20){
+                    JOptionPane.showMessageDialog(null, "The name of the event is too long (should be less than or equal to 5 characters).",
+                            "", JOptionPane.WARNING_MESSAGE);
+                } else{
                     JOptionPane.showMessageDialog(null, "Input a name for the event to proceed.",
                                             "", JOptionPane.WARNING_MESSAGE);
                 }
             }
+
             this.dataFromCSV = new ArrayList<>();
 
             this.tableHolder.setTitle(eventTitle);

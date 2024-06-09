@@ -46,7 +46,7 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                     eventTitleCancel = true;
                     break;
                 } else if(eventTitle.length() > 20){
-                    JOptionPane.showMessageDialog(null, "The name of the event is too long (should be less than or equal to 5 characters).",
+                    JOptionPane.showMessageDialog(null, "The name of the event is too long (should be less than or equal to 20 characters).",
                             "", JOptionPane.WARNING_MESSAGE);
                 } else{
                     JOptionPane.showMessageDialog(null, "Input a name for the event to proceed.",

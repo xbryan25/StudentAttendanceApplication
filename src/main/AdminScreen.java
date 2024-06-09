@@ -75,7 +75,7 @@ public class AdminScreen extends JPanel implements ActionListener{
                     eventTitleCancel = true;
                     break;
                 } else if(eventTitle.length() > 20){
-                    JOptionPane.showMessageDialog(null, "The name of the event is too long (should be less than or equal to 5 characters).",
+                    JOptionPane.showMessageDialog(null, "The name of the event is too long (should be less than or equal to 20 characters).",
                             "", JOptionPane.WARNING_MESSAGE);
                 } else{
                     JOptionPane.showMessageDialog(null, "Input a name for the event to proceed.",
@@ -294,7 +294,6 @@ public class AdminScreen extends JPanel implements ActionListener{
                                          "", JOptionPane.INFORMATION_MESSAGE);
             }
         }
-
         else if(e.getSource() == addProgramsButton) {
             if (colleges.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "No college added. Please add a college.",
@@ -421,23 +420,25 @@ public class AdminScreen extends JPanel implements ActionListener{
                 new ViewCollegesAndProgramsWindow(colleges, dataFromCollegesAndProgramsCSV);
             }
         }
-        else if(e.getSource() == renameEvent){
-            while(true){
-                eventTitle = JOptionPane.showInputDialog(null, "Input a name to rename the event.", "",
+        else if(e.getSource() == renameEvent) {
+            while (true) {
+                eventTitle = JOptionPane.showInputDialog(null, "To proceed, input a name for the event.", "",
                         JOptionPane.QUESTION_MESSAGE);
 
-                if(eventTitle != null && !eventTitle.isEmpty()){
-                    tableHolder.setTitle(eventTitle);
+                if (eventTitle != null && !eventTitle.isEmpty() && eventTitle.length() <= 20) {
                     break;
-
-                } else if(eventTitle == null){
+                } else if (eventTitle == null) {
+                    eventTitleCancel = true;
                     break;
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, "Name cannot be blank. Try again.",
+                } else if (eventTitle.length() > 20) {
+                    JOptionPane.showMessageDialog(null, "The name of the event is too long (should be less than or equal to 20 characters).",
+                            "", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Input a name for the event to proceed.",
                             "", JOptionPane.WARNING_MESSAGE);
                 }
             }
+            this.tableHolder.setTitle(eventTitle);
 
             JOptionPane.showMessageDialog(null, "Event successfully renamed to " + eventTitle + ".",
                     "", JOptionPane.INFORMATION_MESSAGE);

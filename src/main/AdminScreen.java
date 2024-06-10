@@ -33,7 +33,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class AdminScreen extends JPanel implements ActionListener{
-    String databaseName = "src\\assets\\stddb.csv";
+    String studentsDatabasePath = "src\\assets\\stddb.csv";
+    String collegesAndProgramsDatabasePath = "src\\assets\\cpdb.csv";
     JButton backButton = new JButton("←");
     JButton deleteStudentButtonByRow = new JButton("Delete Student (Row)");
     JButton deleteStudentButtonByID = new JButton("Delete Student (ID)");
@@ -41,6 +42,7 @@ public class AdminScreen extends JPanel implements ActionListener{
     JButton addCollegesButton = new JButton("Add colleges");
     JButton viewCollegesAndProgramsButton = new JButton("View colleges and programs");
     JButton renameEvent = new JButton("Rename event");
+    JButton saveCollegesAndPrograms = new JButton("Save colleges and programs");
     JButton saveProgress = new JButton("Save progress");
     JButton endAttendance = new JButton("End attendance");
 
@@ -135,6 +137,11 @@ public class AdminScreen extends JPanel implements ActionListener{
             renameEvent.addActionListener(this);
             renameEvent.setFocusable(false);
 
+            saveCollegesAndPrograms.setPreferredSize(new Dimension(200, 30));
+            saveCollegesAndPrograms.setFont(new Font("Arial", Font.BOLD, 12));
+            saveCollegesAndPrograms.addActionListener(this);
+            saveCollegesAndPrograms.setFocusable(false);
+
             saveProgress.setPreferredSize(new Dimension(200, 30));
             saveProgress.setFont(new Font("Arial", Font.BOLD, 12));
             saveProgress.addActionListener(this);
@@ -166,7 +173,7 @@ public class AdminScreen extends JPanel implements ActionListener{
             this.add(deleteStudentButtonByID, gbc);
 
             // Add blank label to add space
-            gbc.insets = new Insets(10, 0, 0, 0);
+            gbc.insets = new Insets(0, 0, 0, 0);
 
             gbc.gridx = 0;
             gbc.gridy = 3;
@@ -200,7 +207,7 @@ public class AdminScreen extends JPanel implements ActionListener{
             this.add(renameEvent, gbc);
 
             // Add blank label to add space
-            gbc.insets = new Insets(10, 0, 0, 0);
+            gbc.insets = new Insets(0, 0, 0, 0);
 
             gbc.gridx = 0;
             gbc.gridy = 8;
@@ -212,17 +219,24 @@ public class AdminScreen extends JPanel implements ActionListener{
             gbc.gridx = 0;
             gbc.gridy = 9;
 
-            this.add(saveProgress, gbc);
+            this.add(saveCollegesAndPrograms, gbc);
 
             gbc.insets = new Insets(10, 0, 0, 0);
 
             gbc.gridx = 0;
             gbc.gridy = 10;
 
-            this.add(endAttendance, gbc);
+            this.add(saveProgress, gbc);
+
+            gbc.insets = new Insets(10, 0, 0, 0);
 
             gbc.gridx = 0;
             gbc.gridy = 11;
+
+            this.add(endAttendance, gbc);
+
+            gbc.gridx = 0;
+            gbc.gridy = 12;
             gbc.weightx = 1;
             gbc.weighty = 1;
             this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft
@@ -368,7 +382,7 @@ public class AdminScreen extends JPanel implements ActionListener{
                         }
                     }
 
-                    if (!doesProgramExist){
+                    if (!doesProgramExist && checkFirst){
                         ArrayList<String> programAndItsTitleArrayList = new ArrayList<>();
                         programAndItsTitleArrayList.add(programCode);
                         programAndItsTitleArrayList.add(programTitle);
@@ -406,6 +420,17 @@ public class AdminScreen extends JPanel implements ActionListener{
                 }
                 else{
                     colleges.add(program);
+
+                    // Make a 2D ArrayList for the new college
+
+                    ArrayList<ArrayList<String>> newCollegeAndItsProgramsArrayList = new ArrayList<>();
+                    ArrayList<String> newCollegeTitle = new ArrayList<>();
+
+                    newCollegeTitle.add(program);
+                    newCollegeAndItsProgramsArrayList.add(newCollegeTitle);
+
+                    dataFromCollegesAndProgramsCSV.add(newCollegeAndItsProgramsArrayList);
+
                     JOptionPane.showMessageDialog(null, program + " successfully added.",
                             "", JOptionPane.INFORMATION_MESSAGE);
                     break;
@@ -446,12 +471,43 @@ public class AdminScreen extends JPanel implements ActionListener{
                         "", JOptionPane.INFORMATION_MESSAGE);
             }
         }
+        else if(e.getSource() == saveCollegesAndPrograms){
+            if (dataFromCollegesAndProgramsCSV.isEmpty()){
+                JOptionPane.showMessageDialog(null, "No data yet. Add colleges and programs first.",
+                        "", JOptionPane.WARNING_MESSAGE);
+            } else{
+                try (FileWriter writer = new FileWriter(collegesAndProgramsDatabasePath)){
+
+                    for(ArrayList<ArrayList<String>> aCollegeAndItsPrograms: dataFromCollegesAndProgramsCSV){
+                        for(ArrayList<String> eachElementInACollegeAndItsPrograms: aCollegeAndItsPrograms){
+                            if (aCollegeAndItsPrograms.indexOf(eachElementInACollegeAndItsPrograms) == 0){
+                                writer.write("--"+ eachElementInACollegeAndItsPrograms.getFirst() +"--\n");
+                            } else if (aCollegeAndItsPrograms.indexOf(eachElementInACollegeAndItsPrograms) != eachElementInACollegeAndItsPrograms.size() - 1){
+                                writer.write(eachElementInACollegeAndItsPrograms.getFirst() + "," + eachElementInACollegeAndItsPrograms.get(1) + "\n");
+                            } else{
+                                writer.write(eachElementInACollegeAndItsPrograms.getFirst() + "," + eachElementInACollegeAndItsPrograms.get(1) + "\n\n");
+                            }
+
+                        }
+                    }
+
+                    writer.write("--End of data--");
+
+                    JOptionPane.showMessageDialog(null, "Progress successfully saved.",
+                            "", JOptionPane.INFORMATION_MESSAGE);
+
+                    writer.flush();
+                } catch(IOException error){
+                    System.out.println(error.getMessage());
+                }
+            }
+        }
         else if(e.getSource() == saveProgress){
             if (!frame.tableHasData){
                 JOptionPane.showMessageDialog(null, "No data yet. Add students first.",
                         "", JOptionPane.WARNING_MESSAGE);
             } else{
-                try (FileWriter writer = new FileWriter(databaseName)){
+                try (FileWriter writer = new FileWriter(studentsDatabasePath)){
                     String[] tableColumns = {"ID Number", "First Name", "Last Name", "Program", "College"};
 
                     writer.write("Event title: " + eventTitle + "\n");
@@ -570,7 +626,7 @@ public class AdminScreen extends JPanel implements ActionListener{
                 }
 
                 // Erase all contents in database.csv
-                try (FileWriter writer = new FileWriter(databaseName)){
+                try (FileWriter writer = new FileWriter(studentsDatabasePath)){
                     String[] tableColumns = {"ID Number", "First Name", "Last Name", "Program", "College"};
 
                     writer.write("Event title:\n");

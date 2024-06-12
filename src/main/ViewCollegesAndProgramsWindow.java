@@ -22,12 +22,6 @@ public class ViewCollegesAndProgramsWindow {
     DefaultTableModel collegesTableModel = new DefaultTableModel();
     DefaultTableModel programsTableModel = new DefaultTableModel();
 
-//    {
-//        @Override
-//        public boolean isCellEditable(int row, int column) {
-//            return column == 0;
-//        }
-//    };
     JScrollPane collegesTablePane = new JScrollPane(collegesTable);
     JScrollPane programsTablePane = new JScrollPane(programsTable);
     JDialog collegesListDialog = new JDialog();
@@ -46,8 +40,6 @@ public class ViewCollegesAndProgramsWindow {
     ViewCollegesAndProgramsWindow(ArrayList<String> colleges, ArrayList<ArrayList<ArrayList<String>>> dataFromCollegesAndProgramsCSV){
         this.colleges = colleges;
         this.dataFromCollegesAndProgramsCSV = dataFromCollegesAndProgramsCSV;
-//        this.colleges = colleges;
-//        this.programsInColleges = programsInColleges;
 
         // Set properties of the JDialog
         collegesListDialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);

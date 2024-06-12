@@ -424,6 +424,13 @@ public class AdminScreen extends JPanel implements ActionListener{
                 }
             }
         }
+        else if(e.getSource() == deleteProgramsButton){
+            if (!colleges.isEmpty()){
+                Object[] collegesObject = objectColleges(colleges);
+
+                // TODO: To be followed after delete colleges button
+            }
+        }
         else if(e.getSource() == addCollegesButton) {
             String program;
 
@@ -460,6 +467,45 @@ public class AdminScreen extends JPanel implements ActionListener{
                     break;
                 }
             }
+        }
+        else if(e.getSource() == deleteCollegesButton){
+            if (!colleges.isEmpty()){
+                Object[] collegesObject = objectColleges(colleges);
+                int[] numOfProgramsInCollegesArray = numOfProgramsInColleges();
+
+                Object collegeToDelete;
+                int collegeToDeleteIndex = 0;
+
+
+                // TODO: Not null safe (if the user presses cancel, the application will break)
+                collegeToDelete = JOptionPane.showInputDialog(null, "Choose a college to delete",
+                        "", JOptionPane.QUESTION_MESSAGE, null, collegesObject,
+                        collegesObject[0]);
+
+                // The objective here is to get the index of the college to be deleted
+                // to check if it has contents (programs) or not
+                for (int i = 0; i < collegesObject.length; i++){
+                    if (collegeToDelete.toString().equals(collegesObject[i].toString())){
+                        collegeToDeleteIndex = i;
+                        break;
+                    }
+                }
+
+                if (numOfProgramsInCollegesArray[collegeToDeleteIndex] > 0){
+                    int decision = JOptionPane.showConfirmDialog(null, "This college has contents, would you still like to delete this college?",
+                            "", JOptionPane.YES_NO_OPTION);
+
+                    if (decision == 0){
+                        dataFromCollegesAndProgramsCSV.remove(collegeToDeleteIndex);
+                        colleges.remove(collegeToDeleteIndex);
+
+                        JOptionPane.showMessageDialog(null, collegeToDelete + " has been deleted successfully",
+                                "", JOptionPane.INFORMATION_MESSAGE);
+
+                    }
+                }
+            }
+
         }
         else if(e.getSource() == viewCollegesAndProgramsButton){
             if(colleges.isEmpty()){
@@ -686,6 +732,16 @@ public class AdminScreen extends JPanel implements ActionListener{
             objectCtr++;
         }
         return collegesInObject;
+    }
+
+    public int[] numOfProgramsInColleges(){
+        int[] numOfProgramsInCollegesArray = new int[dataFromCollegesAndProgramsCSV.size()];
+
+        for (ArrayList<ArrayList<String>> aCollegeAndItsPrograms: dataFromCollegesAndProgramsCSV){
+            numOfProgramsInCollegesArray[dataFromCollegesAndProgramsCSV.indexOf(aCollegeAndItsPrograms)] = aCollegeAndItsPrograms.size() - 1;
+        }
+
+        return numOfProgramsInCollegesArray;
     }
 
     public void initializeCollegesAndProgramsInColleges(){

@@ -10,16 +10,15 @@ public class TableHolder extends JPanel{
 
     JLabel eventTitle = new JLabel();
 
-    ArrayList<String[]> dataFromCSV;
+    ArrayList<String[]> dataFromStudentCSV;
 
     TableHolder(ArrayList<String[]> dataFromCSV, DefaultTableModel tableData, boolean tableHasData){
         if (!tableHasData) {
-            this.dataFromCSV = dataFromCSV;
+            this.dataFromStudentCSV = dataFromCSV;
 
             table = new AttendanceTable(dataFromCSV, tableData, tableHasData);
 
             this.setLayout(null);
-//            this.setBackground(Color.ORANGE);
             this.setBounds(0, 0, 500, 500);
 
             eventTitle.setHorizontalAlignment(JLabel.CENTER);
@@ -48,7 +47,7 @@ public class TableHolder extends JPanel{
 
     // This method fills the table with data from the CSV
     public void initializeTable(){
-        for(String[] row: dataFromCSV){
+        for(String[] row: dataFromStudentCSV){
             table.model.addRow(row);
         }
     }

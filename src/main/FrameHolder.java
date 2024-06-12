@@ -102,7 +102,7 @@ public class FrameHolder extends JFrame{
 
             hasInitialized = true;
 
-            this.setSize(750, 500);
+            this.setSize(750, 550);
 
             this.add(attendanceScreen);
             this.add(tableHolder);
@@ -139,7 +139,7 @@ public class FrameHolder extends JFrame{
 
             hasInitialized = true;
 
-            this.setSize(750, 500);
+            this.setSize(750, 550);
 
             this.add(adminScreen);
             this.add(tableHolder);

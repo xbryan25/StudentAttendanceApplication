@@ -68,7 +68,7 @@ public class AttendanceScreen extends JPanel implements ActionListener{
 
         if (!eventTitleCancel){
             this.setLayout(new GridBagLayout());
-            this.setBounds(500, 0, 250, 500);
+            this.setBounds(500, 0, 250, 550);
 
             backButton.setPreferredSize(new Dimension(65, 30));
             backButton.setFont(new Font("Arial", Font.BOLD, 30));
@@ -76,7 +76,7 @@ public class AttendanceScreen extends JPanel implements ActionListener{
             backButton.setFocusable(false);
 
             addStudentButton.setPreferredSize(new Dimension(180, 30));
-            addStudentButton.setFont(new Font("Arial", Font.BOLD, 20));
+            addStudentButton.setFont(new Font("Arial", Font.BOLD, 16));
             addStudentButton.addActionListener(this);
             addStudentButton.setFocusable(false);
 
@@ -87,27 +87,27 @@ public class AttendanceScreen extends JPanel implements ActionListener{
 
             // Positioning of buttons starts here
 
-            gbc.insets = new Insets(10, 0, 0, 10);
+            gbc.insets = new Insets(20, 0, 0, 20);
 
             gbc.gridx = 0;
             gbc.gridy = 0;
             this.add(backButton, gbc);
 
-            gbc.insets = new Insets(35, 0, 0, 0);
+            gbc.insets = new Insets(25, 0, 0, 20);
 
             gbc.gridx = 0;
             gbc.gridy = 1;
             this.add(addStudentButton, gbc);
 
             // Add blank label to add space
-            gbc.insets = new Insets(10, 0, 0, 0);
+            gbc.insets = new Insets(0, 0, 0, 0);
 
             gbc.gridx = 0;
             gbc.gridy = 2;
 
             this.add(new JLabel(" "), gbc);
 
-            gbc.insets = new Insets(10, 0, 0, 0);
+            gbc.insets = new Insets(10, 0, 0, 20);
 
             gbc.gridx = 0;
             gbc.gridy = 3;

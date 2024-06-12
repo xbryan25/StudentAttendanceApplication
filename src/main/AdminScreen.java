@@ -39,7 +39,9 @@ public class AdminScreen extends JPanel implements ActionListener{
     JButton deleteStudentButtonByRow = new JButton("Delete Student (Row)");
     JButton deleteStudentButtonByID = new JButton("Delete Student (ID)");
     JButton addProgramsButton = new JButton("Add programs");
+    JButton deleteProgramsButton = new JButton("Delete programs");
     JButton addCollegesButton = new JButton("Add colleges");
+    JButton deleteCollegesButton = new JButton("Delete colleges");
     JButton viewCollegesAndProgramsButton = new JButton("View colleges and programs");
     JButton renameEvent = new JButton("Rename event");
     JButton saveCollegesAndPrograms = new JButton("Save colleges and programs");
@@ -53,13 +55,13 @@ public class AdminScreen extends JPanel implements ActionListener{
 
     ArrayList<String> colleges = new ArrayList<>();
 
-    ArrayList<String[]> dataFromCSV;
+    ArrayList<String[]> dataFromStudentCSV;
     ArrayList<ArrayList<ArrayList<String>>> dataFromCollegesAndProgramsCSV;
 
     String eventTitle;
     boolean eventTitleCancel = false;
 
-    AdminScreen(FrameHolder frame, TableHolder tableHolder, ArrayList<String[]> dataFromCSV, ArrayList<ArrayList<ArrayList<String>>> dataFromCollegesAndProgramsCSV,
+    AdminScreen(FrameHolder frame, TableHolder tableHolder, ArrayList<String[]> dataFromStudentCSV, ArrayList<ArrayList<ArrayList<String>>> dataFromCollegesAndProgramsCSV,
                 boolean hasInitialized, ArrayList<String> collegesData) {
 
         this.frame = frame;
@@ -85,7 +87,7 @@ public class AdminScreen extends JPanel implements ActionListener{
                 }
             }
 
-            this.dataFromCSV = new ArrayList<>();
+            this.dataFromStudentCSV = new ArrayList<>();
 
             this.tableHolder.setTitle(eventTitle);
 
@@ -95,12 +97,12 @@ public class AdminScreen extends JPanel implements ActionListener{
             frame.databaseStartDate = dateTimeFormat.format(timeNow);
         } else{
             this.eventTitle = frame.eventTitle;
-            this.dataFromCSV = dataFromCSV;
+            this.dataFromStudentCSV = dataFromStudentCSV;
         }
 
         if (!eventTitleCancel){
             this.setLayout(new GridBagLayout());
-            this.setBounds(500, 0, 250, 500);
+            this.setBounds(500, 0, 250, 550);
 
             backButton.setPreferredSize(new Dimension(65, 30));
             backButton.setFont(new Font("Arial", Font.BOLD, 30));
@@ -117,15 +119,25 @@ public class AdminScreen extends JPanel implements ActionListener{
             deleteStudentButtonByID.addActionListener(this);
             deleteStudentButtonByID.setFocusable(false);
 
+            addProgramsButton.setPreferredSize(new Dimension(200, 30));
+            addProgramsButton.setFont(new Font("Arial", Font.BOLD, 16));
+            addProgramsButton.addActionListener(this);
+            addProgramsButton.setFocusable(false);
+
+            deleteProgramsButton.setPreferredSize(new Dimension(200, 30));
+            deleteProgramsButton.setFont(new Font("Arial", Font.BOLD, 16));
+            deleteProgramsButton.addActionListener(this);
+            deleteProgramsButton.setFocusable(false);
+
             addCollegesButton.setPreferredSize(new Dimension(200, 30));
-            addCollegesButton.setFont(new Font("Arial", Font.BOLD, 12));
+            addCollegesButton.setFont(new Font("Arial", Font.BOLD, 16));
             addCollegesButton.addActionListener(this);
             addCollegesButton.setFocusable(false);
 
-            addProgramsButton.setPreferredSize(new Dimension(200, 30));
-            addProgramsButton.setFont(new Font("Arial", Font.BOLD, 12));
-            addProgramsButton.addActionListener(this);
-            addProgramsButton.setFocusable(false);
+            deleteCollegesButton.setPreferredSize(new Dimension(200, 30));
+            deleteCollegesButton.setFont(new Font("Arial", Font.BOLD, 16));
+            deleteCollegesButton.addActionListener(this);
+            deleteCollegesButton.setFocusable(false);
 
             viewCollegesAndProgramsButton.setPreferredSize(new Dimension(200, 30));
             viewCollegesAndProgramsButton.setFont(new Font("Arial", Font.BOLD, 12));
@@ -133,7 +145,7 @@ public class AdminScreen extends JPanel implements ActionListener{
             viewCollegesAndProgramsButton.setFocusable(false);
 
             renameEvent.setPreferredSize(new Dimension(200, 30));
-            renameEvent.setFont(new Font("Arial", Font.BOLD, 12));
+            renameEvent.setFont(new Font("Arial", Font.BOLD, 16));
             renameEvent.addActionListener(this);
             renameEvent.setFocusable(false);
 
@@ -143,100 +155,112 @@ public class AdminScreen extends JPanel implements ActionListener{
             saveCollegesAndPrograms.setFocusable(false);
 
             saveProgress.setPreferredSize(new Dimension(200, 30));
-            saveProgress.setFont(new Font("Arial", Font.BOLD, 12));
+            saveProgress.setFont(new Font("Arial", Font.BOLD, 16));
             saveProgress.addActionListener(this);
             saveProgress.setFocusable(false);
 
             endAttendance.setPreferredSize(new Dimension(200, 30));
-            endAttendance.setFont(new Font("Arial", Font.BOLD, 12));
+            endAttendance.setFont(new Font("Arial", Font.BOLD, 16));
             endAttendance.addActionListener(this);
             endAttendance.setFocusable(false);
 
             // Positioning of buttons starts here
 
-            gbc.insets = new Insets(10, 0, 0, 10);
+            gbc.insets = new Insets(20, 0, 0, 20);
 
             gbc.gridx = 0;
             gbc.gridy = 0;
             this.add(backButton, gbc);
 
-            gbc.insets = new Insets(10, 0, 0, 0);
+            gbc.insets = new Insets(25, 0, 0, 20);
 
             gbc.gridx = 0;
             gbc.gridy = 1;
             this.add(deleteStudentButtonByRow, gbc);
 
-            gbc.insets = new Insets(10, 0, 0, 0);
+            gbc.insets = new Insets(5, 0, 0, 20);
 
             gbc.gridx = 0;
             gbc.gridy = 2;
             this.add(deleteStudentButtonByID, gbc);
 
             // Add blank label to add space
-            gbc.insets = new Insets(0, 0, 0, 0);
+            gbc.insets = new Insets(0, 0, 0, 20);
 
             gbc.gridx = 0;
             gbc.gridy = 3;
 
             this.add(new JLabel(" "), gbc);
 
-            gbc.insets = new Insets(10, 0, 0, 0);
+            gbc.insets = new Insets(10, 0, 0, 20);
 
             gbc.gridx = 0;
             gbc.gridy = 4;
             this.add(addProgramsButton, gbc);
 
-            gbc.insets = new Insets(10, 0, 0, 0);
+            gbc.insets = new Insets(5, 0, 0, 20);
 
             gbc.gridx = 0;
             gbc.gridy = 5;
-            this.add(addCollegesButton, gbc);
+            this.add(deleteProgramsButton, gbc);
 
-            gbc.insets = new Insets(10, 0, 0, 0);
+            gbc.insets = new Insets(5, 0, 0, 20);
 
             gbc.gridx = 0;
             gbc.gridy = 6;
+            this.add(addCollegesButton, gbc);
 
-            this.add(viewCollegesAndProgramsButton, gbc);
-
-            gbc.insets = new Insets(10, 0, 0, 0);
+            gbc.insets = new Insets(5, 0, 0, 20);
 
             gbc.gridx = 0;
             gbc.gridy = 7;
+            this.add(deleteCollegesButton, gbc);
 
-            this.add(renameEvent, gbc);
-
-            // Add blank label to add space
-            gbc.insets = new Insets(0, 0, 0, 0);
+            gbc.insets = new Insets(5, 0, 0, 20);
 
             gbc.gridx = 0;
             gbc.gridy = 8;
 
-            this.add(new JLabel(" "), gbc);
+            this.add(viewCollegesAndProgramsButton, gbc);
 
-            gbc.insets = new Insets(10, 0, 0, 0);
+            gbc.insets = new Insets(5, 0, 0, 20);
 
             gbc.gridx = 0;
             gbc.gridy = 9;
 
-            this.add(saveCollegesAndPrograms, gbc);
+            this.add(renameEvent, gbc);
 
-            gbc.insets = new Insets(10, 0, 0, 0);
+            // Add blank label to add space
+            gbc.insets = new Insets(0, 0, 0, 20);
 
             gbc.gridx = 0;
             gbc.gridy = 10;
 
-            this.add(saveProgress, gbc);
+            this.add(new JLabel(" "), gbc);
 
-            gbc.insets = new Insets(10, 0, 0, 0);
+            gbc.insets = new Insets(10, 0, 0, 20);
 
             gbc.gridx = 0;
             gbc.gridy = 11;
 
-            this.add(endAttendance, gbc);
+            this.add(saveCollegesAndPrograms, gbc);
+
+            gbc.insets = new Insets(5, 0, 0, 20);
 
             gbc.gridx = 0;
             gbc.gridy = 12;
+
+            this.add(saveProgress, gbc);
+
+            gbc.insets = new Insets(5, 0, 0, 20);
+
+            gbc.gridx = 0;
+            gbc.gridy = 13;
+
+            this.add(endAttendance, gbc);
+
+            gbc.gridx = 0;
+            gbc.gridy = 14;
             gbc.weightx = 1;
             gbc.weighty = 1;
             this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft

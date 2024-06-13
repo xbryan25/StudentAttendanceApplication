@@ -32,7 +32,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class AdminScreen extends JPanel implements ActionListener{
+public class AdminScreen extends JPanel implements ActionListener {
     String studentsDatabasePath = "src\\assets\\stddb.csv";
     String collegesAndProgramsDatabasePath = "src\\assets\\cpdb.csv";
     JButton backButton = new JButton("←");
@@ -68,22 +68,22 @@ public class AdminScreen extends JPanel implements ActionListener{
         this.tableHolder = tableHolder;
         this.dataFromCollegesAndProgramsCSV = dataFromCollegesAndProgramsCSV;
 
-        if (!frame.hasEventTitle){
-            while(true){
+        if (!frame.hasEventTitle) {
+            while (true) {
                 eventTitle = JOptionPane.showInputDialog(null, "To proceed, input a name for the event.", "",
-                            JOptionPane.QUESTION_MESSAGE);
+                        JOptionPane.QUESTION_MESSAGE);
 
-                if(eventTitle != null && !eventTitle.isEmpty() && !eventTitle.isBlank() && eventTitle.length() <= 20){
+                if (eventTitle != null && !eventTitle.isEmpty() && !eventTitle.isBlank() && eventTitle.length() <= 20) {
                     break;
-                } else if(eventTitle == null){
+                } else if (eventTitle == null) {
                     eventTitleCancel = true;
                     break;
-                } else if(eventTitle.length() > 20){
+                } else if (eventTitle.length() > 20) {
                     JOptionPane.showMessageDialog(null, "The name of the event is too long (should be less than or equal to 20 characters).",
                             "", JOptionPane.WARNING_MESSAGE);
-                } else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Input a name for the event to proceed.",
-                                            "", JOptionPane.WARNING_MESSAGE);
+                            "", JOptionPane.WARNING_MESSAGE);
                 }
             }
 
@@ -95,12 +95,12 @@ public class AdminScreen extends JPanel implements ActionListener{
             DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
             LocalDateTime timeNow = LocalDateTime.now();
             frame.databaseStartDate = dateTimeFormat.format(timeNow);
-        } else{
+        } else {
             this.eventTitle = frame.eventTitle;
             this.dataFromStudentCSV = dataFromStudentCSV;
         }
 
-        if (!eventTitleCancel){
+        if (!eventTitleCancel) {
             this.setLayout(new GridBagLayout());
             this.setBounds(500, 0, 250, 550);
 
@@ -265,10 +265,10 @@ public class AdminScreen extends JPanel implements ActionListener{
             gbc.weighty = 1;
             this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft
 
-            if (!hasInitialized){
+            if (!hasInitialized) {
                 // Initalize colleges ArrayList with a college that already exists in the database
                 initializeCollegesAndProgramsInColleges();
-            } else{
+            } else {
                 colleges = collegesData;
             }
         }
@@ -276,10 +276,10 @@ public class AdminScreen extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == backButton) {
+        if (e.getSource() == backButton) {
             this.frame.changeToIntroScreen(3);
         }
-        else if(e.getSource() == deleteStudentButtonByRow){
+        else if (e.getSource() == deleteStudentButtonByRow) {
             // Typecast to DefaultTableModel since it only gives TableModel
 
             DefaultTableModel tableModel = (DefaultTableModel) tableHolder.table.mainTable.getModel();
@@ -287,52 +287,52 @@ public class AdminScreen extends JPanel implements ActionListener{
             int selectedRowCount = tableHolder.table.mainTable.getSelectedRowCount();
             int selectedRow = tableHolder.table.mainTable.getSelectedRow();
 
-            if (selectedRowCount == 1){
+            if (selectedRowCount == 1) {
                 tableModel.removeRow(selectedRow);
-            } else if (selectedRowCount == 0){
+            } else if (selectedRowCount == 0) {
                 JOptionPane.showMessageDialog(null, "No row selected. Select a row to delete.",
                         "", JOptionPane.WARNING_MESSAGE);
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Multiple rows selected. Only select one to delete.",
                         "", JOptionPane.WARNING_MESSAGE);
             }
         }
-        else if(e.getSource() == deleteStudentButtonByID){
+        else if (e.getSource() == deleteStudentButtonByID) {
             String IDToDelete;
             boolean IDIsFound = false;
 
-            do{
+            do {
                 IDToDelete = JOptionPane.showInputDialog(null, "Input ID Number of the student",
                         "", JOptionPane.QUESTION_MESSAGE);
 
-                if (IDToDelete != null && !IDToDelete.isEmpty()){
+                if (IDToDelete != null && !IDToDelete.isEmpty()) {
                     break;
-                } else if (IDToDelete == null){
+                } else if (IDToDelete == null) {
                     return;
-                } else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Input an ID Number.",
-                                            "", JOptionPane.WARNING_MESSAGE);
+                            "", JOptionPane.WARNING_MESSAGE);
                 }
-            } while(true);
+            } while (true);
 
             // Gets the data from the table
             DefaultTableModel tableModel = tableHolder.table.model;
 
-            for (int count = 0; count < tableModel.getRowCount(); count++){
+            for (int count = 0; count < tableModel.getRowCount(); count++) {
                 String currentIDInModel = tableModel.getValueAt(count, 0).toString();
-                if (IDToDelete.equals(currentIDInModel)){
+                if (IDToDelete.equals(currentIDInModel)) {
                     tableModel.removeRow(count);
                     IDIsFound = true;
                     break;
                 }
             }
 
-            if (!IDIsFound){
+            if (!IDIsFound) {
                 JOptionPane.showMessageDialog(null, "ID Number cannot be found in the table.",
-                                         "", JOptionPane.INFORMATION_MESSAGE);
+                        "", JOptionPane.INFORMATION_MESSAGE);
             }
         }
-        else if(e.getSource() == addProgramsButton) {
+        else if (e.getSource() == addProgramsButton) {
             if (colleges.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "No college added. Please add a college.",
                         "", JOptionPane.WARNING_MESSAGE);
@@ -340,7 +340,7 @@ public class AdminScreen extends JPanel implements ActionListener{
                 String programCode = "";
                 String programTitle = "";
                 Object programsCollege = "";
-                Object[] collegesObject = objectColleges(colleges);
+                Object[] collegesObject = objectColleges();
                 Object responseObject;
 
                 String[] paneMessages = {"Add program code (e.g. BSSTAT)", "Input program name (e.g. BS Statistics)", "Under what college?"};
@@ -350,26 +350,26 @@ public class AdminScreen extends JPanel implements ActionListener{
 
                 // Can also be written using a while loop
 
-                for (int i = 0; i < 3; i++){
-                    if (i == 0){
+                for (int i = 0; i < 3; i++) {
+                    if (i == 0) {
                         responseObject = JOptionPane.showInputDialog(null, paneMessages[i],
                                 "", JOptionPane.QUESTION_MESSAGE);
-                    } else if (i == 1){
+                    } else if (i == 1) {
                         responseObject = JOptionPane.showInputDialog(null, paneMessages[i],
                                 "", JOptionPane.QUESTION_MESSAGE);
-                    } else{
+                    } else {
                         responseObject = JOptionPane.showInputDialog(null, paneMessages[i],
                                 "", JOptionPane.QUESTION_MESSAGE, null, collegesObject, collegesObject[0]);
                     }
 
-                    if (responseObject == null){
+                    if (responseObject == null) {
                         return;
-                    } else{
-                        if (i == 0){
+                    } else {
+                        if (i == 0) {
                             programCode = responseObject.toString();
-                        } else if (i == 1){
+                        } else if (i == 1) {
                             programTitle = responseObject.toString();
-                        } else{
+                        } else {
                             programsCollege = responseObject;
                         }
                     }
@@ -388,16 +388,16 @@ public class AdminScreen extends JPanel implements ActionListener{
                 boolean checkFirst = false;
                 boolean doesProgramExist = false;
 
-                for(ArrayList<ArrayList<String>> aCollegeAndItsPrograms: dataFromCollegesAndProgramsCSV){
-                    for(ArrayList<String> eachElementInACollegeAndItsPrograms: aCollegeAndItsPrograms){
+                for (ArrayList<ArrayList<String>> aCollegeAndItsPrograms : dataFromCollegesAndProgramsCSV) {
+                    for (ArrayList<String> eachElementInACollegeAndItsPrograms : aCollegeAndItsPrograms) {
                         // If program doesn't exist in college
-                        if (!programsCollege.toString().equals(eachElementInACollegeAndItsPrograms.getFirst()) && !checkFirst){
+                        if (!programsCollege.toString().equals(eachElementInACollegeAndItsPrograms.getFirst()) && !checkFirst) {
                             continue;
-                        } else{
+                        } else {
                             checkFirst = true;
                         }
 
-                        if (eachElementInACollegeAndItsPrograms.contains(programCode)){
+                        if (eachElementInACollegeAndItsPrograms.contains(programCode)) {
                             JOptionPane.showMessageDialog(null, programTitle + " already exists in " +
                                     programsCollege + ", add another program.", "", JOptionPane.INFORMATION_MESSAGE);
 
@@ -406,7 +406,7 @@ public class AdminScreen extends JPanel implements ActionListener{
                         }
                     }
 
-                    if (!doesProgramExist && checkFirst){
+                    if (!doesProgramExist && checkFirst) {
                         ArrayList<String> programAndItsTitleArrayList = new ArrayList<>();
                         programAndItsTitleArrayList.add(programCode);
                         programAndItsTitleArrayList.add(programTitle);
@@ -414,7 +414,7 @@ public class AdminScreen extends JPanel implements ActionListener{
                         aCollegeAndItsPrograms.add(programAndItsTitleArrayList);
 
                         JOptionPane.showMessageDialog(null, programTitle + " successfully added in " +
-                                programsCollege + ".","", JOptionPane.INFORMATION_MESSAGE);
+                                programsCollege + ".", "", JOptionPane.INFORMATION_MESSAGE);
 
                         break;
                     }
@@ -424,32 +424,55 @@ public class AdminScreen extends JPanel implements ActionListener{
                 }
             }
         }
-        else if(e.getSource() == deleteProgramsButton){
-            if (!colleges.isEmpty()){
-                Object[] collegesObject = objectColleges(colleges);
+        else if (e.getSource() == deleteProgramsButton) {
+            if (!colleges.isEmpty()) {
+                Object[] collegesObject = objectColleges();
 
-                // TODO: To be followed after delete colleges button
+                Object collegeToDeleteIn, programToDelete;
+
+                collegeToDeleteIn = JOptionPane.showInputDialog(null, "Choose a college to delete in",
+                        "", JOptionPane.QUESTION_MESSAGE, null, collegesObject,
+                        collegesObject[0]);
+
+                if (collegeToDeleteIn != null) {
+                    Object[] programsInACollegesObject = objectProgramsInACollege(collegeToDeleteIn.toString());
+
+                    programToDelete = JOptionPane.showInputDialog(null, "Choose a program to delete in " + collegeToDeleteIn,
+                            "", JOptionPane.QUESTION_MESSAGE, null, programsInACollegesObject,
+                            programsInACollegesObject[0]);
+
+                    if (programToDelete != null) {
+                        for (ArrayList<ArrayList<String>> aCollegeAndItsPrograms : dataFromCollegesAndProgramsCSV) {
+                            for (ArrayList<String> eachElementInACollegeAndItsPrograms : aCollegeAndItsPrograms) {
+                                if (aCollegeAndItsPrograms.indexOf(eachElementInACollegeAndItsPrograms) != 0 && programToDelete.toString().equals(eachElementInACollegeAndItsPrograms.getFirst())) {
+                                    JOptionPane.showMessageDialog(null, eachElementInACollegeAndItsPrograms.getLast() + " has been deleted successfully",
+                                            "", JOptionPane.INFORMATION_MESSAGE);
+                                    aCollegeAndItsPrograms.remove(eachElementInACollegeAndItsPrograms);
+                                }
+                            }
+                        }
+
+
+                    }
+                }
             }
         }
-        else if(e.getSource() == addCollegesButton) {
+        else if (e.getSource() == addCollegesButton) {
             String program;
 
-            while(true){
+            while (true) {
                 program = JOptionPane.showInputDialog(null, "Add college",
                         "", JOptionPane.QUESTION_MESSAGE);
 
-                if (colleges.contains(program)){
+                if (colleges.contains(program)) {
                     JOptionPane.showMessageDialog(null, "College already exists",
                             "", JOptionPane.INFORMATION_MESSAGE);
-                }
-                else if (program == null){
+                } else if (program == null) {
                     break;
-                }
-                else if (program.isEmpty()){
+                } else if (program.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "College cannot be blank, try again.",
                             "", JOptionPane.WARNING_MESSAGE);
-                }
-                else{
+                } else {
                     colleges.add(program);
 
                     // Make a 2D ArrayList for the new college
@@ -468,9 +491,9 @@ public class AdminScreen extends JPanel implements ActionListener{
                 }
             }
         }
-        else if(e.getSource() == deleteCollegesButton){
-            if (!colleges.isEmpty()){
-                Object[] collegesObject = objectColleges(colleges);
+        else if (e.getSource() == deleteCollegesButton) {
+            if (!colleges.isEmpty()) {
+                Object[] collegesObject = objectColleges();
                 int[] numOfProgramsInCollegesArray = numOfProgramsInColleges();
 
                 Object collegeToDelete;
@@ -480,21 +503,21 @@ public class AdminScreen extends JPanel implements ActionListener{
                         "", JOptionPane.QUESTION_MESSAGE, null, collegesObject,
                         collegesObject[0]);
 
-                if (collegeToDelete != null){
+                if (collegeToDelete != null) {
                     // The objective here is to get the index of the college to be deleted
                     // to check if it has contents (programs) or not
-                    for (int i = 0; i < collegesObject.length; i++){
-                        if (collegeToDelete.toString().equals(collegesObject[i].toString())){
+                    for (int i = 0; i < collegesObject.length; i++) {
+                        if (collegeToDelete.toString().equals(collegesObject[i].toString())) {
                             collegeToDeleteIndex = i;
                             break;
                         }
                     }
 
-                    if (numOfProgramsInCollegesArray[collegeToDeleteIndex] > 0){
+                    if (numOfProgramsInCollegesArray[collegeToDeleteIndex] > 0) {
                         int decision = JOptionPane.showConfirmDialog(null, "This college has contents, would you still like to delete this college?",
                                 "", JOptionPane.YES_NO_OPTION);
 
-                        if (decision == 0){
+                        if (decision == 0) {
                             dataFromCollegesAndProgramsCSV.remove(collegeToDeleteIndex);
                             colleges.remove(collegeToDeleteIndex);
 
@@ -505,17 +528,16 @@ public class AdminScreen extends JPanel implements ActionListener{
                     }
                 }
             }
-
         }
-        else if(e.getSource() == viewCollegesAndProgramsButton){
-            if(colleges.isEmpty()){
+        else if (e.getSource() == viewCollegesAndProgramsButton) {
+            if (colleges.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "No colleges yet. Please input a college to" +
-                        " open this window.","", JOptionPane.WARNING_MESSAGE);
-            } else{
+                        " open this window.", "", JOptionPane.WARNING_MESSAGE);
+            } else {
                 new ViewCollegesAndProgramsWindow(colleges, dataFromCollegesAndProgramsCSV);
             }
         }
-        else if(e.getSource() == renameEvent) {
+        else if (e.getSource() == renameEvent) {
             while (true) {
                 eventTitle = JOptionPane.showInputDialog(null, "To proceed, input a name for the event.", "",
                         JOptionPane.QUESTION_MESSAGE);
@@ -534,27 +556,27 @@ public class AdminScreen extends JPanel implements ActionListener{
                 }
             }
 
-            if (eventTitle != null){
+            if (eventTitle != null) {
                 this.tableHolder.setTitle(eventTitle);
 
                 JOptionPane.showMessageDialog(null, "Event successfully renamed to " + eventTitle + ".",
                         "", JOptionPane.INFORMATION_MESSAGE);
             }
         }
-        else if(e.getSource() == saveCollegesAndPrograms){
-            if (dataFromCollegesAndProgramsCSV.isEmpty()){
+        else if (e.getSource() == saveCollegesAndPrograms) {
+            if (dataFromCollegesAndProgramsCSV.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "No data yet. Add colleges and programs first.",
                         "", JOptionPane.WARNING_MESSAGE);
-            } else{
-                try (FileWriter writer = new FileWriter(collegesAndProgramsDatabasePath)){
+            } else {
+                try (FileWriter writer = new FileWriter(collegesAndProgramsDatabasePath)) {
 
-                    for(ArrayList<ArrayList<String>> aCollegeAndItsPrograms: dataFromCollegesAndProgramsCSV){
-                        for(ArrayList<String> eachElementInACollegeAndItsPrograms: aCollegeAndItsPrograms){
-                            if (aCollegeAndItsPrograms.indexOf(eachElementInACollegeAndItsPrograms) == 0){
-                                writer.write("--"+ eachElementInACollegeAndItsPrograms.getFirst() +"--\n");
-                            } else if (aCollegeAndItsPrograms.indexOf(eachElementInACollegeAndItsPrograms) != eachElementInACollegeAndItsPrograms.size() - 1){
+                    for (ArrayList<ArrayList<String>> aCollegeAndItsPrograms : dataFromCollegesAndProgramsCSV) {
+                        for (ArrayList<String> eachElementInACollegeAndItsPrograms : aCollegeAndItsPrograms) {
+                            if (aCollegeAndItsPrograms.indexOf(eachElementInACollegeAndItsPrograms) == 0) {
+                                writer.write("--" + eachElementInACollegeAndItsPrograms.getFirst() + "--\n");
+                            } else if (aCollegeAndItsPrograms.indexOf(eachElementInACollegeAndItsPrograms) != eachElementInACollegeAndItsPrograms.size() - 1) {
                                 writer.write(eachElementInACollegeAndItsPrograms.getFirst() + "," + eachElementInACollegeAndItsPrograms.get(1) + "\n");
-                            } else{
+                            } else {
                                 writer.write(eachElementInACollegeAndItsPrograms.getFirst() + "," + eachElementInACollegeAndItsPrograms.get(1) + "\n\n");
                             }
 
@@ -563,32 +585,32 @@ public class AdminScreen extends JPanel implements ActionListener{
 
                     writer.write("--End of data--");
 
-                    JOptionPane.showMessageDialog(null, "Progress successfully saved.",
+                    JOptionPane.showMessageDialog(null, "College and programs successfully saved in cpdb.csv.",
                             "", JOptionPane.INFORMATION_MESSAGE);
 
                     writer.flush();
-                } catch(IOException error){
+                } catch (IOException error) {
                     System.out.println(error.getMessage());
                 }
             }
         }
-        else if(e.getSource() == saveProgress){
-            if (!frame.tableHasData){
+        else if (e.getSource() == saveProgress) {
+            if (!frame.tableHasData) {
                 JOptionPane.showMessageDialog(null, "No data yet. Add students first.",
                         "", JOptionPane.WARNING_MESSAGE);
-            } else{
-                try (FileWriter writer = new FileWriter(studentsDatabasePath)){
+            } else {
+                try (FileWriter writer = new FileWriter(studentsDatabasePath)) {
                     String[] tableColumns = {"ID Number", "First Name", "Last Name", "Program", "College"};
 
                     writer.write("Event title: " + eventTitle + "\n");
 
-                    if (frame.databaseStartDate.isEmpty()){
+                    if (frame.databaseStartDate.isEmpty()) {
                         DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
                         LocalDateTime timeNow = LocalDateTime.now();
                         String dateInString = dateTimeFormat.format(timeNow);
 
                         writer.write("Date started: " + dateInString + "\n\n");
-                    } else{
+                    } else {
                         writer.write("Date started: " + frame.databaseStartDate + "\n\n");
                     }
 
@@ -597,7 +619,7 @@ public class AdminScreen extends JPanel implements ActionListener{
                     DefaultTableModel tableModel = tableHolder.table.model;
 
                     // Pulls data from the table
-                    for (int count = 0; count < tableModel.getRowCount(); count++){
+                    for (int count = 0; count < tableModel.getRowCount(); count++) {
                         // Gets the data from each row of the table
                         String dataFromEachRow = tableModel.getDataVector().elementAt(count).toString();
 
@@ -614,16 +636,16 @@ public class AdminScreen extends JPanel implements ActionListener{
                             "", JOptionPane.INFORMATION_MESSAGE);
 
                     writer.flush();
-                } catch(IOException error){
+                } catch (IOException error) {
                     System.out.println(error.getMessage());
                 }
             }
         }
-        else if (e.getSource() == endAttendance){
-            if (tableHolder.table.model.getRowCount() != 0){
+        else if (e.getSource() == endAttendance) {
+            if (tableHolder.table.model.getRowCount() != 0) {
 
                 // Saving data to PDF (Reference: jinu jawad m)
-                try{
+                try {
                     // Not included in reference - get current time
                     DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
                     LocalDateTime timeNow = LocalDateTime.now();
@@ -657,7 +679,7 @@ public class AdminScreen extends JPanel implements ActionListener{
 
                     String[] tableColumnsInPDF = {"ID Number", "First Name", "Last Name", "Program", "College"};
 
-                    for(String tableColumn: tableColumnsInPDF){
+                    for (String tableColumn : tableColumnsInPDF) {
                         PdfPCell tableHeadingInPDF = new PdfPCell(new Phrase(tableColumn, pdfHeadingsFont));
                         tableHeadingInPDF.setHorizontalAlignment(Element.ALIGN_CENTER);
                         tableInPDF.addCell(tableHeadingInPDF);
@@ -669,8 +691,8 @@ public class AdminScreen extends JPanel implements ActionListener{
                     DefaultTableModel tableModel = tableHolder.table.model;
                     String dataInTableModel;
 
-                    for (int countRow = 0; countRow < tableModel.getRowCount(); countRow++){
-                        for (int countColumn = 0; countColumn < tableModel.getColumnCount(); countColumn++){
+                    for (int countRow = 0; countRow < tableModel.getRowCount(); countRow++) {
+                        for (int countColumn = 0; countColumn < tableModel.getColumnCount(); countColumn++) {
                             dataInTableModel = tableModel.getValueAt(countRow, countColumn).toString();
 
                             PdfPCell tableCellInPDF = new PdfPCell(new Phrase(dataInTableModel, pdfCellFont));
@@ -690,13 +712,12 @@ public class AdminScreen extends JPanel implements ActionListener{
                     // Close the document
                     document.close();
 
-                }
-                catch (Exception error){
+                } catch (Exception error) {
                     System.out.println(error.getMessage());
                 }
 
                 // Erase all contents in database.csv
-                try (FileWriter writer = new FileWriter(studentsDatabasePath)){
+                try (FileWriter writer = new FileWriter(studentsDatabasePath)) {
                     String[] tableColumns = {"ID Number", "First Name", "Last Name", "Program", "College"};
 
                     writer.write("Event title:\n");
@@ -705,7 +726,7 @@ public class AdminScreen extends JPanel implements ActionListener{
                     writer.write(tableColumns[0] + "," + tableColumns[1] + "," + tableColumns[2] + "," + tableColumns[3] + "," + tableColumns[4] + "\n");
 
                     writer.flush();
-                } catch(IOException error){
+                } catch (IOException error) {
                     System.out.println(error.getMessage());
                 }
 
@@ -713,7 +734,7 @@ public class AdminScreen extends JPanel implements ActionListener{
                 tableHolder.table.model.setRowCount(0);
 
                 this.frame.changeToIntroScreen(6);
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Table is empty.",
                         "", JOptionPane.WARNING_MESSAGE);
             }
@@ -723,15 +744,36 @@ public class AdminScreen extends JPanel implements ActionListener{
     }
 
     // Transforms each college in collegeList ArrayList<String> into Object[]
-    public Object[] objectColleges(ArrayList<String> collegeList){
+    public Object[] objectColleges() {
         Object[] collegesInObject = new Object[colleges.size()];
         int objectCtr = 0;
 
-        for(String college : collegeList){
+        for (String college : colleges) {
             collegesInObject[objectCtr] = college;
             objectCtr++;
         }
         return collegesInObject;
+    }
+
+    public Object[] objectProgramsInACollege(String collegeToDeleteIn) {
+        for (ArrayList<ArrayList<String>> aCollegeAndItsPrograms : dataFromCollegesAndProgramsCSV) {
+            if (collegeToDeleteIn.equals(aCollegeAndItsPrograms.getFirst().getFirst())) {
+                Object[] programsInACollegeObject = new Object[aCollegeAndItsPrograms.size() - 1];
+                int objectCtr = 0;
+
+                for (ArrayList<String> eachElementInACollegeAndItsPrograms : aCollegeAndItsPrograms) {
+                    if (aCollegeAndItsPrograms.indexOf(eachElementInACollegeAndItsPrograms) != 0) {
+                        // Only get the elements after the first element of eachElementInACollegeAndItsPrograms, since the first one is always the college name
+                        programsInACollegeObject[objectCtr] = eachElementInACollegeAndItsPrograms.getFirst();
+                        objectCtr++;
+                    }
+                }
+                return programsInACollegeObject;
+            }
+        }
+
+        // To avoid IntelliSense error; this here won't get reached
+        return new Object[1];
     }
 
     public int[] numOfProgramsInColleges(){
@@ -747,7 +789,7 @@ public class AdminScreen extends JPanel implements ActionListener{
     public void initializeCollegesAndProgramsInColleges(){
         for(ArrayList<ArrayList<String>> aCollegeAndItsPrograms: dataFromCollegesAndProgramsCSV){
             for(ArrayList<String> eachElementInACollegeAndItsPrograms: aCollegeAndItsPrograms){
-                // Only get the first element of eachElementInACollegeAndItsPrograms, since its always the college
+                // Only get the first element of eachElementInACollegeAndItsPrograms, since it's always the college
                 colleges.add(eachElementInACollegeAndItsPrograms.getFirst());
                 break;
             }

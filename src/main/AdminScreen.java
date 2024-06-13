@@ -476,32 +476,32 @@ public class AdminScreen extends JPanel implements ActionListener{
                 Object collegeToDelete;
                 int collegeToDeleteIndex = 0;
 
-
-                // TODO: Not null safe (if the user presses cancel, the application will break)
                 collegeToDelete = JOptionPane.showInputDialog(null, "Choose a college to delete",
                         "", JOptionPane.QUESTION_MESSAGE, null, collegesObject,
                         collegesObject[0]);
 
-                // The objective here is to get the index of the college to be deleted
-                // to check if it has contents (programs) or not
-                for (int i = 0; i < collegesObject.length; i++){
-                    if (collegeToDelete.toString().equals(collegesObject[i].toString())){
-                        collegeToDeleteIndex = i;
-                        break;
+                if (collegeToDelete != null){
+                    // The objective here is to get the index of the college to be deleted
+                    // to check if it has contents (programs) or not
+                    for (int i = 0; i < collegesObject.length; i++){
+                        if (collegeToDelete.toString().equals(collegesObject[i].toString())){
+                            collegeToDeleteIndex = i;
+                            break;
+                        }
                     }
-                }
 
-                if (numOfProgramsInCollegesArray[collegeToDeleteIndex] > 0){
-                    int decision = JOptionPane.showConfirmDialog(null, "This college has contents, would you still like to delete this college?",
-                            "", JOptionPane.YES_NO_OPTION);
+                    if (numOfProgramsInCollegesArray[collegeToDeleteIndex] > 0){
+                        int decision = JOptionPane.showConfirmDialog(null, "This college has contents, would you still like to delete this college?",
+                                "", JOptionPane.YES_NO_OPTION);
 
-                    if (decision == 0){
-                        dataFromCollegesAndProgramsCSV.remove(collegeToDeleteIndex);
-                        colleges.remove(collegeToDeleteIndex);
+                        if (decision == 0){
+                            dataFromCollegesAndProgramsCSV.remove(collegeToDeleteIndex);
+                            colleges.remove(collegeToDeleteIndex);
 
-                        JOptionPane.showMessageDialog(null, collegeToDelete + " has been deleted successfully",
-                                "", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, collegeToDelete + " has been deleted successfully",
+                                    "", JOptionPane.INFORMATION_MESSAGE);
 
+                        }
                     }
                 }
             }

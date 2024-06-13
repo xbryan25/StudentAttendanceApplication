@@ -35,8 +35,6 @@ public class ViewCollegesAndProgramsWindow {
 
     ArrayList<ArrayList<String>> chosenCollegeAndItsPrograms;
 
-    JLabel chosenCollegeTitle = new JLabel("");
-
     ViewCollegesAndProgramsWindow(ArrayList<String> colleges, ArrayList<ArrayList<ArrayList<String>>> dataFromCollegesAndProgramsCSV){
         this.colleges = colleges;
         this.dataFromCollegesAndProgramsCSV = dataFromCollegesAndProgramsCSV;

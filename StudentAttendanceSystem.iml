@@ -10,7 +10,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/itextpdf-5.5.13.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/dependencies/itextpdf-5.5.13.3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -19,7 +19,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/flatlaf-3.4.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/dependencies/flatlaf-3.4.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -733,6 +733,10 @@ public class AdminScreen extends JPanel implements ActionListener {
                 // Clears the contents of the tableHolder
                 tableHolder.table.model.setRowCount(0);
 
+
+                JOptionPane.showMessageDialog(null, "Attendance session ended. Data encoded in " + eventTitle + ".pdf",
+                        "", JOptionPane.INFORMATION_MESSAGE);
+
                 this.frame.changeToIntroScreen(6);
             } else {
                 JOptionPane.showMessageDialog(null, "Table is empty.",

@@ -214,9 +214,6 @@ public class FrameHolder extends JFrame{
         } else if (state == 6){
             this.changeToIntroScreen(3);
 
-            JOptionPane.showMessageDialog(null, "Attendance session ended. Please check the database.",
-                    "", JOptionPane.INFORMATION_MESSAGE);
-
             hasEventTitle = false;
         }
 

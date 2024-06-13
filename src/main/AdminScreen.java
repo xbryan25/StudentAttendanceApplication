@@ -574,7 +574,7 @@ public class AdminScreen extends JPanel implements ActionListener {
                         for (ArrayList<String> eachElementInACollegeAndItsPrograms : aCollegeAndItsPrograms) {
                             if (aCollegeAndItsPrograms.indexOf(eachElementInACollegeAndItsPrograms) == 0) {
                                 writer.write("--" + eachElementInACollegeAndItsPrograms.getFirst() + "--\n");
-                            } else if (aCollegeAndItsPrograms.indexOf(eachElementInACollegeAndItsPrograms) != eachElementInACollegeAndItsPrograms.size() - 1) {
+                            } else if (aCollegeAndItsPrograms.indexOf(eachElementInACollegeAndItsPrograms) != aCollegeAndItsPrograms.size() - 1) {
                                 writer.write(eachElementInACollegeAndItsPrograms.getFirst() + "," + eachElementInACollegeAndItsPrograms.get(1) + "\n");
                             } else {
                                 writer.write(eachElementInACollegeAndItsPrograms.getFirst() + "," + eachElementInACollegeAndItsPrograms.get(1) + "\n\n");

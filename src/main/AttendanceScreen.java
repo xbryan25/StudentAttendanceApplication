@@ -158,30 +158,43 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                                 responseObject = JOptionPane.showInputDialog(null, paneMessages[i], paneTitles[i],
                                         JOptionPane.QUESTION_MESSAGE);
 
-                                boolean alreadyExists = false;
-
-                                int rowCount = tableHolder.table.model.getRowCount();
-
-                                for (int j = 0; j < rowCount; j++){
-                                    String tempIDNum = tableHolder.table.model.getValueAt(j, 0).toString();
-                                    if (responseObject.equals(tempIDNum)){
-                                        alreadyExists = true;
-                                        break;
-                                    }
-                                }
-
-                                if (!alreadyExists){
-                                    break;
-                                } else{
-                                    JOptionPane.showMessageDialog(null, "ID number already exists. Try again.",
+                                if (responseObject != null && responseObject.toString().isBlank()) {
+                                    JOptionPane.showMessageDialog(null, "The ID number shouldn't be blank ",
                                             "", JOptionPane.WARNING_MESSAGE);
+                                } else{
+                                    boolean alreadyExists = false;
+
+                                    int rowCount = tableHolder.table.model.getRowCount();
+
+                                    for (int j = 0; j < rowCount; j++){
+                                        String tempIDNum = tableHolder.table.model.getValueAt(j, 0).toString();
+                                        if (responseObject != null && responseObject.equals(tempIDNum)){
+                                            alreadyExists = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (!alreadyExists){
+                                        break;
+                                    } else{
+                                        JOptionPane.showMessageDialog(null, "ID number already exists. Try again.",
+                                                "", JOptionPane.WARNING_MESSAGE);
+                                    }
                                 }
                             }
                         } else{
-                            responseObject = JOptionPane.showInputDialog(null, paneMessages[i], paneTitles[i],
-                                    JOptionPane.QUESTION_MESSAGE);
-                        }
+                            while (true){
+                                responseObject = JOptionPane.showInputDialog(null, paneMessages[i], paneTitles[i],
+                                        JOptionPane.QUESTION_MESSAGE);
 
+                                if (responseObject != null && responseObject.toString().isBlank()){
+                                    JOptionPane.showMessageDialog(null, "The name shouldn't be blank ",
+                                            "", JOptionPane.WARNING_MESSAGE);
+                                } else{
+                                    break;
+                                }
+                            }
+                        }
                     }
 
                     // This is different because it shows a dropdown menu

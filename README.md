@@ -4,7 +4,7 @@
 - This application allows the user to store the information of a student based on their ID number, first and last names, and the college and program that the student is in.
 - It has an 'admin mode' where the user can add or delete colleges, add or delete programs, delete students, save the progress of the data, or end the attendance session.
 - The application creates a .pdf once the attendance session has been ended.
-- Created using Java Swing, with assistance from FlatLaf for the final look.
+- Created using Java Swing and AWT, with assistance from FlatLaf for the final look.
 
 ## Java libraries used in this project (major libraries)
 - Swing

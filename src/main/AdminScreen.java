@@ -1,4 +1,6 @@
-package main;// Import from itextpdf jar file
+package main;
+
+// Import from itextpdf jar file
 //import com.itextpdf.text.*;
 
 import com.itextpdf.text.Document;
@@ -16,7 +18,6 @@ import java.time.LocalDateTime;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-//import java.awt.*;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -25,7 +26,6 @@ import java.awt.Insets;
 import java.awt.GridBagLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-
 
 import java.io.FileWriter;
 import java.io.FileOutputStream;
@@ -263,7 +263,7 @@ public class AdminScreen extends JPanel implements ActionListener {
             gbc.gridy = 14;
             gbc.weightx = 1;
             gbc.weighty = 1;
-            this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on topleft
+            this.add(new JLabel(" "), gbc);  // blank JLabel, put on bottom right to put back button on top
 
             if (!hasInitialized) {
                 // Initalize colleges ArrayList with a college that already exists in the database
@@ -763,8 +763,6 @@ public class AdminScreen extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Table is empty.",
                         "", JOptionPane.WARNING_MESSAGE);
             }
-
-
         }
     }
 

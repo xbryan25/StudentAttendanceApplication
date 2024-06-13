@@ -53,15 +53,13 @@ public class FrameHolder extends JFrame{
 
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("assets/accept.png")));
         this.setIconImage(icon.getImage());
-//        this.add(aboutScreen);
 
-//        attendanceScreen.setVisible(false);
         aboutScreen.setVisible(false);
 
         // Fetch student data from stddb.csv
         getDataFromStudentCSV();
 
-        // Fetch college and programd data from cpdb.csv
+        // Fetch college and programs data from cpdb.csv
         getDataFromCollegeAndProgramsCSV();
     }
 
@@ -152,10 +150,6 @@ public class FrameHolder extends JFrame{
     }
 
     public void changeToIntroScreen(int state){
-//        if (state != 6){
-//            introScreen = new IntroScreen(this);
-//        }
-
 
         if(state == 1){
             this.remove(aboutScreen);
@@ -166,11 +160,6 @@ public class FrameHolder extends JFrame{
 
             // Get colleges data from main.AdminScreen class and transfer to main.AttendanceScreen
             collegesData = attendanceScreen.colleges;
-
-            // TODO: Fix this
-            // Get programs data from main.AdminScreen class and transfer to main.AttendanceScreen
-//            programsInCollegesData = attendanceScreen.programsInColleges;
-
 
             // Get event title
             if (!hasEventTitle){
@@ -189,10 +178,6 @@ public class FrameHolder extends JFrame{
 
             // Get colleges data from main.AdminScreen class and transfer to main.AttendanceScreen
             collegesData = adminScreen.colleges;
-
-            // TODO: Fix this
-            // Get programs data from main.AdminScreen class and transfer to main.AttendanceScreen
-//            programsInCollegesData = adminScreen.programsInColleges;
 
             if (adminScreen.eventTitle != null){
                 eventTitle = adminScreen.eventTitle;
@@ -246,7 +231,6 @@ public class FrameHolder extends JFrame{
                         eventTitle = title[0].replace("Event title: ", "");
                         hasEventTitle = true;
                     }
-
                 } else if (count == 1){
                     // Get event start date
                     String[] startDate = line.split(",");
@@ -256,11 +240,6 @@ public class FrameHolder extends JFrame{
                     } else{
                         databaseStartDate = startDate[0].replace("Date started: ", "");
                     }
-
-//                } else if (count == 2){
-//                    // Get event end date
-//                    String[] endDate = line.split(",");
-//                    databaseEndDate = endDate[0].replace("Date ended: ", "");
                 } else if (count > 3){
                     // Greater than 3 because row 4 is where the data starts in the database
                     String[] row = line.split(",");
@@ -314,8 +293,6 @@ public class FrameHolder extends JFrame{
                     collegeArrayList = new ArrayList<>();
                 }
             }
-
-
         }
         catch(Exception e){
             System.out.println(e.getMessage());

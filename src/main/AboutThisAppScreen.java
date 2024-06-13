@@ -13,7 +13,6 @@ public class AboutThisAppScreen extends JPanel implements ActionListener{
     JLabel paragraph1 = new JLabel();
     JLabel paragraph2 = new JLabel();
     JLabel paragraph3 = new JLabel();
-    JLabel version = new JLabel();
     JButton githubButton = new JButton("GitHub");
     JButton facebookButton = new JButton("Facebook");
     FrameHolder frame;
@@ -23,7 +22,6 @@ public class AboutThisAppScreen extends JPanel implements ActionListener{
     AboutThisAppScreen(FrameHolder frame) {
         this.frame = frame;
         this.setLayout(new GridBagLayout());
-//        this.setBackground(Color.GREEN);
         this.setBounds(0, 0, 500, 500);
 
         backButton.setPreferredSize(new Dimension(25, 25));
@@ -39,7 +37,6 @@ public class AboutThisAppScreen extends JPanel implements ActionListener{
         paragraph1.setText("<html><p align=\"justify\">&nbsp&nbsp&nbsp&nbsp This application was made to enhance my proficiency in Java GUI." +
                            " This application supports the addition of colleges, and programs. Once the colleges and programs" +
                            " have been added, the application will accept the addition of students.</p></html>");
-//        paragraph1.setPreferredSize(new Dimension(100,100));
 
         paragraph2.setFont(new Font("Arial", Font.PLAIN, 14));
         paragraph2.setText("<html><p align=\"justify\"><br>The application will prompt" +

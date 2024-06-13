@@ -19,8 +19,6 @@ public class IntroScreen extends JPanel implements ActionListener{
         this.frame = frame;
         this.setLayout(new GridBagLayout());
         this.setSize(500, 500);
-//        this.setBackground(Color.RED);
-
 
         attendanceButton.setPreferredSize(new Dimension(180, 50));
         attendanceButton.setFont(new Font("Arial", Font.BOLD, 20));

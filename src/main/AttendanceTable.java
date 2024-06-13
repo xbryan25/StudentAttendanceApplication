@@ -35,12 +35,15 @@ public class AttendanceTable{
         mainTable.setAutoCreateRowSorter(true);
         mainTable.setDefaultEditor(Object.class, null);
         mainTable.getTableHeader().setReorderingAllowed(false);
+
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
         mainTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
         mainTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
         mainTable.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
         mainTable.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
         mainTable.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+
         pane.setForeground(Color.RED);
         pane.setBounds(10, 75, 480, 425);
     }

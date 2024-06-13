@@ -45,7 +45,6 @@ public class ViewCollegesAndProgramsWindow {
         collegesListDialog.setLocationRelativeTo(null);
         collegesListDialog.setVisible(true);
         collegesListDialog.setResizable(false);
-//        collegesListDialog.setBackground(Color.RED);
         collegesListDialog.setTitle("Available colleges");
         collegesListDialog.setAlwaysOnTop(true);
 
@@ -55,10 +54,8 @@ public class ViewCollegesAndProgramsWindow {
         collegesTable.setModel(collegesTableModel);
 
 
-        //      Set font of header
+        // Set font of header
         collegesTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 30));
-
-//        collegesTable.setBackground(Color.LIGHT_GRAY);
         collegesTable.setSelectionForeground(Color.BLACK);
         collegesTable.setGridColor(Color.BLACK);
         collegesTable.setFont(new Font("Arial", Font.BOLD, 20));
@@ -66,7 +63,6 @@ public class ViewCollegesAndProgramsWindow {
         collegesTable.setAutoCreateRowSorter(true);
         collegesTable.setDefaultEditor(Object.class, null);
         collegesTable.getTableHeader().setReorderingAllowed(false);
-
 
         //      Put text in center
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -79,10 +75,7 @@ public class ViewCollegesAndProgramsWindow {
         collegesTable.getColumnModel().getColumn(0).setCellEditor(buttonEditor);
 
         // Set properties of the pane
-        collegesTablePane.setForeground(Color.RED);
-//        collegesTablePane.setBackground(Color.WHITE);
         collegesTablePane.setBounds(0, 0, 480, 375);
-
 
         // Add each college from the ArrayList colleges to the table
         for(String college: this.colleges){
@@ -113,7 +106,6 @@ public class ViewCollegesAndProgramsWindow {
             programsListDialog.setLocationRelativeTo(null);
             programsListDialog.setVisible(true);
             programsListDialog.setResizable(false);
-//            programsListDialog.setBackground(Color.RED);
             programsListDialog.setTitle("Available programs in " + collegePrompt);
             programsListDialog.setAlwaysOnTop(true);
 
@@ -146,7 +138,6 @@ public class ViewCollegesAndProgramsWindow {
             programsTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
             programsTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
 
-
             // Set properties of the pane
             programsTablePane.setBounds(0, 0, 480, 375);
 
@@ -162,7 +153,7 @@ public class ViewCollegesAndProgramsWindow {
 
             programsListDialog.add(programsTablePane);
 
-            // Create another dialog that shows another table of available programs in a colleges (last na ni nga JDialog)
+            // Create another dialog that shows another table of available programs in a colleges (last JDialog)
         }
     }
 }

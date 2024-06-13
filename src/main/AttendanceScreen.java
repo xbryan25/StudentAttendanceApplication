@@ -18,7 +18,6 @@ public class AttendanceScreen extends JPanel implements ActionListener{
     FrameHolder frame;
     TableHolder tableHolder;
 
-//    main.TableHolder tableHolder = new main.TableHolder();
     GridBagConstraints gbc = new GridBagConstraints();
 
     ArrayList<String> colleges = new ArrayList<>();
@@ -193,7 +192,7 @@ public class AttendanceScreen extends JPanel implements ActionListener{
                     } else{
                         Object tempCollege = obj[4];
                         Object[] programInCollegeObject = objectProgramInColleges(tempCollege);
-//
+
                         responseObject = JOptionPane.showInputDialog(null, paneMessages[i],
                                 paneTitles[i], JOptionPane.QUESTION_MESSAGE, null, programInCollegeObject,
                                 programInCollegeObject[0]);
@@ -251,9 +250,6 @@ public class AttendanceScreen extends JPanel implements ActionListener{
     public Object[] objectProgramInColleges(Object collegePrompt){
         int collegePromptSize;
         ArrayList<String> tempProgramsInCollege = new ArrayList<>();
-
-
-        // Get the size of the array list of a specific college in programsInColleges
 
         for(ArrayList<ArrayList<String>> aCollegeAndItsPrograms: dataFromCollegesAndProgramsCSV){
             if (collegePrompt.equals(aCollegeAndItsPrograms.getFirst().getFirst())){

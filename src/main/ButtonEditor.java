@@ -11,7 +11,6 @@ import java.lang.String;
 // Very confusing, I will study its implementation
 // Link for vid: https://www.youtube.com/watch?v=3LiSHPqbuic
 public class ButtonEditor extends DefaultCellEditor implements ActionListener {
-
     protected JButton btn;
     private String label;
     private boolean clicked;
@@ -64,6 +63,4 @@ public class ButtonEditor extends DefaultCellEditor implements ActionListener {
     protected void fireEditingStopped(){
         super.fireEditingStopped();
     }
-
-
 }

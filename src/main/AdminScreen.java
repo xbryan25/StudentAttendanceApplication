@@ -355,8 +355,16 @@ public class AdminScreen extends JPanel implements ActionListener {
                         responseObject = JOptionPane.showInputDialog(null, paneMessages[i],
                                 "", JOptionPane.QUESTION_MESSAGE);
                     } else if (i == 1) {
-                        responseObject = JOptionPane.showInputDialog(null, paneMessages[i],
-                                "", JOptionPane.QUESTION_MESSAGE);
+                        while (true){
+                            responseObject = JOptionPane.showInputDialog(null, paneMessages[i],
+                                    "", JOptionPane.QUESTION_MESSAGE);
+                            if (responseObject != null && responseObject.toString().length() >= 20){
+                                JOptionPane.showMessageDialog(null, "The program title is too long (should be less than or equal to 20 characters) ",
+                                        "", JOptionPane.INFORMATION_MESSAGE);
+                            } else{
+                                break;
+                            }
+                        }
                     } else {
                         responseObject = JOptionPane.showInputDialog(null, paneMessages[i],
                                 "", JOptionPane.QUESTION_MESSAGE, null, collegesObject, collegesObject[0]);
